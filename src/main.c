@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 10:37:48 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/06 10:36:19 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/06 12:53:15 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 // Your global exit status (ONLY global allowed)
 int	g_exit_status = 0;
 
+/*TO DO: Shorten main function to 25 lines*/
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
@@ -50,9 +51,9 @@ int	main(int argc, char **argv, char **envp)
 			ft_printf("TOKEN[%d]: %s\n", i, tokens[i]);
 			i++;
 		}
-
 		execute_command(tokens, &shell);
 		ft_printf("You typed: %s\n", input);
+		/*TODO: have to implement token freeing*/
 		free_tokens(tokens);
 		free(input);
 	}

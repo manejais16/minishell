@@ -3,31 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:32:20 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/01 15:57:06 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/06 13:01:24 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	is_numeric(char *str)
-{
-	int i = 0;
-
-	if (!str)
-		return (0);
-	if (str[0] == '+' || str[0] == '-')
-		i++;
-	while (str[i])
-	{
-		if (!ft_isdigit(str[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 int	ft_exit(char **tokens)
 {
@@ -53,4 +36,3 @@ int	ft_exit(char **tokens)
 	exit_code = ft_atoi(tokens[1]);
 	exit(exit_code);
 }
-
