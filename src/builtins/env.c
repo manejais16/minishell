@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 20:40:46 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/02 10:50:17 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/06 15:29:21 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*TODO: Should free and exit in case ft_strdup fails*/
 char	**copy_envp(char **envp)
 {
 	int		i;

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:18:06 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/01 15:24:13 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/06 15:53:54 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
+/*TODO: Have to implement flags.*/
 int	ft_pwd(char **tokens)
 {
 	char	*cwd;

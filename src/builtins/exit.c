@@ -6,12 +6,14 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:32:20 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/06 13:01:24 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/06 16:13:13 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*TODO: Before exit codes all the allocated
+memory should be freed.*/
 int	ft_exit(char **tokens)
 {
 	int	exit_code;

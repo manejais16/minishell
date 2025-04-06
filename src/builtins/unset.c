@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 09:04:13 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/02 10:48:01 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/06 16:09:20 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ int	is_matching_key(char *env_var, char *key)
 	return (1);
 }
 
+/*TODO: Give signal if the new_env malloc fails,
+because the value will still be set if malloc fails*/
 void	remove_env_key(char ***envp, char *key)
 {
 	int		i;
