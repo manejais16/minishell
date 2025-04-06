@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 10:37:48 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/06 12:53:15 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/06 13:22:47 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	g_exit_status = 0;
 /*TO DO: Shorten main function to 25 lines*/
 int	main(int argc, char **argv, char **envp)
 {
-	char	*input;
 	char	**tokens;
 	t_main	shell;
 	int		i;
@@ -32,30 +31,33 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		setup_signals();
-		input = readline("minishell> ");
-		if (!input)
+		shell.user_input = readline("minishell> ");
+		if (!shell.user_input)
 		{
 			ft_printf("exit\n");
 			break ;
 		}
-		if (*input == '\0')
+		if (*shell.user_input == '\0')
 		{
-			free(input);
+			free(shell.user_input);
 			continue ;
 		}
-		add_history(input);
-		tokens = tokenize_input(input);
+		add_history(shell.user_input);
+		/*TODO: Store tokens in the internal structure*/
+		tokens = tokenize_input(shell.user_input);
 		i = 0;
 		while (tokens && tokens[i])
 		{
 			ft_printf("TOKEN[%d]: %s\n", i, tokens[i]);
 			i++;
 		}
+		/*TODO: Expand ENV variables*/
+		//expand_variables();
 		execute_command(tokens, &shell);
-		ft_printf("You typed: %s\n", input);
-		/*TODO: have to implement token freeing*/
+		ft_printf("You typed: %s\n", shell.user_input);
+		/*TODO: Have to implement token freeing*/
 		free_tokens(tokens);
-		free(input);
+		free(shell.user_input);
 	}
 	return (g_exit_status);
 }
