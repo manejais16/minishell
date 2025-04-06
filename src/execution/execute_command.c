@@ -6,7 +6,7 @@
 /*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:31:04 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/02 10:14:52 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/06 10:42:49 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	execute_external(char **tokens, char **envp)
 		g_exit_status = WEXITSTATUS(status);
 }
 
-void execute_command(char **tokens, t_shell *shell)
+void execute_command(char **tokens, t_main *shell)
 {
 	if (!tokens || !*tokens)
 		return;

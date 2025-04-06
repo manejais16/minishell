@@ -6,7 +6,7 @@
 /*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:31:33 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/02 10:16:23 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/06 10:43:01 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	is_builtin(char *cmd)
 		return (1);
 	return (0);
 }
-int execute_builtin(char **tokens, t_shell *shell)
+int execute_builtin(char **tokens, t_main *shell)
 {
 	if (ft_strncmp(tokens[0], "echo", ft_strlen("echo") + 1) == 0)
 		return (ft_echo(tokens));

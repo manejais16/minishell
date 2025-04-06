@@ -6,7 +6,7 @@
 /*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 10:37:48 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/02 10:13:27 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/06 10:36:19 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
 	char	**tokens;
-	t_shell	shell;
+	t_main	shell;
 	int		i;
 
 	(void)argc;
