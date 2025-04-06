@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/06 13:14:21 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/06 14:21:14 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ typedef struct s_main
 	char			*working_dir;
 	char			*old_working_dir;
 	pid_t			pid;
+	t_token			*first_token;
+	t_token			*last_token;
 	int				return_value;
 }					t_main;
 
