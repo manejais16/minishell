@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:19:47 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/01 16:34:15 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/06 14:28:06 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
+/*TODO: Add possibility to add flags to the command*/
 int	ft_cd(char **tokens)
 {
 	char *target;
