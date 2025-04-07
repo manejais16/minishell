@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/07 12:48:21 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/07 22:02:20 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,14 @@ int					ft_cd(char **tokens);
 char				**copy_envp(char **envp);
 int					ft_env(char **tokens, char **envp);
 int					env_size(char **envp);
-void				remove_env_key(char ***envp, char *key);
-int					ft_unset(char **tokens, char ***envp);
-int					is_matching_key(char *env_var, char *key);
+int					is_valid_identifier(char *name);
+int					is_matching_name(char *env_var, char *name);
+int					remove_env_name(char ***envp, char *name);
+int					ft_unset(char **tokens, t_main *shell);
+
+
+
+
 
 extern int			g_exit_status;
 
