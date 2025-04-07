@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:32:20 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/07 10:39:27 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/07 11:42:18 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ int	ft_exit(char **tokens, t_main *shell)
 	if (shell->user_input)
 		free(shell->user_input);
 	if (shell->envp)
+	/*TODO: Still have to free other structures
+	like herdoc, metachar*/
 		shell_free_split(shell->envp);
 	exit(exit_code);
 }
