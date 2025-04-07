@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 20:40:46 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/06 15:29:21 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/07 09:01:26 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*TODO: Should free and exit in case ft_strdup fails*/
 char	**copy_envp(char **envp)
 {
 	int		i;
@@ -28,6 +27,13 @@ char	**copy_envp(char **envp)
 	while (envp[i])
 	{
 		copy[i] = ft_strdup(envp[i]);
+		if (!copy[i])
+		{
+			while (--i >= 0)
+				free(copy[i]);
+			free(copy);
+			return (NULL);
+		}
 		i++;
 	}
 	copy[i] = NULL;
@@ -36,9 +42,10 @@ char	**copy_envp(char **envp)
 
 int	ft_env(char **tokens, char **envp)
 {
-	int	i = 0;
-	(void)tokens;
+	int	i;
 
+	i = 0;
+	(void)tokens;
 	while (envp[i])
 	{
 		if (ft_strchr(envp[i], '='))
@@ -47,4 +54,3 @@ int	ft_env(char **tokens, char **envp)
 	}
 	return (0);
 }
-
