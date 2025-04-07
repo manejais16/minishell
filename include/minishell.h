@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/06 14:34:09 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/07 10:43:21 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int					execute_builtin(char **tokens, t_main *shell);
 int					ft_echo(char **tokens);
 int					ft_pwd(char **tokens);
 int					is_numeric(char *str);
-int					ft_exit(char **tokens);
+int					ft_exit(char **tokens, t_main *shell);
 int					ft_cd(char **tokens);
 char				**copy_envp(char **envp);
 int					ft_env(char **tokens, char **envp);
