@@ -17,6 +17,7 @@ LIBRARIES   =  -L$(LIBFT_PATH) -lft \
 SRC_DIR     = src
 SRC_FILES   =	main.c \
 				signal.c \
+				terminal_init.c \
 				parsing/tokenizer.c \
 				execution/execute_command.c \
 				execution/path_resolver.c \

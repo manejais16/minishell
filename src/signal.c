@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 08:56:54 by blohrer           #+#    #+#             */
-/*   Updated: 2025/03/31 15:04:50 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/07 12:29:44 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <termios.h>
 
 void	setup_signals(void)
 {
@@ -54,13 +53,3 @@ void	handle_sigquit(int sig)
 // 	sa_quit.sa_flags = 0;
 // 	sigaction(SIGQUIT, &sa_quit, NULL);
 // }
-void	init_terminal_settings(void)
-{
-	struct termios	term;
-
-	if (isatty(STDIN_FILENO) && tcgetattr(STDIN_FILENO, &term) == 0)
-	{
-		term.c_lflag &= ~ECHOCTL;
-		tcsetattr(STDIN_FILENO, TCSANOW, &term);
-	}
-}

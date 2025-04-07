@@ -1,42 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   terminal_init.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 16:19:47 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/07 12:44:16 by kzarins          ###   ########.fr       */
+/*   Created: 2025/04/07 12:28:16 by kzarins           #+#    #+#             */
+/*   Updated: 2025/04/07 12:46:36 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <termios.h>
 
-/*TODO: Add possibility to add flags to the command*/
-int	ft_cd(char **tokens)
+int		init_terminal_settings(void);
+
+void	init_terminal(t_main *shell)
 {
-	char	*target;
+	(void)shell;
+	init_terminal_settings();
+	// init_terminal_variables(shell);
+}
 
-	if (tokens[1] == NULL)
-		target = getenv("HOME");
-	else
+int		init_terminal_settings(void)
+{
+	struct termios	term;
+
+	if (isatty(STDIN_FILENO) && tcgetattr(STDIN_FILENO, &term) == 0)
 	{
-		target = tokens[1];
-		if (tokens[2])
-		{
-			ft_printf("minishell: cd: too many arguments\n");
-			return (1);
-		}
-	}
-	if (!target)
-	{
-		ft_printf("minishell: cd: HOME not set\n");
-		return (1);
-	}
-	if (chdir(target) == -1)
-	{
-		perror("cd");
-		return (1);
+		term.c_lflag &= ~ECHOCTL;
+		tcsetattr(STDIN_FILENO, TCSANOW, &term);
 	}
 	return (0);
 }

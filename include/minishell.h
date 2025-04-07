@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/07 11:42:10 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/07 12:48:21 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
-typedef struct s_token	t_token;
+typedef struct s_token		t_token;
+typedef struct s_heredoc	t_heredoc;
 
 typedef struct s_main
 {
@@ -86,7 +87,7 @@ typedef struct s_token
 void				setup_signals(void);
 void				handle_sigint(int sig);
 void				handle_sigquit(int sig);
-void				init_terminal_settings(void);
+void				init_terminal(t_main *shell);
 char				**tokenize_input(char *input);
 void				free_tokens(char **tokens);
 void				execute_command(char **tokens, t_main *shell);
