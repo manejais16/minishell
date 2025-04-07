@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 06:30:44 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/07 19:40:53 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/07 21:04:27 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <unistd.h>
 /*TODO: Include file to mainshell*/
 #include "parsing.h"
+#include "../../lib/libft/libft.h"
 
 //TODO: STILL IN DEVELOPMENT!!!
 static int	count_words(char const *s)
@@ -22,9 +23,7 @@ static int	count_words(char const *s)
 	int in_quotes[2];
 
 	count = 0;
-	/*TODO: should replace with memset!*/
-	in_quotes[0] = 0;
-	in_quotes[1] = 0;
+	ft_memset(in_quotes, 0, sizeof(int) * 2);
 	while (*s != '\0')
 	{
 		if (is_quotes(*s) && !is_in_quotes(in_quotes))
@@ -39,6 +38,20 @@ static int	count_words(char const *s)
 				change_quote_state(in_quotes, get_current_quotes(in_quotes));
 				s++;
 			}
+		}
+		else if (is_meta_char(*s) && *s != ' ')
+		{
+			count++;
+			s++;
+		}
+		else if (*s != ' ')
+		{
+			while (ft_isalnum(*s) || *s == '_')
+			{
+				printf("%c", *s);
+				s++;
+			}
+			count++;
 		}
 		else
 			s++;
@@ -103,11 +116,12 @@ char	**ft_split(const char *str, char c)
 	return (result);
 }
 */
-/*
+
+
+//gcc spliting.c quote_and_meta_utils.c ../../lib/libft/ft_isalnum.c ../../lib/libft/ft_memset.c
 #include <stdio.h>
 int main(void)
 {
-	char *s = "\" There are \' Thare are \" some\' \'\" things \" ";
+	char *s = "\" There are \' Thare are \" some\' \'\" things \" |tat";
 	printf("%d\n", count_words(s));
 }
-*/
