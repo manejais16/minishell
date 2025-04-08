@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 12:55:26 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/08 15:15:45 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/08 15:41:40 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argc;
 	(void)argv;
 	(void)envp;
+
+	parsing_test();
 	return (0);
 }
