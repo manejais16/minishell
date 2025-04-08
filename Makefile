@@ -1,4 +1,5 @@
 NAME        = minishell
+TEST_NAME	= test
 CC          = cc
 CFLAGS = -Wall -Wextra -Werror -I./include -I/usr/local/opt/readline/include -g
 
@@ -10,7 +11,7 @@ GNL_PATH    = ./lib/gnl
 LIBRARIES   =  -L$(LIBFT_PATH) -lft \
                -L$(PRINTF_PATH) -lftprintf \
                -L$(GNL_PATH) -lgnl \
-               -L/usr/local/opt/readline/lib -lreadline -lhistory -lcurses \
+               -lreadline -lhistory -lcurses \
                -ldl -pthread -lm
 
 
@@ -32,7 +33,10 @@ SRC_FILES   =	main.c \
 
 
 SRCS        = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
+TEST_SRCS	= $(filter-out $(SRC_DIR)/main.c , $(SRCS))
+TEST_SRCS	+= tests/main.c
 OBJS        = $(SRCS:.c=.o)
+TEST_OBJS	= $(TEST_SRCS:.c=.o)
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
@@ -55,9 +59,11 @@ clean:
 	@make -C $(LIBFT_PATH) clean
 	@make -C $(PRINTF_PATH) clean
 	@make -C $(GNL_PATH) clean
+	@rm -f $(TEST_OBJS)
 
 fclean: clean
 	@rm -f $(NAME)
+	@rm -f $(TEST_NAME)
 	@make -C $(LIBFT_PATH) fclean
 	@make -C $(PRINTF_PATH) fclean
 	@make -C $(GNL_PATH) fclean
@@ -67,4 +73,8 @@ re: fclean all
 
 all: $(NAME)
 
-.PHONY: all clean fclean re libft gnl
+test: libft ftprintf gnl $(TEST_OBJS)
+	@$(CC) $(TEST_OBJS) $(LIBRARIES) -o $(TEST_NAME)
+
+
+.PHONY: all clean fclean re libft gnl tests
