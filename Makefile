@@ -21,7 +21,8 @@ SRC_FILES   =	main.c \
 				terminal_init.c \
 				parsing/tokenizer.c \
 				parsing/quote_and_meta_utils.c \
-				parsing/spliting.c \
+				parsing/token_counter.c \
+				parsing/token_splitter.c \
 				execution/execute_command.c \
 				execution/path_resolver.c \
 				utils.c \

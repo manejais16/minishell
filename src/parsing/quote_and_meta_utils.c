@@ -6,12 +6,11 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:28:01 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/07 19:40:14 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/08 16:53:22 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
-//TODO: Include file in minishell
 
 int	is_quotes(const char input)
 {
@@ -32,12 +31,21 @@ void	change_quote_state(int *state, const char input)
 		state[quote_type] = 1;
 	return ;
 }
+/*These are all meta characters*/
+// int	is_meta_char(const char input)
+// {
+// 	if (input == '\'' || input == ' ' || input == '\t' || \
+// 		input == '\n' || input == '|' || input == '&' || \
+// 		input == ';' || input == '(' || input == ')' || \
+// 		input == '<' || input == '>')
+// 		return (1);
+// 	else
+// 		return (0);
+// }
 
 int	is_meta_char(const char input)
 {
-	if (input == '\'' || input == ' ' || input == '\t' || \
-		input == '\n' || input == '|' || input == '&' || \
-		input == ';' || input == '(' || input == ')' || \
+	if (input == ' ' || input == '|' || input == '&' || \
 		input == '<' || input == '>')
 		return (1);
 	else
