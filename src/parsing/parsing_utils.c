@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_test.c                                     :+:      :+:    :+:   */
+/*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 15:12:08 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/08 18:51:57 by kzarins          ###   ########.fr       */
+/*   Created: 2025/04/08 19:45:11 by kzarins           #+#    #+#             */
+/*   Updated: 2025/04/08 19:47:32 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tests.h"
+#include <unistd.h>
 
-int	parsing_test(void)
+char	*substr_dangeros(char const *s, unsigned int start, size_t len)
 {
-	char	*s = "\" There are \' Thare are \" some\' \'\" things \" |tat";
-	printf("%d\n", count_words(s));
-	s = ft_strdup("asd asd 0a");
-	printf("%d\n", count_words(s));
-	return (0);
+	char	*substr;
+
+	if (s == NULL)
+	{
+		return (NULL);
+	}
+	substr = (char *)malloc(len + 1);
+	if (substr == NULL)
+	{
+		return (NULL);
+	}
+	ft_strlcpy(substr, s + start, len + 1);
+	return (substr);
 }

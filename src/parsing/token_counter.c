@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 06:30:44 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/08 17:33:08 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/08 18:50:27 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	go_through_str(const char **s, int *in_quotes, int *count)
 		(*count)++;
 		(*s)++;
 	}
-	else if (**s != ' ' && (ft_isalnum(**s) || **s == '_'))
+	else if (ft_isalnum(**s) || **s == '_')
 	{
 		while (ft_isalnum(**s) || **s == '_')
 			(*s)++;

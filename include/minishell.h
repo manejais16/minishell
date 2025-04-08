@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/08 15:25:07 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/08 18:36:15 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,19 @@ typedef struct s_token
 {
 	char			*str;
 	int				type;
-	bool			quotes;
+	int				quote_type;
 	bool			var_exists;
 	struct t_token	*prev;
 	struct t_token	*next;
 	t_metachar		*meta;
 }					t_token;
+
+enum	quote_type
+{
+	NONE = 0,
+	SINGLE = 1,
+	DOUBLE = 2
+};
 
 void				setup_signals(void);
 void				handle_sigint(int sig);

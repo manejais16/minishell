@@ -6,12 +6,15 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:33:12 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/08 17:33:15 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/08 20:02:40 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minishell.h"
+#include "parsing.h"
+
 /*
-static char	*next_word(const char *str, char c, int *k)
+static char	*next_token(const char *str, char c, int *k)
 {
 	char	*word;
 	int		start;
@@ -50,7 +53,7 @@ static int	fill_split(char **result, const char *str, char c, int word_count)
 	return (1);
 }
 
-char	**ft_split(const char *str, char c)
+char	*split_tokens(const char *str, char c)
 {
 	char	**result;
 	int		word_count;
@@ -64,5 +67,52 @@ char	**ft_split(const char *str, char c)
 	if (!fill_split(result, str, c, word_count))
 		return (NULL);
 	return (result);
+}
+*/
+/*
+static int	count_quotes(const char **s, int *in_quotes, int *count)
+{
+	change_quote_state(in_quotes, **s);
+	(*count)++;
+	(*s)++;
+	while (**s && **s != get_current_quotes(in_quotes))
+		(*s)++;
+	if (**s)
+	{
+		change_quote_state(in_quotes, get_current_quotes(in_quotes));
+		(*s)++;
+	}
+	return (0);
+}
+/*TODO: Still on development!!!
+static int	go_through_str(t_main *shell)
+{
+	t_twopointer	temp;
+	int				in_quotes[2];
+	int				count;
+
+	temp.p_fast = shell->user_input;
+	 = p_first;
+	count = 0;
+	ft_memset(in_quotes, 0, sizeof(int) * 2);
+	while (*p_second)
+	{
+		if (is_quotes(*p_second) && !is_in_quotes(in_quotes))
+			count_quotes(s, in_quotes, count);
+		else if (is_meta_char(**s) && **s != ' ')
+		{
+			(*count)++;
+			(*s)++;
+		}
+		else if (**s != ' ' && (ft_isalnum(**s) || **s == '_'))
+		{
+			while (ft_isalnum(**s) || **s == '_')
+				(*s)++;
+			(*count)++;
+		}
+		else if (**s == ' ')
+			(*s)++;
+	}
+	return (0);
 }
 */

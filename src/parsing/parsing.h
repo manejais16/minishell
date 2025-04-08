@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:26:27 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/08 17:35:01 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/08 19:59:59 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,13 @@ enum e_parsing_errors
 	ILEGAL_CHAR = -2
 };
 
+typedef struct s_twopointer
+{
+	char	*p_slow;
+	char	*p_fast;
+} t_twopointer;
+
+
 //quote_and_meta_utils.c
 int		is_quotes(const char input);
 void	change_quote_state(int *state, const char input);
@@ -34,5 +41,8 @@ char	get_current_quotes(int int_quotes[2]);
 
 //token_counter.c
 int	count_words(char const *s);
+
+//parsing_utils.c
+char	*substr_dangeros(char const *s, unsigned int start, size_t len);
 
 #endif
