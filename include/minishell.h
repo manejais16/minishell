@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/07 22:02:20 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/08 15:25:07 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,8 @@ int					is_valid_identifier(char *name);
 int					is_matching_name(char *env_var, char *name);
 int					remove_env_name(char ***envp, char *name);
 int					ft_unset(char **tokens, t_main *shell);
+int					count_words(char const *s);
 
-
-
-
-
-extern int			g_exit_status;
+extern int					g_exit_status;
 
 #endif

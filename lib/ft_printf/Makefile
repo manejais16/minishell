@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+         #
+#    By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/29 10:58:28 by blohrer           #+#    #+#              #
-#    Updated: 2024/11/14 08:20:48 by blohrer          ###   ########.fr        #
+#    Updated: 2025/04/08 15:37:09 by kzarins          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,16 +28,16 @@ OFILES = $(CFILES:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OFILES)
-	$(AR) rcs $(NAME) $(OFILES)
+	@$(AR) rcs $(NAME) $(OFILES) > /dev/null
 
 %.o: %.c
-	$(CC) -c $(CFLAGS) $?
+	@$(CC) -c $(CFLAGS) $? > /dev/null
 
 clean:
-	rm -f $(OFILES)
+	@rm -f $(OFILES) > /dev/null
 
 fclean: clean
-	rm -f $(NAME) $(OBFILES)
+	@rm -f $(NAME) $(OBFILES) > /dev/null
 
 re: fclean all
 

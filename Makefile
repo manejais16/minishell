@@ -20,6 +20,8 @@ SRC_FILES   =	main.c \
 				signal.c \
 				terminal_init.c \
 				parsing/tokenizer.c \
+				parsing/quote_and_meta_utils.c \
+				parsing/spliting.c \
 				execution/execute_command.c \
 				execution/path_resolver.c \
 				utils.c \
@@ -35,15 +37,16 @@ SRC_FILES   =	main.c \
 SRCS        = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 TEST_SRCS	= $(filter-out $(SRC_DIR)/main.c , $(SRCS))
 TEST_SRCS	+= tests/main.c
+TEST_SRCS	+= tests/parsing_test.c
 OBJS        = $(SRCS:.c=.o)
 TEST_OBJS	= $(TEST_SRCS:.c=.o)
 
 %.o: %.c
-	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
+	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES) > /dev/null
 	@echo "\033[1;32m✔ Compiled: $<\033[0m"
 
 $(NAME): libft ftprintf gnl $(OBJS)
-	@$(CC) $(OBJS) $(LIBRARIES) -o $(NAME)
+	@$(CC) $(OBJS) $(LIBRARIES) -o $(NAME) > /dev/null
 
 ftprintf:
 	@make -C $(PRINTF_PATH)
@@ -55,18 +58,18 @@ gnl:
 	@make -C $(GNL_PATH)
 
 clean:
-	@rm -f $(OBJS)
-	@make -C $(LIBFT_PATH) clean
-	@make -C $(PRINTF_PATH) clean
-	@make -C $(GNL_PATH) clean
-	@rm -f $(TEST_OBJS)
+	@rm -f $(OBJS) > /dev/null
+	@make -C $(LIBFT_PATH) clean > /dev/null
+	@make -C $(PRINTF_PATH) clean > /dev/null
+	@make -C $(GNL_PATH) clean > /dev/null
+	@rm -f $(TEST_OBJS) > /dev/null
 
 fclean: clean
-	@rm -f $(NAME)
-	@rm -f $(TEST_NAME)
-	@make -C $(LIBFT_PATH) fclean
-	@make -C $(PRINTF_PATH) fclean
-	@make -C $(GNL_PATH) fclean
+	@rm -f $(NAME) > /dev/null
+	@rm -f $(TEST_NAME) > /dev/null
+	@make -C $(LIBFT_PATH) fclean > /dev/null
+	@make -C $(PRINTF_PATH) fclean > /dev/null
+	@make -C $(GNL_PATH) fclean > /dev/null
 	@echo "\033[1;33m Fully cleaned $(NAME)!\033[0m"
 
 re: fclean all
@@ -74,7 +77,8 @@ re: fclean all
 all: $(NAME)
 
 test: libft ftprintf gnl $(TEST_OBJS)
-	@$(CC) $(TEST_OBJS) $(LIBRARIES) -o $(TEST_NAME)
+	@$(CC) $(TEST_OBJS) $(LIBRARIES) -o $(TEST_NAME) > /dev/null
+	@make clean
 
 
 .PHONY: all clean fclean re libft gnl tests

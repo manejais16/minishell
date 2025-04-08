@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   tests.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/08 12:55:26 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/08 15:15:45 by kzarins          ###   ########.fr       */
+/*   Created: 2025/04/08 15:13:42 by kzarins           #+#    #+#             */
+/*   Updated: 2025/04/08 15:20:50 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "tests.h"
+#ifndef TESTS_H
+# define TESTS_H
+# include <stdio.h>
+# include "minishell.h"
 
-int	g_exit_status = 0;
+int	parsing_test(void);
 
-int	main(int argc, char **argv, char **envp)
-{
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	return (0);
-}
+#endif

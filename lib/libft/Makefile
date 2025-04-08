@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+         #
+#    By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 10:59:09 by blohrer           #+#    #+#              #
-#    Updated: 2024/10/18 11:51:51 by blohrer          ###   ########.fr        #
+#    Updated: 2025/04/08 15:37:05 by kzarins          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -65,21 +65,21 @@ OBJ 	= $(SRC:.c=.o)
 all: $(NAME)
 
 bonus: $(BONUS:.c=.o)
-	ar -r $(NAME) $?
+	@ar -r $(NAME) $? > /dev/null
 
 $(NAME): $(OBJ)
-	ar rcs $(NAME) $(OBJ)
+	@ar rcs $(NAME) $(OBJ) > /dev/null
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@ > /dev/null
 
 
 clean:
-	rm -f $(OBJ) $(BONUS:.c=.o)
+	@rm -f $(OBJ) $(BONUS:.c=.o) > /dev/null
 
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME) > /dev/null
 
 
 re: fclean all
