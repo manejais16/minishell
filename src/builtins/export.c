@@ -6,135 +6,111 @@
 /*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 10:34:11 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/08 21:44:45 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/09 19:38:00 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static void	sort_env_variables(char **env_array, int size)
-// {
-// 	int		i;
-// 	int		j;
-// 	char	*temp;
-// 	int		swapped;
+int	append_env_var(char ***envp, char *new_entry)
+{
+	char	**new_env;
+	int		len;
+	int		i;
 
-// 	i = 0;
-// 	while (i < size - 1)
-// 	{
-// 		swapped = 0;
-// 		j = 0;
-// 		while (j < size - i - 1)
-// 		{
-// 			if (ft_strcmp(env_array[j], env_array[j + 1]) > 0)
-// 			{
-// 				temp = env_array[j];
-// 				env_array[j] = env_array[j + 1];
-// 				env_array[j + 1] = temp;
-// 				swapped = 1;
-// 			}
-// 			j++;
-// 		}
-// 		if (swapped == 0)
-// 			break ;
-// 		i++;
-// 	}
-// }
+	len = 0;
+	while ((*envp)[len])
+		len++;
+	new_env = malloc(sizeof(char *) * (len + 2));
+	if (!new_env)
+		return (1);
+	i = 0;
+	while ((*envp)[i])
+	{
+		new_env[i] = (*envp)[i];
+		i++;
+	}
+	new_env[i++] = new_entry;
+	new_env[i] = NULL;
+	free(*envp);
+	*envp = new_env;
+	return (0);
+}
 
-// static void	print_export_entry(char *env_entry)
-// {
-// 	char	*equal_sign;
+int	set_env_var(char ***envp, char *name, char *value)
+{
+	char	*new_entry;
 
-// 	equal_sign = ft_strchr(env_entry, '=');
-// 	if (equal_sign)
-// 	{
-// 		*equal_sign = '\0';
-// 		ft_printf("declare -x %s=\"%s\"\n", env_entry, equal_sign + 1);
-// 		*equal_sign = '=';
-// 	}
-// 	else
-// 		ft_printf("declare -x %s\n", env_entry);
-// }
+	new_entry = create_env_entry(name, value);
+	if (!new_entry)
+		return (1);
+	if (update_existing_var(*envp, name, new_entry))
+		return (0);
+	if (append_env_var(envp, new_entry))
+	{
+		free(new_entry);
+		return (1);
+	}
+	return (0);
+}
 
-// static int	print_sorted_export(char **envp)
-// {
-// 	int		count;
-// 	char	**sorted_copy;
-// 	int		i;
+int	handle_export_with_value(char *arg, char *equal_sign, t_main *shell)
+{
+	char	*name;
+	char	*value;
+	int		result;
 
-// 	count = 0;
-// 	while (envp[count])
-// 		count++;
-// 	sorted_copy = malloc(sizeof(char *) * (count + 1));
-// 	if (!sorted_copy)
-// 	{
-// 		ft_printf("Memory allocation failed\n");
-// 		return (1);
-// 	}
-// 	i = 0;
-// 	while (i < count)
-// 		sorted_copy[i] = envp[i++];
-// 	sorted_copy[i] = NULL;
-// 	sort_env_variables(sorted_copy, count);
-// 	i = 0;
-// 	while (sorted_copy[i])
-// 		print_export_entry(sorted_copy[i++]);
-// 	free(sorted_copy);
-// 	return (0);
-// }
+	*equal_sign = '\0';
+	name = arg;
+	value = equal_sign + 1;
+	if (is_valid_identifier_export(name))
+	{
+		result = set_env_var(&shell->envp, name, value);
+		*equal_sign = '=';
+		return (result);
+	}
+	else
+	{
+		*equal_sign = '=';
+		ft_printf("minishell: export: `%s': not a valid identifier\n", arg);
+		return (1);
+	}
+}
 
-// int	is_valid_identifier(char *name)
-// {
-// 	int	i;
+int	process_export_arg(char *arg, t_main *shell)
+{
+	char	*equal_sign;
 
-// 	if (!name || !*name)
-// 		return (0);
-// 	if (!ft_isalpha(name[0]) && name[0] != '_')
-// 		return (0);
-// 	i = 1;
-// 	while (name[i])
-// 	{
-// 		if (!ft_isalnum(name[i]) && name[i] != '_')
-// 			return (0);
-// 		i++;
-// 	}
-// 	return (1);
-// }
+	equal_sign = ft_strchr(arg, '=');
+	if (equal_sign)
+	{
+		return (handle_export_with_value(arg, equal_sign, shell));
+	}
+	else if (is_valid_identifier_export(arg))
+	{
+		return (set_env_var(&shell->envp, arg, NULL));
+	}
+	else
+	{
+		ft_printf("minishell: export: `%s': not a valid identifier\n", arg);
+		return (1);
+	}
+}
 
-// static int	update_existing_var(char **env, char *name, char *new_entry)
-// {
-// 	int	i;
-// 	int	name_len;
+int	ft_export(char **tokens, t_main *shell)
+{
+	int	i;
+	int	status;
 
-// 	name_len = ft_strlen(name);
-// 	i = 0;
-// 	while (env[i])
-// 	{
-// 		if (ft_strncmp(env[i], name, name_len) == 0 && env[i][name_len] == '=')
-// 		{
-// 			free(env[i]);
-// 			env[i] = new_entry;
-// 			return (1);
-// 		}
-// 		i++;
-// 	}
-// 	return (0);
-// }
-
-// static char	*create_env_entry(char *name, char *value)
-// {
-// 	char	*entry;
-// 	int		total_len;
-
-// 	total_len = ft_strlen(name) + ft_strlen(value) + 2;
-// 	entry = malloc(total_len);
-// 	if (!entry)
-// 		return (NULL);
-// 	ft_strcpy(entry, name);
-// 	ft_strcat(entry, "=");
-// 	ft_strcat(entry, value);
-// 	return (entry);
-// }
-
-
-// Still on development
+	status = 0;
+	if (!tokens[1])
+		return (print_sorted_export(shell->envp));
+	i = 1;
+	while (tokens[i])
+	{
+		if (process_export_arg(tokens[i], shell))
+			status = 1;
+		i++;
+	}
+	return (status);
+}

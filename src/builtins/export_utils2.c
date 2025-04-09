@@ -1,30 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   export_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 15:18:06 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/09 19:11:52 by blohrer          ###   ########.fr       */
+/*   Created: 2025/04/09 19:08:48 by blohrer           #+#    #+#             */
+/*   Updated: 2025/04/09 19:09:28 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*TODO: Have to implement flags.*/
-int	ft_pwd(char **tokens)
+char	*create_env_entry(char *name, char *value)
 {
-	char	*cwd;
+	char	*entry;
+	int		name_len;
+	int		value_len;
+	int		total_len;
 
-	(void)tokens;
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
+	name_len = ft_strlen(name);
+	if (value)
 	{
-		perror("pwd");
-		return (1);
+		value_len = ft_strlen(value);
+		total_len = name_len + value_len + 2;
+		entry = malloc(total_len);
+		if (!entry)
+			return (NULL);
+		ft_strcpy(entry, name);
+		ft_strcat(entry, "=");
+		ft_strcat(entry, value);
 	}
-	ft_printf("%s\n", cwd);
-	free(cwd);
-	return (0);
+	else
+	{
+		entry = ft_strdup(name);
+	}
+	return (entry);
 }

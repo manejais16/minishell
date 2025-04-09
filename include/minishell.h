@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/09 15:48:18 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/09 19:15:20 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,18 @@ int					remove_env_name(char ***envp, char *name);
 int					ft_unset(char **tokens, t_main *shell);
 int					count_words(char const *s);
 int					go_through_str(t_main *shell);
+void				sort_env_variables(char **env_array, int size);
+void				print_export_entry(char *env_entry);
+int					print_sorted_export(char **envp);
+int					is_valid_identifier_export(char *name);
+int					update_existing_var(char **env, char *name, char *new_entry);
+char				*create_env_entry(char *name, char *value);
+int					append_env_var(char ***envp, char *new_entry);
+int					set_env_var(char ***envp, char *name, char *value);
+int					handle_export_with_value(char *arg, char *equal_sign, t_main *shell);
+int					process_export_arg(char *arg, t_main *shell);
+int					ft_export(char **tokens, t_main *shell);
+
 
 extern int					g_exit_status;
 
