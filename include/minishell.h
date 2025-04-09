@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/08 18:36:15 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/09 15:48:18 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ typedef struct s_heredoc
 
 typedef enum s_type
 {
-	larger,
-	smaller,
-	d_larger,
-	d_smaller
+	LARGER,
+	SMALLER,
+	D_LARGER,
+	D_SMALLER
 }					t_type;
 
 typedef struct s_metachar
@@ -79,8 +79,8 @@ typedef struct s_token
 	int				type;
 	int				quote_type;
 	bool			var_exists;
-	struct t_token	*prev;
-	struct t_token	*next;
+	t_token			*prev;
+	t_token			*next;
 	t_metachar		*meta;
 }					t_token;
 
@@ -118,6 +118,7 @@ int					is_matching_name(char *env_var, char *name);
 int					remove_env_name(char ***envp, char *name);
 int					ft_unset(char **tokens, t_main *shell);
 int					count_words(char const *s);
+int					go_through_str(t_main *shell);
 
 extern int					g_exit_status;
 

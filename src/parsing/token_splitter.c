@@ -6,13 +6,12 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:33:12 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/08 20:02:40 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/09 16:05:25 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
-
 /*
 static char	*next_token(const char *str, char c, int *k)
 {
@@ -69,50 +68,151 @@ char	*split_tokens(const char *str, char c)
 	return (result);
 }
 */
-/*
-static int	count_quotes(const char **s, int *in_quotes, int *count)
+static int	get_token_quote_type(int *in_quotes)
 {
-	change_quote_state(in_quotes, **s);
-	(*count)++;
-	(*s)++;
-	while (**s && **s != get_current_quotes(in_quotes))
-		(*s)++;
-	if (**s)
+	return (in_quotes[SINGLE_Q] * 1 \
+		+ in_quotes[DOUBLE_Q] * 2);
+}
+
+static int	add_token_at_end(t_main *shell, t_token token)
+{
+	t_token	*temp_stor;
+	t_token	*temp_iter;
+
+	temp_stor = malloc(sizeof(t_token));
+	if (!temp_stor)
+		return (MALLOC_FAIL);
+	temp_stor->str = token.str;
+	temp_stor->quote_type = token.quote_type;
+	temp_iter =  shell->first_token;
+	shell->last_token = temp_stor;
+	if (temp_iter == NULL)
 	{
+		shell->first_token = temp_stor;
+		return (0);
+	}
+	while (temp_iter->next)
+		temp_iter = temp_iter->next;
+	temp_iter->next = temp_stor;
+	temp_stor->prev = temp_iter;
+	return (0);
+}
+
+static int	extract_quotes(t_main *shell, t_twopointer *temp, int *in_quotes)
+{
+	change_quote_state(in_quotes, *temp->p_fast);
+	temp->p_slow++;
+	temp->p_fast++;
+	while (*temp->p_fast && *temp->p_fast != get_current_quotes(in_quotes))
+		temp->p_fast++;
+	if (*temp->p_fast)
+	{
+		if (add_token_at_end( shell, \
+			(t_token) { .str = substr_dangeros(temp->p_slow, temp->p_fast - temp->p_slow), \
+			.quote_type = get_token_quote_type(in_quotes)}) == MALLOC_FAIL)
+			return (MALLOC_FAIL);
 		change_quote_state(in_quotes, get_current_quotes(in_quotes));
-		(*s)++;
+		temp->p_fast++;
+		temp->p_slow = temp->p_fast;
+		return (0);
+	}
+	return (UNCLOSED_QUOTES);
+}
+
+static int	extract_meta_token(t_main *shell, t_twopointer *temp)
+{
+	if (*temp->p_fast == '|')
+	{
+		if (add_token_at_end( shell, \
+			(t_token) { .str = "|", .quote_type = NONE}) == MALLOC_FAIL)
+			return (MALLOC_FAIL);
+		temp->p_fast++;
+		temp->p_slow = temp->p_fast;
+	}
+	else if (*temp->p_fast == '>')
+	{
+		temp->p_fast++;
+		if (*temp->p_fast == '>')
+		{
+			if (add_token_at_end( shell, \
+				(t_token) { .str = ">>", .quote_type = NONE}) == MALLOC_FAIL)
+				return (MALLOC_FAIL);
+			temp->p_fast++;
+		}
+		else
+			if (add_token_at_end( shell, \
+				(t_token) { .str = ">", .quote_type = NONE}) == MALLOC_FAIL)
+				return (MALLOC_FAIL);
+		temp->p_slow = temp->p_fast;
+	}
+	else if (*temp->p_fast == '<')
+	{
+		temp->p_fast++;
+		if (*temp->p_fast == '<')
+		{
+			if (add_token_at_end( shell, \
+				(t_token) { .str = "<<", .quote_type = NONE}) == MALLOC_FAIL)
+				return (MALLOC_FAIL);
+			temp->p_fast++;
+		}
+		else
+			if (add_token_at_end( shell, \
+				(t_token) { .str = "<", .quote_type = NONE}) == MALLOC_FAIL)
+				return (MALLOC_FAIL);
+		temp->p_slow = temp->p_fast;
 	}
 	return (0);
 }
-/*TODO: Still on development!!!
-static int	go_through_str(t_main *shell)
+
+static int	extract_token(t_main *shell, t_twopointer *temp)
+{
+	if (is_meta_char(*temp->p_fast) && *temp->p_fast != ' ')
+	{
+		if (extract_meta_token(shell, temp) == MALLOC_FAIL)
+			return (MALLOC_FAIL);
+	}
+	else if (*temp->p_fast != ' ')
+	{
+		while(*temp->p_fast != ' ' && *temp->p_fast && !is_quotes(*temp->p_fast))
+			temp->p_fast++;
+		if (add_token_at_end( shell, \
+			(t_token) { .str = substr_dangeros(temp->p_slow, temp->p_fast - temp->p_slow), \
+				.quote_type = NONE}) == MALLOC_FAIL)
+			return (MALLOC_FAIL);
+		temp->p_slow = temp->p_fast;	
+	}
+	return (0);
+}
+
+//TODO: Still on development!!!
+int	go_through_str(t_main *shell)
 {
 	t_twopointer	temp;
 	int				in_quotes[2];
-	int				count;
+	int				return_val;
 
 	temp.p_fast = shell->user_input;
-	 = p_first;
-	count = 0;
+	temp.p_slow = temp.p_fast;
 	ft_memset(in_quotes, 0, sizeof(int) * 2);
-	while (*p_second)
+	while (*temp.p_fast)
 	{
-		if (is_quotes(*p_second) && !is_in_quotes(in_quotes))
-			count_quotes(s, in_quotes, count);
-		else if (is_meta_char(**s) && **s != ' ')
+		if (is_quotes(*temp.p_fast) && !is_in_quotes(in_quotes))
 		{
-			(*count)++;
-			(*s)++;
+			return_val = extract_quotes(shell, &temp, in_quotes);
+			if (return_val < 0)
+				return (return_val);
 		}
-		else if (**s != ' ' && (ft_isalnum(**s) || **s == '_'))
+		else if (*temp.p_fast != ' ')
 		{
-			while (ft_isalnum(**s) || **s == '_')
-				(*s)++;
-			(*count)++;
+			return_val = extract_token(shell, &temp);
+			if (return_val < 0)
+				return (return_val);
 		}
-		else if (**s == ' ')
-			(*s)++;
+		else
+		{
+			temp.p_fast++;
+			temp.p_slow = temp.p_fast;
+		}
 	}
 	return (0);
 }
-*/

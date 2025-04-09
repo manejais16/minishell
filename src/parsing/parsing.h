@@ -6,23 +6,26 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:26:27 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/08 19:59:59 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/09 15:45:23 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
+#include <unistd.h>
+
 enum e_quotes
 {
-	SINGLE = 0,
-	DOUBLE
+	SINGLE_Q = 0,
+	DOUBLE_Q
 };
 
 enum e_parsing_errors
 {
 	UNCLOSED_QUOTES = -1,
-	ILEGAL_CHAR = -2
+	ILEGAL_CHAR = -2,
+	MALLOC_FAIL = -3
 };
 
 typedef struct s_twopointer
@@ -43,6 +46,6 @@ char	get_current_quotes(int int_quotes[2]);
 int	count_words(char const *s);
 
 //parsing_utils.c
-char	*substr_dangeros(char const *s, unsigned int start, size_t len);
+char	*substr_dangeros(char const *s, size_t len);
 
 #endif

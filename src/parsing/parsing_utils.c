@@ -6,13 +6,13 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 19:45:11 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/08 19:47:32 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/09 15:50:02 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "minishell.h"
 
-char	*substr_dangeros(char const *s, unsigned int start, size_t len)
+char	*substr_dangeros(char const *s, size_t len)
 {
 	char	*substr;
 
@@ -25,6 +25,6 @@ char	*substr_dangeros(char const *s, unsigned int start, size_t len)
 	{
 		return (NULL);
 	}
-	ft_strlcpy(substr, s + start, len + 1);
+	ft_strlcpy(substr, s, len + 1);
 	return (substr);
 }
