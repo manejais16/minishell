@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+         #
+#    By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/10/14 10:59:09 by blohrer           #+#    #+#              #
-#    Updated: 2025/04/08 15:37:05 by kzarins          ###   ########.fr        #
+#    Updated: 2025/04/09 09:27:49 by blohrer          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,9 @@ SRC		=	ft_isdigit.c \
 			ft_strncmp.c \
 			ft_strmapi.c \
 			ft_isprint.c \
+			ft_strcmp.c \
+			ft_strcpy.c \
+			ft_strcat.c \
 
 BONUS	=	ft_lstadd_back_bonus.c \
 			ft_lstadd_front_bonus.c \

@@ -6,7 +6,7 @@
 /*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 13:01:27 by blohrer           #+#    #+#             */
-/*   Updated: 2024/10/18 09:40:13 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/09 09:30:41 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,9 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 int		ft_isalnum(int c);
+int		ft_strcmp(const char *s1, const char *s2);
+char	*ft_strcpy(char *dst, const char *src);
+char	*ft_strcat(char *dest, const char *src);
 
 typedef struct s_list
 {
