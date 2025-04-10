@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 19:49:18 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/10 20:08:30 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/10 20:26:57 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,5 @@ int	add_token_at_end(t_main *shell, char *str, int quote_type)
 int	free_all_tokens(t_main *shell)
 {
 	(void)shell;
+	return (0);
 }
