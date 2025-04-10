@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 06:30:44 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/08 18:50:27 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/10 20:06:00 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	count_quotes(const char **s, int *in_quotes, int *count)
 	return (0);
 }
 
-static int	go_through_str(const char **s, int *in_quotes, int *count)
+static int	go_through_str2(const char **s, int *in_quotes, int *count)
 {
 	if (is_quotes(**s) && !is_in_quotes(in_quotes))
 		count_quotes(s, in_quotes, count);
@@ -61,7 +61,7 @@ int	count_words(char const *s)
 	ft_memset(in_quotes, 0, sizeof(int) * 2);
 	while (*s != '\0')
 	{
-		if (go_through_str(&s, in_quotes, &count) == ILEGAL_CHAR)
+		if (go_through_str2(&s, in_quotes, &count) == ILEGAL_CHAR)
 			return (ILEGAL_CHAR);
 	}
 	if (in_quotes[0] || in_quotes[1])

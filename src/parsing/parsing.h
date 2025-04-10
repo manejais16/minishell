@@ -6,14 +6,15 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:26:27 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/09 15:45:23 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/10 20:01:19 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSING_H
 # define PARSING_H
 
-#include <unistd.h>
+# include <unistd.h>
+# include "minishell.h"
 
 enum e_quotes
 {
@@ -32,8 +33,7 @@ typedef struct s_twopointer
 {
 	char	*p_slow;
 	char	*p_fast;
-} t_twopointer;
-
+}	t_twopointer;
 
 //quote_and_meta_utils.c
 int		is_quotes(const char input);
@@ -43,9 +43,20 @@ int		is_in_quotes(int in_quotes[2]);
 char	get_current_quotes(int int_quotes[2]);
 
 //token_counter.c
-int	count_words(char const *s);
+int		count_words(char const *s);
 
 //parsing_utils.c
 char	*substr_dangeros(char const *s, size_t len);
+int		get_token_quote_type(int *in_quotes);
+
+//token_splitter.c
+int		extract_quotes(t_main *shell, t_twopointer *temp, int *in_quotes);
+int		extract_unquoted(t_main *shell, t_twopointer *temp, int *return_val);
+
+//token_add_and_dell.c
+int		add_token_at_end(t_main *shell, char *str, int quote_type);
+
+//quote_seperation.c
+int		extract_quotes(t_main *shell, t_twopointer *temp, int *in_quotes);
 
 #endif

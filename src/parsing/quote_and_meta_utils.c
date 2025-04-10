@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:28:01 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/09 15:04:00 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/10 19:17:40 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	change_quote_state(int *state, const char input)
 
 int	is_meta_char(const char input)
 {
-	if (input == ' ' || input == '|'  || \
+	if (input == ' ' || input == '|' || \
 		input == '<' || input == '>')
 		return (1);
 	else
