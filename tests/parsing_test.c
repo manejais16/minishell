@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:12:08 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/10 19:12:31 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/11 09:50:00 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,18 @@ int	parsing_test(void)
 
 	shell.user_input = s;
 	go_through_str(&shell);
-	while (shell.first_token)
+	t_token	*temp;
+	temp = shell.first_token;
+	while (temp)
 	{
-		printf(":%s:\n", shell.first_token->str);
-		shell.first_token = shell.first_token->next;
+		printf(":%s:\n", temp->str);
+		temp = temp->next;
 	}
+	free_all_tokens(&shell);
+	if (shell.first_token)
+		printf("\e[0;101mfree_all_tokens does not work!!\e[0m\n");
+	else
+		printf("\e[0;102mTokens freed sucessfully!\e[0m\n");
 	// printf("%d\n", count_words(s));
 	// s = ft_strdup("asd asd 0a");
 	// printf("%d\n", count_words(s));

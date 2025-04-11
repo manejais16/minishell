@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/09 19:15:20 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/11 09:38:32 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ int					set_env_var(char ***envp, char *name, char *value);
 int					handle_export_with_value(char *arg, char *equal_sign, t_main *shell);
 int					process_export_arg(char *arg, t_main *shell);
 int					ft_export(char **tokens, t_main *shell);
+int					free_all_tokens(t_main *shell);
 
 
 extern int					g_exit_status;

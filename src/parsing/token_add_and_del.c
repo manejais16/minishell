@@ -6,12 +6,23 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 19:49:18 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/10 20:26:57 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/11 09:50:53 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
+
+static void	initialize_token(t_token *token)
+{
+	token->str = NULL;
+	token->type = -1;
+	token->quote_type = -1;
+	token->var_exists = 0;
+	token->prev = NULL;
+	token->next = NULL;
+	token->meta = NULL;
+}
 
 int	add_token_at_end(t_main *shell, char *str, int quote_type)
 {
@@ -23,6 +34,7 @@ int	add_token_at_end(t_main *shell, char *str, int quote_type)
 	temp_stor = malloc(sizeof(t_token));
 	if (!temp_stor)
 		return (MALLOC_FAIL);
+	initialize_token(temp_stor);
 	temp_stor->str = str;
 	temp_stor->quote_type = quote_type;
 	temp_iter = shell->first_token;
@@ -39,9 +51,27 @@ int	add_token_at_end(t_main *shell, char *str, int quote_type)
 	return (0);
 }
 
-/*TODO: make a function that frees all tokens!*/
+static int	free_all_metachar(t_token *token)
+{
+	while (token->meta)
+	{
+		free(token->meta);
+		token->meta++;
+	}
+	return (0);
+}
+
 int	free_all_tokens(t_main *shell)
 {
-	(void)shell;
+	t_token *next;
+	
+	while(shell->first_token)
+	{
+		free_all_metachar(shell->first_token);
+		free(shell->first_token->str);
+		next = shell->first_token->next;
+		free(shell->first_token);
+		shell->first_token = next;
+	}
 	return (0);
 }

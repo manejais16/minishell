@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:33:12 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/10 20:03:06 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/11 09:47:05 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ static int	extract_meta_smaller(t_main *shell, t_twopointer *temp)
 	temp->p_fast++;
 	if (*temp->p_fast == '<')
 	{
-		if (add_token_at_end(shell, "<<", NONE) == MALLOC_FAIL)
+		if (add_token_at_end(shell, ft_strdup("<<"), NONE) == MALLOC_FAIL)
 			return (MALLOC_FAIL);
 		temp->p_fast++;
 	}
 	else
-		if (add_token_at_end(shell, "<", NONE) == MALLOC_FAIL)
+		if (add_token_at_end(shell, ft_strdup("<"), NONE) == MALLOC_FAIL)
 			return (MALLOC_FAIL);
 	temp->p_slow = temp->p_fast;
 	return (0);
@@ -34,12 +34,12 @@ static int	extract_meta_larger(t_main *shell, t_twopointer *temp)
 	temp->p_fast++;
 	if (*temp->p_fast == '>')
 	{
-		if (add_token_at_end(shell, ">>", NONE) == MALLOC_FAIL)
+		if (add_token_at_end(shell, ft_strdup(">>"), NONE) == MALLOC_FAIL)
 			return (MALLOC_FAIL);
 		temp->p_fast++;
 	}
 	else
-		if (add_token_at_end(shell, ">", NONE) == MALLOC_FAIL)
+		if (add_token_at_end(shell, ft_strdup(">"), NONE) == MALLOC_FAIL)
 			return (MALLOC_FAIL);
 	temp->p_slow = temp->p_fast;
 	return (0);
@@ -49,7 +49,7 @@ static int	extract_meta_token(t_main *shell, t_twopointer *temp)
 {
 	if (*temp->p_fast == '|')
 	{
-		if (add_token_at_end(shell, "|", NONE) == MALLOC_FAIL)
+		if (add_token_at_end(shell, ft_strdup("|"), NONE) == MALLOC_FAIL)
 			return (MALLOC_FAIL);
 		temp->p_fast++;
 		temp->p_slow = temp->p_fast;
