@@ -6,14 +6,14 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 19:49:18 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/11 09:50:53 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/11 09:56:44 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-static void	initialize_token(t_token *token)
+void	initialize_token(t_token *token)
 {
 	token->str = NULL;
 	token->type = -1;
@@ -73,5 +73,14 @@ int	free_all_tokens(t_main *shell)
 		free(shell->first_token);
 		shell->first_token = next;
 	}
+	return (0);
+}
+
+int	free_one_token(t_token *token)
+{
+	free_all_metachar(token);
+	free(token->str);
+	free(token);
+	token = NULL;
 	return (0);
 }
