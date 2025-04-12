@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/11 09:38:32 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/11 11:20:43 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_heredoc
 {
 	char			*delimiter;
 	bool			delimiter_quoted;
+	char			*heredoc_input;
 	int				pipe_fd[2];
 	bool			pipe_open[2];
 	pid_t			pid;
@@ -79,6 +80,7 @@ typedef struct s_token
 	int				type;
 	int				quote_type;
 	bool			var_exists;
+	bool			is_heredoc;
 	t_token			*prev;
 	t_token			*next;
 	t_metachar		*meta;
