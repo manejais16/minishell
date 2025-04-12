@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/11 11:20:43 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/12 14:10:38 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -111,7 +112,7 @@ int					ft_echo(char **tokens);
 int					ft_pwd(char **tokens);
 int					is_numeric(char *str);
 int					ft_exit(char **tokens, t_main *shell);
-int					ft_cd(char **tokens);
+int					ft_cd(char **tokens, t_main *shell);
 char				**copy_envp(char **envp);
 int					ft_env(char **tokens, char **envp);
 int					env_size(char **envp);
@@ -133,7 +134,8 @@ int					handle_export_with_value(char *arg, char *equal_sign, t_main *shell);
 int					process_export_arg(char *arg, t_main *shell);
 int					ft_export(char **tokens, t_main *shell);
 int					free_all_tokens(t_main *shell);
-
+char				*get_env_value(char **envp, char *name);
+int					update_pwd_vars(t_main *shell, char *old_pwd);
 
 extern int					g_exit_status;
 

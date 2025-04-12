@@ -39,6 +39,7 @@ SRC_FILES   =	main.c \
 				builtins/export_utils.c \
 				builtins/export_utils2.c \
 				builtins/export.c \
+				builtins/cd_utils.c \
 
 
 SRCS        = $(addprefix $(SRC_DIR)/, $(SRC_FILES))

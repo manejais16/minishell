@@ -6,7 +6,7 @@
 /*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 13:31:33 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/09 19:19:00 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/11 15:32:41 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	execute_builtin(char **tokens, t_main *shell)
 	if (ft_strncmp(tokens[0], "exit", ft_strlen("exit") + 1) == 0)
 		return (ft_exit(tokens, shell));
 	if (ft_strncmp(tokens[0], "cd", ft_strlen("cd") + 1) == 0)
-		return (ft_cd(tokens));
+		return (ft_cd(tokens, shell));
 	if (ft_strncmp(tokens[0], "env", ft_strlen("env") + 1) == 0)
 		return (ft_env(tokens, shell->envp));
 	if (ft_strncmp(tokens[0], "unset", ft_strlen("unset") + 1) == 0)
