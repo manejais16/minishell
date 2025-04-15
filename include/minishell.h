@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/12 14:10:38 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/15 18:45:39 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,13 @@ typedef struct s_metachar
 	bool			read_write;
 }					t_metachar;
 
+enum	token_types
+{
+	FILE_N,
+	CMD,
+	META
+};
+
 typedef struct s_token
 {
 	char			*str;
@@ -136,6 +143,7 @@ int					ft_export(char **tokens, t_main *shell);
 int					free_all_tokens(t_main *shell);
 char				*get_env_value(char **envp, char *name);
 int					update_pwd_vars(t_main *shell, char *old_pwd);
+int					check_for_repeating_meta(t_main *shell);
 
 extern int					g_exit_status;
 

@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:12:08 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/11 09:50:00 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/15 18:43:54 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,13 @@
 
 int	parsing_test(void)
 {
-	char	*s = "\" There are \' Thare are \" some\" things \" ||tat << < ehy< what";
+	// char	*s = "\" There are \' Thare are \" some\" things \" ||tat << < ehy< what";
+	char	*s = "\" There are \' Thare are \" some\" things \" |tat <<'<' ehy< what";
 	t_main	shell;
 
 	shell.user_input = s;
 	go_through_str(&shell);
+	printf("Token validity: %d\n", check_for_repeating_meta(&shell));
 	t_token	*temp;
 	temp = shell.first_token;
 	while (temp)
