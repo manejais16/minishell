@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:19:47 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/12 11:42:09 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/15 15:44:27 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ static int	handle_cd_error(char *target, char *old_pwd, char *error_msg)
 	return (1);
 }
 
+
+/*TODO: The cd does not handle ~/Desktop which is relative path*/
 int	ft_cd(char **tokens, t_main *shell)
 {
 	char	*target;
