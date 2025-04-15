@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 08:58:43 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/15 18:42:48 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/15 20:36:39 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,44 +58,15 @@ int	go_through_str(t_main *shell)
 
 // int assign_redirections_to_tokens(t_main *shell, t_token *start)
 // {
-// 	t_token	*current;
+// 	t_token	*temp;
+// 	t_token	*nextp;
+	
+// 	/*TODO: still have to expand the token if it is $var*/
 
-// 	current = start;
-// 	while(current != shell->last_token)
-// 	{
-// 		if(current)
-// 	}
+	
+// 	//current = start;
+// 	// while(current != shell->last_token)
+// 	// {
+// 	// 	if(current)
+// 	// }
 // }
-
-static void	print_tokenisation_error(char *str)
-{
-	ft_printf("minishell: syntax error near unexpected token `%s'\n", str);
-}
-
-int	check_for_repeating_meta(t_main *shell)
-{
-	t_token	*temp;
-	t_token	*nextp;
-
-	temp = shell->first_token;
-	while (temp)
-	{
-		nextp = temp->next;
-		if (nextp)
-		{
-			if (is_meta_char(*temp->str) && temp->quote_type == NONE
-				&& is_meta_char(*nextp->str) && nextp->quote_type == NONE)
-			{
-				print_tokenisation_error(nextp->str);
-				return (-1);
-			}
-		}
-		else if (is_meta_char(*temp->str) && temp->quote_type == NONE)
-		{
-			print_tokenisation_error("newline");
-			return (-1);
-		}
-		temp = nextp;
-	}
-	return (0);
-}

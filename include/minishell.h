@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/15 18:45:39 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/15 20:36:17 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 
 typedef struct s_token		t_token;
 typedef struct s_heredoc	t_heredoc;
+typedef struct s_metachar	t_metachar;
 
 typedef struct s_main
 {
@@ -61,18 +62,22 @@ typedef struct s_heredoc
 
 typedef enum s_type
 {
+	NONE_T,
 	LARGER,
 	SMALLER,
 	D_LARGER,
-	D_SMALLER
+	D_SMALLER,
+	PIPE
 }					t_type;
 
 typedef struct s_metachar
 {
 	t_type			type;
+	char			*file_name;
 	bool			open_close;
 	int				fd;
 	bool			read_write;
+	t_metachar		*next;
 }					t_metachar;
 
 enum	token_types

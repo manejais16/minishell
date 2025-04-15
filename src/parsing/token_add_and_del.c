@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 19:49:18 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/11 09:56:44 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/15 20:08:32 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,14 @@ static int	free_all_metachar(t_token *token)
 {
 	while (token->meta)
 	{
+		if (token->meta->file_name != NULL)
+		{
+			free(token->meta->file_name);
+		}
 		free(token->meta);
-		token->meta++;
+		token->meta = token->meta->next;
 	}
+	token->meta = NULL;
 	return (0);
 }
 

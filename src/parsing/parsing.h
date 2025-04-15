@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:26:27 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/11 09:57:16 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/15 20:34:40 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,10 @@ int		free_one_token(t_token *token);
 
 //quote_seperation.c
 int		extract_quotes(t_main *shell, t_twopointer *temp, int *in_quotes);
+
+//between_token_op.c
+t_type	get_meta_type(char *token);
+int		add_meta_to_token(t_token *main_token, t_type meta_type, t_token *pseudo_t);
+int		remove_token_from_chain(t_token *token);
 
 #endif

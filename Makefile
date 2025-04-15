@@ -26,6 +26,8 @@ SRC_FILES   =	main.c \
 				parsing/token_splitter.c \
 				parsing/token_add_and_del.c \
 				parsing/quote_seperation.c \
+				parsing/input_checking.c \
+				parsing/between_token_op.c \
 				execution/execute_command.c \
 				execution/path_resolver.c \
 				utils.c \
