@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 08:58:43 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/16 12:19:56 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/16 17:27:53 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,27 @@ int	go_through_str(t_main *shell)
 	return (0);
 }
 
-int	reassign_meta_token(t_token *token, t_token *start)
+int	reassign_meta_t(t_main *shell, t_token *token, t_token **start)
 {
-	if (add_meta_to_token(token, get_meta_type(start->str), start->next) == -1)
+	t_token	*temp;
+	
+	if (add_meta_to_token(token, get_meta_type((*start)->str), (*start)->next) == -1)
 		return (-1);
-	remove_token_from_chain(start->next);
-	remove_token_from_chain(start);
+	temp = (*start)->next->next;
+	if (shell->first_token == *start)
+		shell->first_token = temp;
+	if (shell->last_token == (*start)->next)
+		shell->last_token = (*start)->prev;
+	remove_token_from_chain((*start)->next);
+	remove_token_from_chain(*start);
+	*start = temp;
 	return (0);
 }
 
+/*Function that only crates files*/
+/*The functino should return -1 if it fails!!!!!*/
+/*TODO: Create something that just opens the files 
+if there is not command between the pipes*/
 int	only_create_files(t_token *token)
 {
 	(void)token;
@@ -72,34 +84,33 @@ int	only_create_files(t_token *token)
 }
 
 /*TODO: still have to expand the token if it is $var*/
-int assign_redirections_to_tokens(t_main *shell, t_token *start_of_cmd)
+int	assign_redirections_to_tokens(t_main *shell, t_token *start_of_cmd)
 {
 	t_token	temp;
 	t_token	*start;
-	//t_token	*first_cmd;
+	t_token	*first_cmd;
 
-	//first_cmd = NULL;
+	first_cmd = NULL;
 	start = start_of_cmd;
 	initialize_token(&temp);
-	while(*start->str != '|')
+	while (*start->str != '|')
 	{
-		if (is_meta_char(*start->str))
+		if (is_meta_char(*start->str) && *start->str != ' ')
 		{
-			if (reassign_meta_token(&temp, start) == -1)
+			if (reassign_meta_t(shell, &temp, &start) == -1)
 				return (-1);
 		}
 		else
 		{
-			if (temp.str == NULL)
-				temp.str = start->str;
+			if (!first_cmd)
+				first_cmd = start;
+			start = start->next;
 		}
-		if (start == shell->last_token)
+		if (start == NULL)
 			break ;
-		start = start->next;
 	}
-	if (temp.str == NULL)
-		return (only_create_files(&temp) ,0);
-	
+	if (first_cmd == NULL)
+		return (only_create_files(&temp), 0);
+	first_cmd->meta = temp.meta;
 	return (0);
-	/*Still things to do*/
 }
