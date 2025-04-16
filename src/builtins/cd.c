@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:19:47 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/15 15:44:27 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/16 10:48:34 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,15 @@ static char	*get_env_path(t_main *shell, char *var_name, int print_path)
 
 static char	*get_cd_target(char **tokens, t_main *shell)
 {
+	char	*target;
+
 	init_missing_pwd_vars(shell);
-	if (!tokens[1] || ft_strcmp(tokens[1], "~") == 0)
+	if (!tokens[1])
 		return (get_env_path(shell, "HOME", 0));
 	if (ft_strcmp(tokens[1], "-") == 0)
 		return (get_env_path(shell, "OLDPWD", 1));
-	return (ft_strdup(tokens[1]));
+	target = expand_tilde_in_path(tokens[1], shell);
+	return (target);
 }
 
 static int	handle_cd_error(char *target, char *old_pwd, char *error_msg)
@@ -62,8 +65,6 @@ static int	handle_cd_error(char *target, char *old_pwd, char *error_msg)
 	return (1);
 }
 
-
-/*TODO: The cd does not handle ~/Desktop which is relative path*/
 int	ft_cd(char **tokens, t_main *shell)
 {
 	char	*target;
