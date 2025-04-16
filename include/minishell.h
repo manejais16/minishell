@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/16 12:27:56 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/16 18:11:05 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ typedef struct s_token
 	char			*str;
 	// int				type;
 	int				quote_type;
+	bool			var_exists;
 	t_token			*prev;
 	t_token			*next;
 	t_metachar		*meta;
@@ -148,7 +149,23 @@ char				*get_env_value(char **envp, char *name);
 int					update_pwd_vars(t_main *shell, char *old_pwd);
 int					check_for_repeating_meta(t_main *shell);
 char				*expand_tilde_in_path(char *path, t_main *shell);
-
+int					expand_variables(t_main *main);
+int					expand_variables_in_token(t_main *main, t_token *token);
+int					expand_variables(t_main *main);
+int					perform_token_expansion(t_main *main, t_token *token, char **expanded_str);
+bool				find_and_expand_vars(t_main *main, char **expanded_str);
+bool				expand_var_in_string(t_main *main, char **expanded_str, size_t i);
+char				*init_token_expansion(t_token *token);
+char				*expand_var_at_pos(t_main *main, const char *str, size_t pos);
+int					extract_string_parts(const char *str, size_t pos, size_t var_name_len, char **parts);
+char				*get_expanded_value(t_main *main, const char *str, size_t *var_name_len);
+char				*ft_strjoin3(char const *s1, char const *s2, char const *s3);
+char				*extract_var_name(const char *str);
+size_t				get_var_name_len(const char *str);
+char				*handle_exit_status(t_main *main);
+int					expand_tilde(t_main *main, t_token *token);
+char				**tokens_list_to_array(t_token *first_token);
+int					count_tokens_in_list(t_token *first_token);
 
 extern int					g_exit_status;
 
