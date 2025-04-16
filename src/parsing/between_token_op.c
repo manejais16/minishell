@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 19:44:17 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/16 16:57:31 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/16 18:16:56 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,10 @@ int	remove_token_from_chain(t_token *token)
 	if (token->prev)
 	{
 		token->prev->next = token->next;
-		token->next->prev = token->prev;
+		if (token->next)
+			token->next->prev = token->prev;
 	}
-	else
+	else if (token->next)
 		token->next->prev = NULL;
 	free_one_token(token);
 	return (0);
