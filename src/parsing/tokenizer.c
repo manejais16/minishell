@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 08:58:43 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/15 20:36:39 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/16 12:19:56 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,17 +56,50 @@ int	go_through_str(t_main *shell)
 	return (0);
 }
 
-// int assign_redirections_to_tokens(t_main *shell, t_token *start)
-// {
-// 	t_token	*temp;
-// 	t_token	*nextp;
-	
-// 	/*TODO: still have to expand the token if it is $var*/
+int	reassign_meta_token(t_token *token, t_token *start)
+{
+	if (add_meta_to_token(token, get_meta_type(start->str), start->next) == -1)
+		return (-1);
+	remove_token_from_chain(start->next);
+	remove_token_from_chain(start);
+	return (0);
+}
 
+int	only_create_files(t_token *token)
+{
+	(void)token;
+	return (0);
+}
+
+/*TODO: still have to expand the token if it is $var*/
+int assign_redirections_to_tokens(t_main *shell, t_token *start_of_cmd)
+{
+	t_token	temp;
+	t_token	*start;
+	//t_token	*first_cmd;
+
+	//first_cmd = NULL;
+	start = start_of_cmd;
+	initialize_token(&temp);
+	while(*start->str != '|')
+	{
+		if (is_meta_char(*start->str))
+		{
+			if (reassign_meta_token(&temp, start) == -1)
+				return (-1);
+		}
+		else
+		{
+			if (temp.str == NULL)
+				temp.str = start->str;
+		}
+		if (start == shell->last_token)
+			break ;
+		start = start->next;
+	}
+	if (temp.str == NULL)
+		return (only_create_files(&temp) ,0);
 	
-// 	//current = start;
-// 	// while(current != shell->last_token)
-// 	// {
-// 	// 	if(current)
-// 	// }
-// }
+	return (0);
+	/*Still things to do*/
+}

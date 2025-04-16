@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 19:44:17 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/15 20:36:25 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/16 12:20:28 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,10 @@
 
 int	remove_token_from_chain(t_token *token)
 {
-	token->prev->next = token->next->prev;
+	if (token->prev)
+		token->prev->next = token->next->prev;
+	else
+		token->next->prev = NULL;
 	free_one_token(token);
 	return (0);
 }
@@ -63,4 +66,26 @@ t_type	get_meta_type(char *token)
 	if (*token == '|')
 		return (PIPE);
 	return (NONE_T);
+}
+
+/*BE CAREFUL!!!! the meta linked list does not get dublicated!!!*/
+t_token	*token_dup(t_token *token)
+{
+	t_token	*result;
+
+	result = malloc(sizeof(token));
+	if (!result)
+		return (NULL);
+	initialize_token(result);
+	result->str = ft_strdup(token->str);
+	if (!result->str)
+	{
+		free (result);
+		return (NULL);
+	}
+	result->prev = token->prev;
+	result->next = token->next;
+	result->meta = token->meta;
+	token->meta = NULL;
+	return (result);
 }

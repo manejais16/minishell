@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 19:49:18 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/15 20:08:32 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/16 12:20:12 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,7 @@
 void	initialize_token(t_token *token)
 {
 	token->str = NULL;
-	token->type = -1;
 	token->quote_type = -1;
-	token->var_exists = 0;
 	token->prev = NULL;
 	token->next = NULL;
 	token->meta = NULL;

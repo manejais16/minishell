@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/15 20:36:17 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/16 12:14:36 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,20 +80,18 @@ typedef struct s_metachar
 	t_metachar		*next;
 }					t_metachar;
 
-enum	token_types
-{
-	FILE_N,
-	CMD,
-	META
-};
+// enum	token_types
+// {
+// 	FILE_N,
+// 	CMD,
+// 	META
+// };
 
 typedef struct s_token
 {
 	char			*str;
-	int				type;
+	// int				type;
 	int				quote_type;
-	bool			var_exists;
-	bool			is_heredoc;
 	t_token			*prev;
 	t_token			*next;
 	t_metachar		*meta;
