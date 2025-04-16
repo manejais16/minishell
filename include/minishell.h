@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/16 12:14:36 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/16 12:27:56 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,8 @@ int					free_all_tokens(t_main *shell);
 char				*get_env_value(char **envp, char *name);
 int					update_pwd_vars(t_main *shell, char *old_pwd);
 int					check_for_repeating_meta(t_main *shell);
+char				*expand_tilde_in_path(char *path, t_main *shell);
+
 
 extern int					g_exit_status;
 

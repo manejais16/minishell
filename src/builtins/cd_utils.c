@@ -6,7 +6,7 @@
 /*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 11:37:24 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/12 11:42:17 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/16 08:53:23 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,23 @@ int	update_pwd_vars(t_main *shell, char *old_pwd)
 	free(shell->working_dir);
 	shell->working_dir = current_pwd;
 	return (0);
+}
+
+char	*expand_tilde_in_path(char *path, t_main *shell)
+{
+	char	*home;
+	char	*result;
+
+	if (!path || path[0] != '~')
+		return (ft_strdup(path));
+	home = get_env_value(shell->envp, "HOME");
+	if (!home)
+		return (ft_strdup(path));
+	if (path[1] == '\0')
+		return (ft_strdup(home));
+	else if (path[1] == '/')
+		result = ft_strjoin(home, path + 1);
+	else
+		result = ft_strdup(path);
+	return (result);
 }
