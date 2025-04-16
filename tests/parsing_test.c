@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:12:08 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/16 18:26:23 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/16 22:36:15 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,18 @@ char *get_type(t_type type)
 
 int	parsing_test(void)
 {
-	// char	*s = "\" There are \' Thare are \" some\" things \" ||tat << < ehy< what";
-	//char	*s = "\" There are \' Thare are \" some\" things \" |tat <<'<' ehy< what";
+	//char	*s = "\" There are \' Thare are \" some\" things \" ||tat << < ehy< what";
+	//char	*s = "\" There are \' Thare are \" <file1 some\" things \" |tat <<'<' ehy< what";
 	//char *s = ">that <this >>be echo << \" change es\" | ese";
-	char *s = ">that <this >>be echo << \" change es\" | ese <file1 << 'that'";
+	char *s = ">that <this >>be echo << \" change es\" | ese <file1 << 'that' is";
 	t_main	shell;
 
 	shell.user_input = s;
-	go_through_str(&shell);
-	int validity = check_for_repeating_meta(&shell);
-	printf("Token validity: %d\n", validity);
-	if (validity != 0)
+	if (tokenize_input(&shell) == -1)
+	{
+		printf("This is test message: Large error!!\n");
 		return (-1);
-	// assign_redirections_to_token(&shell, shell.first_token);
-	assign_all_redirections(&shell);
+	}
 	t_token	*temp;
 	t_metachar *meta_temp;
 	temp = shell.first_token;

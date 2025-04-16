@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/16 18:11:05 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/16 22:30:02 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,8 @@ void				setup_signals(void);
 void				handle_sigint(int sig);
 void				handle_sigquit(int sig);
 void				init_terminal(t_main *shell);
-char				**tokenize_input(char *input);
+// char				**tokenize_input(char *input);
+int					tokenize_input(t_main *shell);
 void				free_tokens(char **tokens);
 void				execute_command(char **tokens, t_main *shell);
 char				*try_paths(char **paths, char *command);

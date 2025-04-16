@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 08:58:43 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/16 18:24:49 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/16 22:29:34 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,26 @@
 #include "parsing.h"
 
 /*Rewrite for our builtin struct*/
-char	**tokenize_input(char *input)
+// char	**tokenize_input(char *input)
+// {
+// 	return (ft_split(input, ' '));
+// }
+
+/*TODO: Implement error messages for all fundamental
+errors!*/
+void	print_fundamental_error(int ret_val)
 {
-	return (ft_split(input, ' '));
+	(void)ret_val;
 }
 
-/*TODO: Remove when all the functions are overwritten*/
-void	free_tokens(char **tokens)
-{
-	int	i = 0;
+// void	free_tokens(char **tokens)
+// {
+// 	int	i = 0;
 
-	while (tokens[i])
-		free(tokens[i++]);
-	free(tokens);
-}
+// 	while (tokens[i])
+// 		free(tokens[i++]);
+// 	free(tokens);
+// }
 
 int	go_through_str(t_main *shell)
 {
@@ -76,7 +82,8 @@ int	reassign_meta_t(t_main *shell, t_token *token, t_token **start)
 /*Function that only crates files*/
 /*The functino should return -1 if it fails!!!!!*/
 /*TODO: Create something that just opens the files 
-if there is not command between the pipes*/
+if there is not command between the pipes
+the token is temp token that is on stack!!*/
 int	only_create_files(t_token *token)
 {
 	(void)token;
@@ -129,8 +136,32 @@ int	assign_all_redirections(t_main	*shell)
 			break;
 		if (*temp->str == '|')
 			temp = temp->next;
-		ft_printf("b");
 	}
-	ft_printf("a");
+	return (0);
+}
+
+/*TODO: Still have to set exit codes in case
+it fails*/
+int	tokenize_input(t_main *shell)
+{
+	int	ret_val;
+
+	ret_val = go_through_str(shell);
+	if (ret_val != 0)
+	{
+		free_all_tokens(shell);
+		print_fundamental_error(ret_val);
+		return (-1);
+	}
+	ret_val = check_for_repeating_meta(shell);
+	if (ret_val != 0)
+		return (free_all_tokens(shell), -1);
+	ret_val = assign_all_redirections(shell);
+	if (ret_val != 0)
+	{
+		free_all_tokens(shell);
+		/*TODO: If it fails there might be some malloc fail*/
+		return (-1);
+	}
 	return (0);
 }
