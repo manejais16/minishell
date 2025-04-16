@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:13:42 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/16 14:58:54 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/16 17:52:38 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "minishell.h"
 
 int	parsing_test(void);
-int	assign_redirections_to_tokens(t_main *shell, t_token *start_of_cmd);
+int	assign_redirections_to_token(t_main *shell, t_token *start_of_cmd);
+int	assign_all_redirections(t_main	*shell);
 
 #endif

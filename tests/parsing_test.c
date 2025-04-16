@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 15:12:08 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/16 17:24:54 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/16 18:26:23 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	parsing_test(void)
 {
 	// char	*s = "\" There are \' Thare are \" some\" things \" ||tat << < ehy< what";
 	//char	*s = "\" There are \' Thare are \" some\" things \" |tat <<'<' ehy< what";
-	char *s = ">that <this >>be echo << \" change es\" | ese";
+	//char *s = ">that <this >>be echo << \" change es\" | ese";
+	char *s = ">that <this >>be echo << \" change es\" | ese <file1 << 'that'";
 	t_main	shell;
 
 	shell.user_input = s;
@@ -38,7 +39,8 @@ int	parsing_test(void)
 	printf("Token validity: %d\n", validity);
 	if (validity != 0)
 		return (-1);
-	assign_redirections_to_tokens(&shell, shell.first_token);
+	// assign_redirections_to_token(&shell, shell.first_token);
+	assign_all_redirections(&shell);
 	t_token	*temp;
 	t_metachar *meta_temp;
 	temp = shell.first_token;

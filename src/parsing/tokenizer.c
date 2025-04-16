@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 08:58:43 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/16 17:27:53 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/16 18:24:49 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,33 +84,53 @@ int	only_create_files(t_token *token)
 }
 
 /*TODO: still have to expand the token if it is $var*/
-int	assign_redirections_to_tokens(t_main *shell, t_token *start_of_cmd)
+int	assign_redirections_to_token(t_main *shell, t_token **current_t)
 {
 	t_token	temp;
-	t_token	*start;
 	t_token	*first_cmd;
 
 	first_cmd = NULL;
-	start = start_of_cmd;
 	initialize_token(&temp);
-	while (*start->str != '|')
+	while (*(*current_t)->str != '|')
 	{
-		if (is_meta_char(*start->str) && *start->str != ' ')
+		if (is_meta_char(*(*current_t)->str) && *(*current_t)->str != ' ')
 		{
-			if (reassign_meta_t(shell, &temp, &start) == -1)
+			if (reassign_meta_t(shell, &temp, &(*current_t)) == -1)
 				return (-1);
 		}
 		else
 		{
 			if (!first_cmd)
-				first_cmd = start;
-			start = start->next;
+				first_cmd = (*current_t);
+			(*current_t) = (*current_t)->next;
 		}
-		if (start == NULL)
+		if ((*current_t) == NULL)
 			break ;
 	}
 	if (first_cmd == NULL)
 		return (only_create_files(&temp), 0);
 	first_cmd->meta = temp.meta;
+	return (0);
+}
+
+/*TODO: must think of what happens when there is no tokens*/
+int	assign_all_redirections(t_main	*shell)
+{
+	t_token	*temp;
+
+	temp = shell->first_token;
+	if (!temp)
+		return (0);
+	while (temp)
+	{
+		if (assign_redirections_to_token(shell, &temp) == -1)
+			return (-1);
+		if (temp == NULL)
+			break;
+		if (*temp->str == '|')
+			temp = temp->next;
+		ft_printf("b");
+	}
+	ft_printf("a");
 	return (0);
 }
