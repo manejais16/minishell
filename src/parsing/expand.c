@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 11:34:03 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/16 16:05:50 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/16 21:32:08 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ char	*init_token_expansion(t_token *token)
 	return (expanded_str);
 }
 
+/*TODO: Add so that the tilde gets expanded before the env var expansion.
+E.g. ~/$a -> at first the ~ sould be expanded and after that the $a*/
 int	perform_token_expansion(t_main *main, t_token *token, char **expanded_str)
 {
 	bool	var_expanded;

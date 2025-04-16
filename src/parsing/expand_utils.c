@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:02:22 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/16 16:04:18 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/16 21:00:20 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*TODO: Remove a endless loop when a=$b and b=$a.
+I think there should not be second expansion*/
 bool	find_and_expand_vars(t_main *main, char **expanded_str)
 {
 	size_t	i;
