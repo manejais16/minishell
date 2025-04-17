@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 08:58:43 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/17 15:39:08 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/17 17:27:22 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,40 @@ int	go_through_str(t_main *shell)
 	return (0);
 }
 
+int	add_heredoc_in_linked_list(t_main *shell, t_heredoc *heredoc)
+{
+	t_heredoc	*iter;
+
+	heredoc->next = NULL;
+	iter = shell->p_here;
+	if (!iter)
+	{
+		shell->p_here = heredoc;
+		return (0);
+	}
+	while (iter->next)
+		iter = iter->next;
+	iter->next = heredoc;
+	return (0);
+}
+
+int add_heredoc(t_main *shell, t_token *here_delimitor)
+{
+	t_heredoc	*temp;
+
+	temp = malloc(sizeof(t_heredoc));
+	if (!temp)
+		return (MALLOC_FAIL);
+	temp->delimiter = ft_strdup(here_delimitor->str);
+	if (!temp->delimiter)
+		return (free(temp), MALLOC_FAIL);
+	if (here_delimitor->quote_type != NONE)
+		temp->delimiter_quoted = 1;
+	temp->already_used = 0;
+	add_heredoc_in_linked_list(shell, temp);
+	return (0);
+}
+
 int	reassign_meta_t(t_main *shell, t_token *token, t_token **start)
 {
 	t_token	*temp;
@@ -73,6 +107,9 @@ int	reassign_meta_t(t_main *shell, t_token *token, t_token **start)
 		shell->first_token = temp;
 	if (shell->last_token == (*start)->next)
 		shell->last_token = (*start)->prev;
+	if (get_meta_type((*start)->str) == D_SMALLER)
+		if (add_heredoc(shell, (*start)->next) != 0)
+			return (-1);
 	remove_token_from_chain((*start)->next);
 	remove_token_from_chain(*start);
 	*start = temp;

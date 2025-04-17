@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/16 22:30:02 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/17 17:26:33 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 typedef struct s_token		t_token;
 typedef struct s_heredoc	t_heredoc;
 typedef struct s_metachar	t_metachar;
+typedef struct s_heredoc	t_heredoc;
 
 typedef struct s_main
 {
@@ -53,11 +54,9 @@ typedef struct s_heredoc
 {
 	char			*delimiter;
 	bool			delimiter_quoted;
+	bool			already_used;
 	char			*heredoc_input;
-	int				pipe_fd[2];
-	bool			pipe_open[2];
-	pid_t			pid;
-	int				status;
+	t_heredoc		*next;
 }					t_heredoc;
 
 typedef enum s_type
