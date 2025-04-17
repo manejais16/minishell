@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 12:55:26 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/16 22:49:34 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/17 16:00:56 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ void	print_all_tokens(t_main *shell)
 
 int	main(int argc, char **argv, char **envp)
 {
-	//char	**tokens;
+	char	**tokens;
 	t_main	shell;
-	//int		parsing_result;
+	int		parsing_result;
 	//t_token	*current;
 
 	(void)argc;
@@ -69,8 +69,8 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		add_history(shell.user_input);
-		//parsing_result = go_through_str(&shell);
-		//if (parsing_result < 0)
+		parsing_result = go_through_str(&shell);
+		if (parsing_result < 0)
 		if (tokenize_input(&shell) == -1)
 		{
 			printf("This is test message: Large error!!\n");
@@ -78,20 +78,16 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		}
 		/*This is printing all the input tokens*/
-		print_all_tokens(&shell);
+		// print_all_tokens(&shell);
 		// current = shell.first_token;
-		// while (current)
-		// {
-		// 	expand_tilde(&shell, current);
-		// 	current = current->next;
-		// }
-		// expand_variables(&shell);
-		// tokens = tokens_list_to_array(shell.first_token);
-		// if (tokens)
-		// {
-		// 	execute_command(tokens, &shell);
-		// 	shell_free_split(tokens);
-		// }
+
+		expand_variables(&shell);
+		tokens = tokens_list_to_array(shell.first_token);
+		if (tokens)
+		{
+			execute_command(tokens, &shell);
+			shell_free_split(tokens);
+		}
 		free_all_tokens(&shell);
 		free(shell.user_input);
 	}
