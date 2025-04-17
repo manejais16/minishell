@@ -6,14 +6,14 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 19:49:18 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/17 12:05:31 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/17 14:46:44 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-static int	free_all_metachar(t_token *token)
+int	free_all_metachar(t_token *token)
 {
 	while (token->meta)
 	{
