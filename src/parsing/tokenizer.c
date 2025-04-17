@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 08:58:43 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/16 22:29:34 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/17 12:06:22 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,14 @@ int	reassign_meta_t(t_main *shell, t_token *token, t_token **start)
 /*TODO: Create something that just opens the files 
 if there is not command between the pipes
 the token is temp token that is on stack!!*/
-int	only_create_files(t_token *token)
+// int	only_create_files(t_token *token)
+// {
+// 	(void)token;
+// 	return (0);
+// }
+
+int	create_empty_str_token()
 {
-	(void)token;
 	return (0);
 }
 
@@ -115,7 +120,7 @@ int	assign_redirections_to_token(t_main *shell, t_token **current_t)
 			break ;
 	}
 	if (first_cmd == NULL)
-		return (only_create_files(&temp), 0);
+		return (/*only_create_files(&temp),*/ 0);
 	first_cmd->meta = temp.meta;
 	return (0);
 }
