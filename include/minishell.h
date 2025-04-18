@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/18 13:47:50 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/18 14:37:44 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ typedef struct s_metachar
 	bool			open_close;
 	int				fd;
 	bool			read_write;
-	int				file_name_quote_type;
 	t_metachar		*next;
 }					t_metachar;
 
