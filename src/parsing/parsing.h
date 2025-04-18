@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:26:27 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/18 17:36:53 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/18 19:41:08 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,6 @@ int	expand_string(t_main *shell, char **str);
 
 //here_request.c
 int	ask_for_heredock_inputs(t_main *shell);
+int		expand_heredoc(t_main *shell, t_heredoc *heredoc);
 
 #endif

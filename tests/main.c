@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 12:55:26 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/18 18:02:32 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/18 19:15:43 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ void	print_all_tokens(t_main *shell)
 {
 	t_token	*temp;
 	t_metachar *meta_temp;
+	t_heredoc *here_temp;
 	temp = shell->first_token;
+	here_temp = shell->p_here;
 	while (temp)
 	{
 		printf(":%s:\n", temp->str);
@@ -39,6 +41,11 @@ void	print_all_tokens(t_main *shell)
 			meta_temp = meta_temp->next;
 		}
 		temp = temp->next;
+	}
+	while (here_temp)
+	{
+		ft_printf("\nThe '%s' here:\n%s", here_temp->delimiter, here_temp->heredoc_input);
+		here_temp = here_temp->next;
 	}
 }
 
