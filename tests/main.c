@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 12:55:26 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/18 14:25:55 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/18 18:02:32 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,7 @@ int	main(int argc, char **argv, char **envp)
 		// 	execute_command(tokens, &shell);
 		// 	shell_free_split(tokens);
 		// }
-		free_all_tokens(&shell);
-		free(shell.user_input);
+		free_user_input(&shell);
 	}
 	if (shell.working_dir)
 		free(shell.working_dir);

@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 08:58:43 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/18 14:16:13 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/18 17:52:37 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ int add_heredoc(t_main *shell, t_token *here_delimitor)
 	if (here_delimitor->quote_type != NONE)
 		temp->delimiter_quoted = 1;
 	temp->already_used = 0;
+	temp->heredoc_input = NULL;
 	add_heredoc_in_linked_list(shell, temp);
 	return (0);
 }
@@ -200,5 +201,6 @@ int	tokenize_input(t_main *shell)
 		/*TODO: If it fails there might be some malloc fail*/
 		return (-1);
 	}
+	ask_for_heredock_inputs(shell);
 	return (0);
 }
