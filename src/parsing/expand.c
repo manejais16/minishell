@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 11:34:03 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/17 17:56:36 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/18 08:47:32 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,50 +60,47 @@ int	expand_variables(t_main *main)
 	return (0);
 }
 
-/*If you want to do:
-Theoreticaly if the expantion fails because of malloc in
-subfunctions of perform_token_exp(e.g. expand_tilde_in_string->ft_strjoin)
-the perform_token_expansion and other functions that are over
-it don't recieve the signal that MALLOC has failed and
-will just conclude that there where no expandable vars.
-
-It is not neccessary to fix, because there are not a lot
-of students that are in 42 that know how to check it!*/
-int	perform_token_expansion(t_main *main, t_token *token, char **expanded_str)
-{
-	bool	var_expanded;
-	bool	tilde_expanded;
-
-	if (!expanded_str || !*expanded_str)
-		return (-1);
-	tilde_expanded = false;
-	if (token->quote_type == NONE && (*expanded_str)[0] == '~')
-		tilde_expanded = expand_tilde_in_string(main, expanded_str);
-	var_expanded = find_and_expand_vars(main, expanded_str);
-	free(token->str);
-	token->str = *expanded_str;
-	token->var_exists = var_expanded || tilde_expanded;
-	return (0);
-}
-
-bool	expand_tilde_in_string(t_main *main, char **str)
+int	expand_tilde_in_string(t_main *main, char **str)
 {
 	char	*home_value;
 	char	*new_str;
 
 	if (!str || !*str || (*str)[0] != '~')
-		return (false);
+		return (0);
 	home_value = get_env_value(main->envp, "HOME");
 	if (!home_value)
-		return (false);
+		return (0);
 	if ((*str)[1] == '\0' || (*str)[1] == '/')
 	{
 		new_str = ft_strjoin(home_value, (*str) + 1);
 		if (!new_str)
-			return (false);
+			return (-1);
 		free(*str);
 		*str = new_str;
-		return (true);
+		return (1);
 	}
-	return (false);
+	return (0);
+}
+
+int	perform_token_expansion(t_main *main, t_token *token, char **expanded_str)
+{
+	int		tilde_result;
+	bool	var_expanded;
+
+	if (!expanded_str || !*expanded_str)
+		return (-1);
+	tilde_result = 0;
+	if (token->quote_type == NONE && (*expanded_str)[0] == '~')
+	{
+		tilde_result = expand_tilde_in_string(main, expanded_str);
+		if (tilde_result == -1)
+			return (-1);
+	}
+	var_expanded = find_and_expand_vars(main, expanded_str);
+	if (!*expanded_str)
+		return (-1);
+	free(token->str);
+	token->str = *expanded_str;
+	token->var_exists = var_expanded || (tilde_result == 1);
+	return (0);
 }

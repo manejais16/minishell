@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/17 17:33:39 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/18 08:45:59 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ size_t				get_var_name_len(const char *str);
 char				*handle_exit_status(t_main *main);
 char				**tokens_list_to_array(t_token *first_token);
 int					count_tokens_in_list(t_token *first_token);
-bool				expand_tilde_in_string(t_main *main, char **str);
+int					expand_tilde_in_string(t_main *main, char **str);
 
 
 extern int					g_exit_status;
