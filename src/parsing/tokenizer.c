@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 08:58:43 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/17 17:27:22 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/18 14:16:13 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	reassign_meta_t(t_main *shell, t_token *token, t_token **start)
 {
 	t_token	*temp;
 	
-	if (add_meta_to_token(token, get_meta_type((*start)->str), (*start)->next) == -1)
+	if (add_meta_to_token(shell, token, get_meta_type((*start)->str), (*start)->next) == -1)
 		return (-1);
 	temp = (*start)->next->next;
 	if (shell->first_token == *start)

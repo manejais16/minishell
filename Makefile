@@ -29,6 +29,7 @@ SRC_FILES   =	main.c \
 				parsing/quote_seperation.c \
 				parsing/input_checking.c \
 				parsing/between_token_op.c \
+				parsing/expand_str.c \
 				execution/execute_command.c \
 				execution/path_resolver.c \
 				utils.c \
