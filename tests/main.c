@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 12:55:26 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/18 19:15:43 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/18 19:54:43 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ int	main(int argc, char **argv, char **envp)
 		/*This is printing all the input tokens*/
 		// current = shell.first_token;
 		
-		expand_variables(&shell);
 		print_all_tokens(&shell);
 		// tokens = tokens_list_to_array(shell.first_token);
 		// if (tokens)
