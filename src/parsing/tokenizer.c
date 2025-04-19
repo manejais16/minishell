@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 08:58:43 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/19 15:25:47 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/19 19:51:14 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,7 @@ int	tokenize_input(t_main *shell)
 		return (-1);
 	}
 	ask_for_heredock_inputs(shell);
+	expand_all_heredocs(shell);
 	expand_variables(shell);
 	return (0);
 }

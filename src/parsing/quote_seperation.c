@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 19:53:23 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/19 16:07:55 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/19 20:04:14 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	is_compound_extraction(t_main *shell, t_twopointer *temp)
 {
 	if (shell->user_input == (temp->p_fast - 1))
 		return (1);
-	if (*(temp->p_fast - 2) == ' ')
+	if (is_meta_char(*(temp->p_fast - 2)))
 		return (0);
 	return (1);
 }

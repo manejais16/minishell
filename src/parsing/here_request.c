@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:17:21 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/18 19:33:20 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/19 20:05:22 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,23 @@ int		ask_for_heredock_inputs(t_main *shell)
 			if (collect_heredoc_lines(iter, &input) == -1)
 				return (-1);
 		free(input);
-		if (expand_heredoc(shell, iter) == -1)
-			return (-1);
+		iter = iter->next;
+	}
+	return (0);
+}
+
+int	expand_all_heredocs(t_main	*shell)
+{
+	t_heredoc	*iter;
+	
+	iter = shell->p_here;
+	while (iter)
+	{
+		if (!iter->delimiter_quoted)
+		{
+			if (expand_heredoc(shell, iter) == -1)
+				return (-1);
+		}
 		iter = iter->next;
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:26:27 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/19 15:04:19 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/19 19:48:44 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ int		remove_token_from_chain(t_token *token);
 int	expand_string(t_main *shell, char **str);
 
 //here_request.c
-int	ask_for_heredock_inputs(t_main *shell);
+int		ask_for_heredock_inputs(t_main *shell);
 int		expand_heredoc(t_main *shell, t_heredoc *heredoc);
+int		expand_all_heredocs(t_main	*shell);
 
 #endif
