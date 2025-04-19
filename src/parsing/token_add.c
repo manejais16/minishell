@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:03:31 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/17 15:23:00 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/19 13:58:11 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@ void	initialize_token(t_token *token)
 	token->prev = NULL;
 	token->next = NULL;
 	token->meta = NULL;
+	token->is_compound_token = 0;
 }
 
-int	add_token_at_end(t_main *shell, char *str, int quote_type)
+int	add_token_at_end(t_main *shell, char *str, int quote_type, bool is_comp)
 {
 	t_token	*temp_stor;
 	t_token	*temp_iter;
@@ -35,6 +36,7 @@ int	add_token_at_end(t_main *shell, char *str, int quote_type)
 	initialize_token(temp_stor);
 	temp_stor->str = str;
 	temp_stor->quote_type = quote_type;
+	temp_stor->is_compound_token = is_comp;
 	temp_iter = shell->first_token;
 	shell->last_token = temp_stor;
 	if (temp_iter == NULL)

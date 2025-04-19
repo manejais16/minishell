@@ -6,18 +6,12 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 08:58:43 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/18 19:51:28 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/19 15:25:47 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
-
-/*Rewrite for our builtin struct*/
-// char	**tokenize_input(char *input)
-// {
-// 	return (ft_split(input, ' '));
-// }
 
 /*TODO: Implement error messages for all fundamental
 errors!*/
@@ -26,14 +20,20 @@ void	print_fundamental_error(int ret_val)
 	(void)ret_val;
 }
 
-// void	free_tokens(char **tokens)
-// {
-// 	int	i = 0;
+int extract_first_quote(t_main *shell, t_twopointer *temp)
+{
+	bool	is_compound;
 
-// 	while (tokens[i])
-// 		free(tokens[i++]);
-// 	free(tokens);
-// }
+	is_compound = 1;
+	if (temp->p_fast == temp->p_slow)
+		return (0);
+	if (add_token_at_end(shell, \
+		substr_dangeros(temp->p_slow, temp->p_fast - temp->p_slow), \
+		NONE, is_compound) == MALLOC_FAIL)
+		return (MALLOC_FAIL);
+	temp->p_slow = temp->p_fast;
+	return (0);
+}
 
 int	go_through_str(t_main *shell)
 {
@@ -54,10 +54,13 @@ int	go_through_str(t_main *shell)
 		}
 		else
 		{
-			return_val = extract_unquoted(shell, &temp, &return_val);
+			return_val = extract_unquoted(shell, &temp, in_quotes);
 			if (return_val < 0)
 				return (return_val);
 		}
+		return_val = extract_first_quote(shell, &temp);
+		if (return_val < 0)
+			return (return_val);
 	}
 	return (0);
 }
@@ -114,17 +117,6 @@ int	reassign_meta_t(t_main *shell, t_token *token, t_token **start)
 	remove_token_from_chain((*start)->next);
 	remove_token_from_chain(*start);
 	*start = temp;
-	return (0);
-}
-
-/*Function that only crates files*/
-/*The functino should return -1 if it fails!!!!!*/
-/*TODO: Create something that just opens the files 
-if there is not command between the pipes
-the token is temp token that is on stack!!*/
-int	only_create_files(t_token *token)
-{
-	(void)token;
 	return (0);
 }
 

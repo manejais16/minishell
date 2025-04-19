@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/18 18:01:48 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/19 13:05:40 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct s_token
 {
 	char			*str;
 	// int				type;
+	bool			is_compound_token;
 	int				quote_type;
 	bool			var_exists;
 	t_token			*prev;

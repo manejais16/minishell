@@ -6,23 +6,13 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 12:55:26 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/18 19:54:43 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/19 12:02:20 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.h"
 
 int	g_exit_status = 0;
-
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	(void)argc;
-// 	(void)argv;
-// 	(void)envp;
-
-// 	parsing_test();
-// 	return (0);
-// }
 
 void	print_all_tokens(t_main *shell)
 {

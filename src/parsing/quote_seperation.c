@@ -6,24 +6,51 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 19:53:23 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/10 20:00:25 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/19 15:22:11 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
+int	is_compound_extraction(t_main *shell, t_twopointer *temp)
+{
+	if (shell->user_input == (temp->p_fast - 1))
+		return (1);
+	if (*(temp->p_fast - 2) == ' ')
+		return (0);
+	return (1);
+}
+
+int	move_compound_token(t_twopointer *temp, int *in_quotes)
+{
+	while(*temp->p_fast &&\
+		(get_current_quotes(in_quotes) || !is_meta_char(*temp->p_fast)))
+	{
+		if (*temp->p_fast == get_current_quotes(in_quotes))
+		{
+			change_quote_state(in_quotes, *temp->p_fast);
+		}
+		temp->p_fast++;
+	}
+	if (!*temp->p_fast && get_current_quotes(in_quotes) != 0)
+	 	return (UNCLOSED_QUOTES);
+	return (0);
+}
+
 int	extract_quotes(t_main *shell, t_twopointer *temp, int *in_quotes)
 {
 	change_quote_state(in_quotes, *temp->p_fast);
-	temp->p_slow++;
 	temp->p_fast++;
+	if (is_compound_extraction(shell, temp))
+		return (move_compound_token(temp, in_quotes));
+	temp->p_slow++;
 	while (*temp->p_fast && *temp->p_fast != get_current_quotes(in_quotes))
 		temp->p_fast++;
 	if (*temp->p_fast)
 	{
 		if (add_token_at_end(shell, substr_dangeros(temp->p_slow, \
-			temp->p_fast - temp->p_slow), get_token_quote_type(in_quotes)) \
+			temp->p_fast - temp->p_slow), get_token_quote_type(in_quotes), 0) \
 			== MALLOC_FAIL)
 			return (MALLOC_FAIL);
 		change_quote_state(in_quotes, get_current_quotes(in_quotes));

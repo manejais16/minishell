@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:26:27 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/18 19:41:08 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/19 15:04:19 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ int		get_token_quote_type(int *in_quotes);
 
 //token_splitter.c
 int		extract_quotes(t_main *shell, t_twopointer *temp, int *in_quotes);
-int		extract_unquoted(t_main *shell, t_twopointer *temp, int *return_val);
+int		extract_unquoted(t_main *shell, t_twopointer *temp, int *in_quotes);
 
 //token_add.c
 void	initialize_token(t_token *token);
-int		add_token_at_end(t_main *shell, char *str, int quote_type);
+int		add_token_at_end(t_main *shell, char *str, int quote_type, bool comp);
 int		dup_empty_str_token(t_main *shell, t_token *current_token,\
 			t_token *token_to_add);
 

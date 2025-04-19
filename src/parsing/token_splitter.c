@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:33:12 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/11 09:47:05 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/19 15:24:33 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ static int	extract_meta_smaller(t_main *shell, t_twopointer *temp)
 	temp->p_fast++;
 	if (*temp->p_fast == '<')
 	{
-		if (add_token_at_end(shell, ft_strdup("<<"), NONE) == MALLOC_FAIL)
+		if (add_token_at_end(shell, ft_strdup("<<"), NONE, 0) == MALLOC_FAIL)
 			return (MALLOC_FAIL);
 		temp->p_fast++;
 	}
 	else
-		if (add_token_at_end(shell, ft_strdup("<"), NONE) == MALLOC_FAIL)
+		if (add_token_at_end(shell, ft_strdup("<"), NONE, 0) == MALLOC_FAIL)
 			return (MALLOC_FAIL);
 	temp->p_slow = temp->p_fast;
 	return (0);
@@ -34,12 +34,12 @@ static int	extract_meta_larger(t_main *shell, t_twopointer *temp)
 	temp->p_fast++;
 	if (*temp->p_fast == '>')
 	{
-		if (add_token_at_end(shell, ft_strdup(">>"), NONE) == MALLOC_FAIL)
+		if (add_token_at_end(shell, ft_strdup(">>"), NONE, 0) == MALLOC_FAIL)
 			return (MALLOC_FAIL);
 		temp->p_fast++;
 	}
 	else
-		if (add_token_at_end(shell, ft_strdup(">"), NONE) == MALLOC_FAIL)
+		if (add_token_at_end(shell, ft_strdup(">"), NONE, 0) == MALLOC_FAIL)
 			return (MALLOC_FAIL);
 	temp->p_slow = temp->p_fast;
 	return (0);
@@ -49,7 +49,7 @@ static int	extract_meta_token(t_main *shell, t_twopointer *temp)
 {
 	if (*temp->p_fast == '|')
 	{
-		if (add_token_at_end(shell, ft_strdup("|"), NONE) == MALLOC_FAIL)
+		if (add_token_at_end(shell, ft_strdup("|"), NONE, 0) == MALLOC_FAIL)
 			return (MALLOC_FAIL);
 		temp->p_fast++;
 		temp->p_slow = temp->p_fast;
@@ -61,8 +61,13 @@ static int	extract_meta_token(t_main *shell, t_twopointer *temp)
 	return (0);
 }
 
-static int	extract_token(t_main *shell, t_twopointer *temp)
+static int	extract_token(t_main *shell, t_twopointer *temp, int *in_quotes)
 {
+	bool	is_compound;
+	int		ret_val;
+
+	is_compound = 0;
+	ret_val = 0;
 	if (is_meta_char(*temp->p_fast) && *temp->p_fast != ' ')
 	{
 		if (extract_meta_token(shell, temp) == MALLOC_FAIL)
@@ -71,24 +76,33 @@ static int	extract_token(t_main *shell, t_twopointer *temp)
 	else if (*temp->p_fast != ' ')
 	{
 		while (*temp->p_fast != ' ' && *temp->p_fast && \
-			!is_quotes(*temp->p_fast) && !is_meta_char(*temp->p_fast))
-			temp->p_fast++;
+			!is_meta_char(*temp->p_fast))
+		{
+			if (is_quotes(*temp->p_fast))
+			{
+				is_compound = 1;
+				ret_val = extract_quotes(shell, temp, in_quotes);
+			}
+			else
+				temp->p_fast++;
+		}
 		if (add_token_at_end(shell, \
 			substr_dangeros(temp->p_slow, temp->p_fast - temp->p_slow), \
-			NONE) == MALLOC_FAIL)
+			NONE, is_compound) == MALLOC_FAIL)
 			return (MALLOC_FAIL);
 		temp->p_slow = temp->p_fast;
 	}
-	return (0);
+	return (ret_val);
 }
 
-int	extract_unquoted(t_main *shell, t_twopointer *temp, int *return_val)
+int	extract_unquoted(t_main *shell, t_twopointer *temp, int *is_quotes)
 {
+	int	ret_val;
 	if (*temp->p_fast != ' ')
 	{
-		*return_val = extract_token(shell, temp);
-		if (*return_val < 0)
-			return (*return_val);
+		ret_val = extract_token(shell, temp, is_quotes);
+		if (ret_val < 0)
+			return (ret_val);
 	}
 	else
 	{
