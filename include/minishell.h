@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/19 13:05:40 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/19 20:32:00 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,7 @@ char				**tokens_list_to_array(t_token *first_token);
 int					count_tokens_in_list(t_token *first_token);
 int					expand_tilde_in_string(t_main *main, char **str);
 int					free_user_input(t_main *shell);
+void				init_terminal_variables(t_main *shell);
 
 
 extern int					g_exit_status;

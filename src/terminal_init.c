@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 12:28:16 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/08 18:27:15 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/19 21:34:05 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <termios.h>
 
 static int		init_terminal_settings(void);
-static void		init_terminal_variables(t_main *shell);
+void			init_terminal_variables(t_main *shell);
 
 void	init_terminal(t_main *shell)
 {
@@ -35,7 +35,7 @@ static int		init_terminal_settings(void)
 	return (0);
 }
 
-static void		init_terminal_variables(t_main *shell)
+void		init_terminal_variables(t_main *shell)
 {
 	shell->envp = NULL;
 	shell->user_input = NULL;
