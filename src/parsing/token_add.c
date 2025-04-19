@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:03:31 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/19 13:58:11 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/19 19:16:20 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,28 +58,46 @@ int add_token_before(t_main *shell, t_token *token, t_token *new)
 		new->prev = shell->last_token;
 		shell->last_token = new;
 		if (!shell->first_token)
+		{
 			shell->first_token = new;
-		new->next = NULL;
+			return (0);
+		}
+		new->prev->next = new;
 		return (0);
 	}
 	if (shell->first_token == token)
 		shell->first_token = new;
 	new->prev = token->prev;
 	token->prev = new;
+	if (new->prev)
+		new->prev->next = new;
 	new->next = token;
 	return (0);
 }
 
-/*TODO: This should still be managed!*/
-// int	add_token_after(t_main *shell, t_token *token, t_token *new)
-// {
-// 	if (shell->last_token == token)
-// 		shell->last_token = new;
-// 	new->next = token->next;
-// 	token->next = new;
-// 	new->prev = token;
-// 	return (0);
-// }
+int	add_token_after(t_main *shell, t_token *token, t_token *new)
+{
+	if (!token)
+	{
+		new->prev = shell->last_token;
+		shell->last_token = new;
+		if (!shell->first_token)
+		{
+			shell->first_token = new;
+			return (0);
+		}
+		new->prev->next = new;
+		return (0);
+	}
+	if (shell->last_token == token)
+		shell->last_token = new;
+	new->next = token->next;
+	token->next = new;
+	new->prev = token;
+	if (new->next)
+		new->next->prev = new;
+	return (0);
+}
 
 int	dup_empty_str_token(t_main *shell, t_token *current_token,\
 		t_token *token_to_add)
