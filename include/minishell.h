@@ -6,7 +6,7 @@
 /*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/20 08:35:50 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/20 10:58:23 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,11 @@ int					setup_redirections(t_token *token, int *saved_stdin, int *saved_stdout);
 void				restore_std_fds(int saved_stdin, int saved_stdout);
 int					prepare_redirections(t_main *shell, t_token *token, int *saved_stdin, int *saved_stdout);
 int					execute_command_with_redirections(t_main *shell, t_token *token, char **tokens);
+void				print_redirection_error(char *filename, char *error_msg);
+t_heredoc 			*find_heredoc(t_main *shell, char *delimiter);
+int					write_heredoc_to_pipe(t_heredoc *heredoc, int *pipe_fd, t_main *shell);
+int					process_heredoc(t_main *shell, t_metachar *meta);
+
 
 extern int					g_exit_status;
 
