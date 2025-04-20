@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_resolver.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 10:35:31 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/01 13:15:24 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/20 13:09:48 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ char	**get_paths_from_env(char **envp)
 	return (NULL);
 }
 
+/*TODO: If tmp ft_strjoin fails it does not propogate
+the the message that the strjoin failed.
++ if the full_path str does not get created
+the free statement will try to free something 
+that does not exist.*/
 char	*try_paths(char **paths, char *command)
 {
 	int		i;
@@ -53,7 +58,7 @@ char	*resolve_path(char *command, char **envp)
 		return (ft_strdup(command));
 	paths = get_paths_from_env(envp);
 	if (!paths)
-		return (NULL);
+		return (NULL);	
 	full_path = try_paths(paths, command);
 	shell_free_split(paths);
 	return (full_path);

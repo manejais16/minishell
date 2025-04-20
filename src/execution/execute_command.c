@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:31:04 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/16 18:07:29 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/20 14:13:02 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@ void	exec_child(char *path, char **tokens, char **envp)
 	exit(127);
 }
 
+/*TODO: If the fork() does not create child process and
+return -1 we should also free all the shell internal memory, because
+exit() !exits the process!*/
+/*Technically it could be that the child process gets SIGSTOP
+and the waitpid() will return execution to the parent
+process. The child process will get asigned as an "orphan" 
+to the linux init process which will periodically execute
+wait sys call. Not pretty but it will work!*/
 void	execute_external(char **tokens, char **envp)
 {
 	pid_t	pid;

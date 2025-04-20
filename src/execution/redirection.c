@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:24:42 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/20 08:46:06 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/20 14:12:17 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	restore_std_fds(int saved_stdin, int saved_stdout)
 	close(saved_stdout);
 }
 
+/*TODO: Still have to add priority for redirections*/
 int	setup_redirections(t_token *token, int *saved_stdin, int *saved_stdout)
 {
 	t_metachar	*meta;
