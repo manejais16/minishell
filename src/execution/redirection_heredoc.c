@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 10:57:58 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/20 10:59:46 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/20 14:47:50 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,15 @@ t_heredoc	*find_heredoc(t_main *shell, char *delimiter)
 	}
 	return (NULL);
 }
-
+/*In an ideal implementation, the heredoc could be handled as a separate 
+child process,which would only receive one file descriptor. If an error
+occurs, it would only close the STDOUT_FILENO side of the process. 
+However, for simplicity, we can choose not to implement it this way.
+It's important to keep in mind that if more than 64KB of text is entered, 
+the process may become unresponsive. This is due to the blocking nature
+of the write syscall, which will wait for the other side to read. In 
+thisscenario, the pipe's read side could become full once the 64KB limit
+is reached.*/
 int	write_heredoc_to_pipe(t_heredoc *heredoc, int *pipe_fd, t_main *shell)
 {
 	if (heredoc->heredoc_input)
