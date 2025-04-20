@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 12:55:26 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/20 08:30:51 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/20 19:04:13 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	print_all_tokens(t_main *shell)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char	**tokens;
+	//char	**tokens;
 	t_main	shell;
 	//int		parsing_result;
 	//t_token	*current;
@@ -68,27 +68,28 @@ int	main(int argc, char **argv, char **envp)
 		add_history(shell.user_input);
 		if (tokenize_input(&shell) == -1)
 		{
-			printf("This is test message: Large error!!\n");
-			free(shell.user_input);
+			ft_printf("This is test message: Large error!!\n");
 			continue ;
 		}
+		print_all_tokens(&shell);
+		free_user_input(&shell);
 		/*This is printing all the input tokens*/
 		// current = shell.first_token;
 
-		tokens = tokens_list_to_array(shell.first_token);
-		if (shell.first_token)
-		{
-			if (execute_command_with_redirections(&shell, shell.first_token,
-					tokens) < 0)
-				printf("Error executing command with redirections\n");
-			shell_free_split(tokens);
-		}
-		// if (tokens)
+		// tokens = tokens_list_to_array(shell.first_token);
+		// if (shell.first_token)
 		// {
-		// 	execute_command(tokens, &shell);
+		// 	if (execute_command_with_redirections(&shell, shell.first_token,
+		// 			tokens) < 0)
+		// 		printf("Error executing command with redirections\n");
 		// 	shell_free_split(tokens);
 		// }
-		free_user_input(&shell);
+		// // if (tokens)
+		// // {
+		// // 	execute_command(tokens, &shell);
+		// // 	shell_free_split(tokens);
+		// // }
+		// free_user_input(&shell);
 	}
 	if (shell.working_dir)
 		free(shell.working_dir);

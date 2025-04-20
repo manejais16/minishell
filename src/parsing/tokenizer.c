@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 08:58:43 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/19 19:51:14 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/20 19:25:26 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,13 +186,13 @@ int	tokenize_input(t_main *shell)
 	ret_val = check_for_repeating_meta(shell);
 	if (ret_val != 0)
 		return (free_all_tokens(shell), -1);
-	ret_val = assign_all_redirections(shell);
+	ret_val = expand_compound_tokens(shell);
 	if (ret_val != 0)
-	{
-		free_all_tokens(shell);
-		/*TODO: If it fails there might be some malloc fail*/
-		return (-1);
-	}
+		return (free_all_tokens(shell), -1);
+	ret_val = assign_all_redirections(shell);
+	/*TODO: If it fails there might be some malloc fail*/
+	if (ret_val != 0)
+		return (free_all_tokens(shell), -1);
 	ask_for_heredock_inputs(shell);
 	expand_all_heredocs(shell);
 	expand_variables(shell);

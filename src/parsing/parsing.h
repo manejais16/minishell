@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:26:27 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/19 20:56:25 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/20 18:24:02 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int 	add_token_before(t_main *shell, t_token *token, t_token *new);
 int		free_all_tokens(t_main *shell);
 int		free_one_token(t_token *token);
 int		free_all_metachar(t_token *token);
+int		free_whole_shell(t_main *shell);
 
 //quote_seperation.c
 int		extract_quotes(t_main *shell, t_twopointer *temp, int *in_quotes);
@@ -80,5 +81,8 @@ int	expand_string(t_main *shell, char **str);
 int		ask_for_heredock_inputs(t_main *shell);
 int		expand_heredoc(t_main *shell, t_heredoc *heredoc);
 int		expand_all_heredocs(t_main	*shell);
+
+//segment_operations.c
+int		expand_compound_tokens(t_main *shell);
 
 #endif

@@ -6,49 +6,30 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 20:11:37 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/19 21:35:21 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/20 19:37:05 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-
-/*TODO: Everything in this file will have to get reconected*/
 static int	extract_segment(t_main *shell, t_twopointer *temp)
 {
-	if (is_meta_char(*temp->p_fast) && *temp->p_fast != ' ')
-	{
-		if (extract_meta_token(shell, temp) == MALLOC_FAIL)
-			return (MALLOC_FAIL);
-	}
-	else if (*temp->p_fast != ' ')
-	{
-		while (*temp->p_fast != ' ' && *temp->p_fast && \
-			!is_quotes(*temp->p_fast) && !is_meta_char(*temp->p_fast))
+		while (*temp->p_fast && !is_quotes(*temp->p_fast))
 			temp->p_fast++;
 		if (add_token_at_end(shell, \
 			substr_dangeros(temp->p_slow, temp->p_fast - temp->p_slow), \
 			NONE, 0) == MALLOC_FAIL)
 			return (MALLOC_FAIL);
 		temp->p_slow = temp->p_fast;
-	}
 	return (0);
 }
 
 int	extract_unquoted_segment(t_main *shell, t_twopointer *temp, int *return_val)
 {
-	if (*temp->p_fast != ' ')
-	{
 		*return_val = extract_segment(shell, temp);
 		if (*return_val < 0)
 			return (*return_val);
-	}
-	else
-	{
-		temp->p_fast++;
-		temp->p_slow = temp->p_fast;
-	}
 	return (0);
 }
 
@@ -94,7 +75,7 @@ int	expand_all_segments(t_main *real_shell, t_main *temp_shell)
 	
 	temp = temp_shell->first_token;
 	/*TODO: return value should be checked!!!!*/
-	expand_variables_in_token(temp_shell, temp);
+	expand_variables_in_token(real_shell, temp);
 	temp = temp->next;
 	while(temp)
 	{
@@ -108,25 +89,37 @@ int	expand_all_segments(t_main *real_shell, t_main *temp_shell)
 			}
 			return (-1);
 		}
-		find_and_expand_vars(real_shell, expanded_str);
+		find_and_expand_vars(real_shell, &expanded_str);
 		if (!expanded_str)
-		return (-1);
+			return (-1);
 		free(temp->str);
 		temp->str = expanded_str;
 		temp = temp->next;
 	}
-}
-
-/*TODO: Combine everything in one token*/
-int	combine_in_one_token(t_token *token, t_main	*temp_shell)
-{
-	(void)token;
-	(void)temp_shell;
 	return (0);
 }
 
-/*TODO: rewrite*/
-/*Have to check if the segment before was not heredoc*/
+int	combine_in_one_token(t_token *token, t_main	*temp_shell)
+{
+	char	*result;
+	t_token	*walker;
+
+	walker = temp_shell->first_token;
+	free(token->str);
+	token->str = NULL;
+	while (walker)
+	{
+		token->str = ft_strjoin(result, walker->str);
+		if (!token->str)
+			return (free(result), MALLOC_FAIL);
+		result = token->str;
+		walker = walker->next;
+	}
+	token->quote_type = SINGLE;
+	token->is_compound_token = 0;
+	return (0);
+}
+
 int	go_through_segment(t_main *shell, t_token *token)
 {
 	t_main			temp_shell;
@@ -145,21 +138,38 @@ int	go_through_segment(t_main *shell, t_token *token)
 		{
 			return_val = extract_quote_segment(&temp_shell, &temp, in_quotes);
 			if (return_val < 0)
-				return (return_val);
+				return (free_all_tokens(&temp_shell), return_val);
 		}
 		else
 		{
 			return_val = extract_unquoted_segment(&temp_shell, &temp, &return_val);
 			if (return_val < 0)
-				return (return_val);
+				return (free_all_tokens(&temp_shell), return_val);
 		}
 	}
 	if (!is_heredoc_token(token->prev))
-	{
 		expand_all_segments(shell, &temp_shell);
-	}
 	if (combine_in_one_token(token, &temp_shell) == MALLOC_FAIL)
 		return (free_all_tokens(&temp_shell), MALLOC_FAIL);
 	free_all_tokens(&temp_shell);
+	return (0);
+}
+
+int	expand_compound_tokens(t_main *shell)
+{
+	t_token	*iter;
+
+	iter = shell->first_token;
+	while (iter)
+	{
+		if (iter->is_compound_token)
+		{
+			if (go_through_segment(shell, iter) != 0)
+			{
+				return (-1);
+			}
+		}
+		iter = iter->next;
+	}
 	return (0);
 }
