@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 12:55:26 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/19 12:02:20 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/20 08:30:51 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	print_all_tokens(t_main *shell)
 
 int	main(int argc, char **argv, char **envp)
 {
-	//char	**tokens;
+	char	**tokens;
 	t_main	shell;
 	//int		parsing_result;
 	//t_token	*current;
@@ -74,9 +74,15 @@ int	main(int argc, char **argv, char **envp)
 		}
 		/*This is printing all the input tokens*/
 		// current = shell.first_token;
-		
-		print_all_tokens(&shell);
-		// tokens = tokens_list_to_array(shell.first_token);
+
+		tokens = tokens_list_to_array(shell.first_token);
+		if (shell.first_token)
+		{
+			if (execute_command_with_redirections(&shell, shell.first_token,
+					tokens) < 0)
+				printf("Error executing command with redirections\n");
+			shell_free_split(tokens);
+		}
 		// if (tokens)
 		// {
 		// 	execute_command(tokens, &shell);

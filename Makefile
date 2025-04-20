@@ -48,6 +48,9 @@ SRC_FILES   =	main.c \
 				parsing/expand.c \
 				parsing/expand_utils.c \
 				parsing/expand_utils2.c \
+				execution/redirection.c \
+				execution/redirection_utils.c \
+				execution/redirection_utils2.c \
 
 
 SRCS        = $(addprefix $(SRC_DIR)/, $(SRC_FILES))

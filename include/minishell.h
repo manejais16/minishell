@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/19 20:32:00 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/20 08:35:50 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,16 @@ int					count_tokens_in_list(t_token *first_token);
 int					expand_tilde_in_string(t_main *main, char **str);
 int					free_user_input(t_main *shell);
 void				init_terminal_variables(t_main *shell);
-
+int					open_output_file(t_metachar *meta, t_main *shell);
+int					open_input_file(t_metachar *meta, t_main *shell);
+int					process_redirections(t_main *shell, t_token *token);
+int					setup_single_redirection(t_metachar *meta);
+void				close_redirections(t_token *token);
+int					handle_empty_command_with_redirections(t_main *shell, t_token *token);
+int					setup_redirections(t_token *token, int *saved_stdin, int *saved_stdout);
+void				restore_std_fds(int saved_stdin, int saved_stdout);
+int					prepare_redirections(t_main *shell, t_token *token, int *saved_stdin, int *saved_stdout);
+int					execute_command_with_redirections(t_main *shell, t_token *token, char **tokens);
 
 extern int					g_exit_status;
 
