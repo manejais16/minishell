@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:21:39 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/21 14:17:07 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/21 18:34:18 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	setup_child_pipes(t_command_table *table, int cmd_index)
 	{
 		if (dup2(table->pipe_fds[cmd_index - 1][0], STDIN_FILENO) == -1)
 		{
-			perror("dup2");
+			/*perror("dup2");*/
 			return (1);
 		}
 	}
@@ -104,7 +104,7 @@ int	setup_child_pipes(t_command_table *table, int cmd_index)
 	{
 		if (dup2(table->pipe_fds[cmd_index][1], STDOUT_FILENO) == -1)
 		{
-			perror("dup2");
+			/*perror("dup2");*/
 			return (1);
 		}
 	}
@@ -119,7 +119,7 @@ int	execute_piped_command(char **cmd_args, t_main *shell, int cmd_index,
 	pid = fork();
 	if (pid == -1)
 	{
-		perror("fork");
+		/*perror("fork");*/
 		return (-1);
 	}
 	if (pid == 0)

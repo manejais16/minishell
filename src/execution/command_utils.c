@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:17 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/21 10:58:23 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/21 18:35:42 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	handle_command_not_found(char **tokens, t_token *token_with_meta)
 {
-	ft_printf("Command not found: %s\n", tokens[0]);
+	/*ft_printf("Command not found: %s\n", tokens[0]);*/
+	(void)tokens;
 	g_exit_status = 127;
 	close_redirections(token_with_meta);
 }

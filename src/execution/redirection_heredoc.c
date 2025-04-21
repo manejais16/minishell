@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 10:57:58 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/20 14:47:50 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/21 18:34:36 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	write_heredoc_to_pipe(t_heredoc *heredoc, int *pipe_fd, t_main *shell)
 		if (write(pipe_fd[1], heredoc->heredoc_input,
 				ft_strlen(heredoc->heredoc_input)) == -1)
 		{
-			perror("minishell: write");
+			/*perror("minishell: write");*/
 			close(pipe_fd[0]);
 			close(pipe_fd[1]);
 			shell->return_value = 1;
@@ -90,7 +90,7 @@ int	process_heredoc(t_main *shell, t_metachar *meta)
 	}
 	if (pipe(pipe_fd) == -1)
 	{
-		perror("minishell: pipe");
+		/*perror("minishell: pipe");*/
 		shell->return_value = 1;
 		return (-1);
 	}
