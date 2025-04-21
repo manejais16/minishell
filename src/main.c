@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 10:37:48 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/21 17:17:04 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/21 20:43:40 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	init_terminal(&shell);
 	shell.envp = copy_envp(envp);
-	shell.return_value = 42;
+	shell.return_value = 0;
 	while (1)
 	{
 		setup_signals();

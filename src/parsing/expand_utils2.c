@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:04:34 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/16 18:28:34 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/21 20:57:59 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char	*get_expanded_value(t_main *main, const char *str, size_t *var_name_len)
 
 	if (str[1] == '?')
 	{
+		*var_name_len = 1;
 		return (handle_exit_status(main));
 	}
 	var_name = extract_var_name(str + 1);
