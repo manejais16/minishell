@@ -6,7 +6,7 @@
 /*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/20 10:58:23 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/21 11:16:06 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,11 @@ void				print_redirection_error(char *filename, char *error_msg);
 t_heredoc 			*find_heredoc(t_main *shell, char *delimiter);
 int					write_heredoc_to_pipe(t_heredoc *heredoc, int *pipe_fd, t_main *shell);
 int					process_heredoc(t_main *shell, t_metachar *meta);
-
+t_token				*find_token_with_meta(t_token *first_token, char *cmd_name);
+void				setup_and_exec_child(char *path, char **tokens, t_main *shell, t_token *token_with_meta);
+void				cleanup_and_wait(char *path, t_token *token_with_meta, pid_t pid);
+void				execute_external(char **tokens, t_main *shell, t_token *token_with_meta);
+void				handle_command_not_found(char **tokens, t_token *token_with_meta);
 
 extern int					g_exit_status;
 

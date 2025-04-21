@@ -52,6 +52,7 @@ SRC_FILES   =	main.c \
 				execution/redirection.c \
 				execution/redirection_utils.c \
 				execution/redirection_heredoc.c \
+				execution/command_utils.c \
 
 
 SRCS        = $(addprefix $(SRC_DIR)/, $(SRC_FILES))

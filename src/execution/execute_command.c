@@ -3,42 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:31:04 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/20 14:13:02 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/21 11:17:11 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exec_child(char *path, char **tokens, char **envp)
+void	execute_command(char **tokens, t_main *shell)
 {
-	execve(path, tokens, envp);
-	perror("minishell");
-	free(path);
-	exit(127);
+	t_token	*token_with_meta;
+	int		saved_stdin;
+	int		saved_stdout;
+
+	if (!tokens || !*tokens)
+		return ;
+	token_with_meta = find_token_with_meta(shell->first_token, tokens[0]);
+	if (is_builtin(tokens[0]))
+	{
+		if (prepare_redirections(shell, token_with_meta, &saved_stdin,
+				&saved_stdout) < 0)
+		{
+			shell->return_value = 1;
+			return ;
+		}
+		g_exit_status = execute_builtin(tokens, shell);
+		close_redirections(token_with_meta);
+		restore_std_fds(saved_stdin, saved_stdout);
+		return ;
+	}
+	execute_external(tokens, shell, token_with_meta);
 }
 
-/*TODO: If the fork() does not create child process and
-return -1 we should also free all the shell internal memory, because
-exit() !exits the process!*/
-/*Technically it could be that the child process gets SIGSTOP
-and the waitpid() will return execution to the parent
-process. The child process will get asigned as an "orphan" 
-to the linux init process which will periodically execute
-wait sys call. Not pretty but it will work!*/
-void	execute_external(char **tokens, char **envp)
+t_token	*find_token_with_meta(t_token *first_token, char *cmd_name)
+{
+	t_token	*current;
+
+	current = first_token;
+	while (current)
+	{
+		if (current->str && ft_strcmp(current->str, cmd_name) == 0)
+			return (current);
+		current = current->next;
+	}
+	return (NULL);
+}
+
+void	execute_external(char **tokens, t_main *shell, t_token *token_with_meta)
 {
 	pid_t	pid;
-	int		status;
 	char	*path;
 
-	path = resolve_path(tokens[0], envp);
+	path = resolve_path(tokens[0], shell->envp);
 	if (!path)
 	{
-		ft_printf("Command not found: %s\n", tokens[0]);
-		g_exit_status = 127;
+		handle_command_not_found(tokens, token_with_meta);
 		return ;
 	}
 	pid = fork();
@@ -46,67 +67,44 @@ void	execute_external(char **tokens, char **envp)
 	{
 		perror("fork");
 		free(path);
-		exit(EXIT_FAILURE);
+		close_redirections(token_with_meta);
+		shell_free_split(tokens);
+		return ;
 	}
 	if (pid == 0)
-		exec_child(path, tokens, envp);
+		setup_and_exec_child(path, tokens, shell, token_with_meta);
+	cleanup_and_wait(path, token_with_meta, pid);
+}
+
+void	setup_and_exec_child(char *path, char **tokens, t_main *shell,
+		t_token *token_with_meta)
+{
+	int	saved_stdin;
+	int	saved_stdout;
+
+	if (process_redirections(shell, token_with_meta) < 0
+		|| setup_redirections(token_with_meta, &saved_stdin, &saved_stdout) < 0)
+	{
+		free(path);
+		close_redirections(token_with_meta);
+		shell_free_split(tokens);
+		exit(1);
+	}
+	execve(path, tokens, shell->envp);
+	perror("minishell");
 	free(path);
+	close_redirections(token_with_meta);
+	shell_free_split(tokens);
+	exit(127);
+}
+
+void	cleanup_and_wait(char *path, t_token *token_with_meta, pid_t pid)
+{
+	int	status;
+
+	free(path);
+	close_redirections(token_with_meta);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		g_exit_status = WEXITSTATUS(status);
-}
-
-void execute_command(char **tokens, t_main *shell)
-{
-	if (!tokens || !*tokens)
-		return;
-	if (is_builtin(tokens[0]))
-	{
-		g_exit_status = execute_builtin(tokens, shell);
-		return;
-	}
-	execute_external(tokens, shell->envp);
-}
-
-int	count_tokens_in_list(t_token *first_token)
-{
-	int		count;
-	t_token	*current;
-
-	count = 0;
-	current = first_token;
-	while (current)
-	{
-		count++;
-		current = current->next;
-	}
-	return (count);
-}
-
-char	**tokens_list_to_array(t_token *first_token)
-{
-	char	**tokens_array;
-	int		count;
-	t_token	*current;
-	int		i;
-
-	count = count_tokens_in_list(first_token);
-	tokens_array = (char **)malloc(sizeof(char *) * (count + 1));
-	if (!tokens_array)
-		return (NULL);
-	i = 0;
-	current = first_token;
-	while (current)
-	{
-		tokens_array[i] = ft_strdup(current->str);
-		if (!tokens_array[i])
-		{
-			shell_free_split(tokens_array);
-			return (NULL);
-		}
-		i++;
-		current = current->next;
-	}
-	tokens_array[i] = NULL;
-	return (tokens_array);
 }
