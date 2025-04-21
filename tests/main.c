@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 12:55:26 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/21 14:05:33 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/21 17:16:31 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "tests.h"
-
+/* The code is depracted, just use regular make expression!!!
+The test suite is binded to the main function
 int		g_exit_status = 0;
 
 void	print_all_tokens(t_main *shell)
@@ -58,6 +59,16 @@ int	main(int argc, char **argv, char **envp)
 	{
 		setup_signals();
 		shell.user_input = readline("minishell> ");
+
+		if (isatty(fileno(stdin)))
+			shell.user_input = readline(shell->terminal_prompt);
+		else
+		{
+			char *line;
+			line = get_next_line(fileno(stdin));
+			shell.user_input = ft_strtrim(line, "\n");
+			free(line);
+		}
 		if (!shell.user_input)
 		{
 			ft_printf("exit\n");
@@ -121,3 +132,4 @@ int	main(int argc, char **argv, char **envp)
 	free_all_tokens(&shell);
 	return (g_exit_status);
 }
+*/
