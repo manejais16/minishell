@@ -6,7 +6,7 @@
 /*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/21 11:16:06 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/21 14:23:30 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,13 @@ typedef struct s_metachar
 // 	CMD,
 // 	META
 // };
+
+typedef struct s_command_table
+{
+	char		***commands;
+	int			num_commands;
+	int			(*pipe_fds)[2];
+}   t_command_table;
 
 typedef struct s_token
 {
@@ -188,6 +195,28 @@ void				setup_and_exec_child(char *path, char **tokens, t_main *shell, t_token *
 void				cleanup_and_wait(char *path, t_token *token_with_meta, pid_t pid);
 void				execute_external(char **tokens, t_main *shell, t_token *token_with_meta);
 void				handle_command_not_found(char **tokens, t_token *token_with_meta);
+
+
+int					is_pipe_token(t_token *token);
+int					count_commands(t_token *token_list);
+int					allocate_pipe_memory(t_command_table *table);
+int					create_pipes(t_command_table *table);
+void				close_all_pipes(t_command_table *table);
+int					setup_child_pipes(t_command_table *table, int cmd_index);
+int					execute_piped_command(char **cmd_args, t_main *shell, int cmd_index, t_command_table *table);
+int					wait_for_all_children(pid_t *pids, int count);
+int					count_args_until_pipe(t_token *start);
+char				**create_args_array(t_token *start, int arg_count);
+int					process_single_command(char ***cmds, int cmd_index, t_token **current, int *remaining_commands);
+void				cleanup_parsed_commands(char ***cmds, int cmd_index);
+char				***parse_commands_for_pipe(t_token *token_list, int num_commands);
+t_command_table		*init_command_table(t_token *token_list);
+void				free_command_arrays(t_command_table *table);
+void				free_command_table(t_command_table *table);
+int					execute_single_command_case(t_command_table *table, t_main *shell);
+int					execute_piped_commands_case(t_command_table *table, t_main *shell, pid_t *pids);
+int					execute_command_table(t_command_table *table, t_main *shell);
+int					process_pipeline(t_main *shell);
 
 extern int					g_exit_status;
 
