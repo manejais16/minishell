@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/22 12:34:21 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/22 18:32:42 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,9 +157,9 @@ int					update_pwd_vars(t_main *shell, char *old_pwd);
 int					check_for_repeating_meta(t_main *shell);
 char				*expand_tilde_in_path(char *path, t_main *shell);
 int					expand_variables(t_main *main);
-int					expand_variables_in_token(t_main *main, t_token *token);
+int					expand_variables_in_token(t_main *main, t_token **token);
 int					expand_variables(t_main *main);
-int					perform_token_expansion(t_main *main, t_token *token, char **expanded_str);
+int					perform_token_expansion(t_main *main, t_token **token, char **expanded_str);
 bool				find_and_expand_vars(t_main *main, char **expanded_str);
 bool				expand_var_in_string(t_main *main, char **expanded_str, size_t *i);
 char				*init_token_expansion(t_token *token);

@@ -6,14 +6,14 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 19:44:17 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/18 14:47:36 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/22 18:23:49 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-int	remove_token_from_chain(t_token *token)
+int	remove_token_from_chain(t_main *shell, t_token *token)
 {
 	if (token->prev)
 	{
@@ -23,6 +23,15 @@ int	remove_token_from_chain(t_token *token)
 	}
 	else if (token->next)
 		token->next->prev = NULL;
+	if (shell->first_token == token && shell->last_token == token)
+	{
+		shell->first_token = NULL;
+		shell->last_token = NULL;
+	}
+	if (!token->next)
+	shell->last_token = token->prev;
+	if (!token->prev)
+	shell->first_token = token->next;
 	free_one_token(token);
 	return (0);
 }

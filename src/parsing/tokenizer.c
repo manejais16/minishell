@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 08:58:43 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/20 19:25:26 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/22 19:22:34 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,8 @@ int	reassign_meta_t(t_main *shell, t_token *token, t_token **start)
 	if (get_meta_type((*start)->str) == D_SMALLER)
 		if (add_heredoc(shell, (*start)->next) != 0)
 			return (-1);
-	remove_token_from_chain((*start)->next);
-	remove_token_from_chain(*start);
+	remove_token_from_chain(shell, (*start)->next);
+	remove_token_from_chain(shell, *start);
 	*start = temp;
 	return (0);
 }

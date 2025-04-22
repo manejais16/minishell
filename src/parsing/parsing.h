@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:26:27 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/20 18:24:02 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/22 16:56:28 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		extract_quotes(t_main *shell, t_twopointer *temp, int *in_quotes);
 //between_token_op.c
 t_type	get_meta_type(char *token);
 int		add_meta_to_token(t_main *shell, t_token *main_token, t_type meta_type, t_token *pseudo_t);
-int		remove_token_from_chain(t_token *token);
+int		remove_token_from_chain(t_main *shell, t_token *token);
 
 //expand_str.c
 int	expand_string(t_main *shell, char **str);

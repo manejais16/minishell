@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 20:11:37 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/22 11:39:54 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/22 20:09:12 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int	expand_all_segments(t_main *real_shell, t_main *temp_shell)
 	
 	temp = temp_shell->first_token;
 	/*TODO: return value should be checked!!!!*/
-	expand_variables_in_token(real_shell, temp);
+	expand_variables_in_token(real_shell, &temp);
 	temp = temp->next;
 	while(temp)
 	{
@@ -126,7 +126,14 @@ int	combine_in_one_token(t_token *token, t_main	*temp_shell)
 	return (0);
 }
 
-int	go_through_segment(t_main *shell, t_token *token)
+// int	replace_token(t_main *shell, t_main *temp_shell, t_token **token)
+// {
+// 	/*I am here!!!!!!!!!!!!!!!!!!!!!!!!*/
+// 	free (*token);
+// 	*token = temp_shell->last_token;
+// }
+
+int	go_through_segment(t_main *shell, t_token **token)
 {
 	t_main			temp_shell;
 	t_twopointer	temp;
@@ -134,7 +141,7 @@ int	go_through_segment(t_main *shell, t_token *token)
 	int				return_val;
 
 	init_terminal_variables(&temp_shell);
-	temp_shell.user_input = token->str;
+	temp_shell.user_input = (*token)->str;
 	temp.p_fast = temp_shell.user_input;
 	temp.p_slow = temp.p_fast;
 	ft_memset(in_quotes, 0, sizeof(int) * 2);
@@ -153,10 +160,17 @@ int	go_through_segment(t_main *shell, t_token *token)
 				return (free_all_tokens(&temp_shell), return_val);
 		}
 	}
-	if (!is_heredoc_token(token->prev))
+	if (!is_heredoc_token((*token)->prev))
+	{
+		/*This is only if there is no heredoc before!!!*/
 		expand_all_segments(shell, &temp_shell);
-	if (combine_in_one_token(token, &temp_shell) == MALLOC_FAIL)
-		return (free_all_tokens(&temp_shell), MALLOC_FAIL);
+		//replace_token(shell, &temp_shell, token);
+	}
+	else
+	{
+		if (combine_in_one_token((*token), &temp_shell) == MALLOC_FAIL)
+			return (free_all_tokens(&temp_shell), MALLOC_FAIL);
+	}
 	free_all_tokens(&temp_shell);
 	return (0);
 }
@@ -170,7 +184,7 @@ int	expand_compound_tokens(t_main *shell)
 	{
 		if (iter->is_compound_token)
 		{
-			if (go_through_segment(shell, iter) != 0)
+			if (go_through_segment(shell, &iter) != 0)
 			{
 				return (-1);
 			}
