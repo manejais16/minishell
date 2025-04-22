@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 20:11:37 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/20 19:37:05 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/22 11:39:54 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,12 @@ int	combine_in_one_token(t_token *token, t_main	*temp_shell)
 	token->str = NULL;
 	while (walker)
 	{
+		if (ft_strcmp("$", walker->str) == 0 && walker->next && \
+			!is_heredoc_token(token->prev))
+		{
+			walker = walker->next;
+			continue ;
+		}
 		token->str = ft_strjoin(result, walker->str);
 		if (!token->str)
 			return (free(result), MALLOC_FAIL);

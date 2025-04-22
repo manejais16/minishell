@@ -6,17 +6,24 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:04:34 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/21 20:57:59 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/22 10:31:58 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_expanded_value(t_main *main, const char *str, size_t *var_name_len)
+char	*handle_just_dollar(void);
+
+char	*get_expanded_value(t_main *main, const char *str, size_t *var_name_len/*, size_t *pos*/)
 {
 	char	*var_name;
 	char	*var_value;
 
+	if (str[1] == '\0')
+	{
+		*var_name_len = 1;
+		return (handle_just_dollar());
+	}
 	if (str[1] == '?')
 	{
 		*var_name_len = 1;
@@ -45,6 +52,14 @@ char	*handle_exit_status(t_main *main)
 	char	*exit_status;
 
 	exit_status = ft_itoa(main->return_value);
+	return (exit_status);
+}
+
+char	*handle_just_dollar(void)
+{
+	char	*exit_status;
+
+	exit_status = ft_strdup("$");
 	return (exit_status);
 }
 

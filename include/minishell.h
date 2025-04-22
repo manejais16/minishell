@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/21 14:23:30 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/22 10:32:17 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,11 +162,12 @@ int					expand_variables_in_token(t_main *main, t_token *token);
 int					expand_variables(t_main *main);
 int					perform_token_expansion(t_main *main, t_token *token, char **expanded_str);
 bool				find_and_expand_vars(t_main *main, char **expanded_str);
-bool				expand_var_in_string(t_main *main, char **expanded_str, size_t i);
+bool				expand_var_in_string(t_main *main, char **expanded_str, size_t *i);
 char				*init_token_expansion(t_token *token);
-char				*expand_var_at_pos(t_main *main, const char *str, size_t pos);
+char				*expand_var_at_pos(t_main *main, const char *str, size_t *pos);
 int					extract_string_parts(const char *str, size_t pos, size_t var_name_len, char **parts);
-char				*get_expanded_value(t_main *main, const char *str, size_t *var_name_len);
+//char				*get_expanded_value(t_main *main, const char *str, size_t *var_name_len);
+char				*get_expanded_value(t_main *main, const char *str, size_t *var_name_len/*, size_t *pos*/);
 char				*ft_strjoin3(char const *s1, char const *s2, char const *s3);
 char				*extract_var_name(const char *str);
 size_t				get_var_name_len(const char *str);

@@ -6,14 +6,12 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:02:22 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/16 21:00:20 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/22 11:42:41 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*TODO: Remove a endless loop when a=$b and b=$a.
-I think there should not be second expansion*/
 bool	find_and_expand_vars(t_main *main, char **expanded_str)
 {
 	size_t	i;
@@ -25,7 +23,7 @@ bool	find_and_expand_vars(t_main *main, char **expanded_str)
 	{
 		if ((*expanded_str)[i] == '$')
 		{
-			if (expand_var_in_string(main, expanded_str, i))
+			if (expand_var_in_string(main, expanded_str, &i))
 			{
 				var_expanded = true;
 				continue ;
@@ -36,11 +34,11 @@ bool	find_and_expand_vars(t_main *main, char **expanded_str)
 	return (var_expanded);
 }
 
-bool	expand_var_in_string(t_main *main, char **expanded_str, size_t i)
+bool	expand_var_in_string(t_main *main, char **expanded_str, size_t *i)
 {
 	char	*temp;
 
-	if (!expanded_str || !*expanded_str || (*expanded_str)[i] != '$')
+	if (!expanded_str || !*expanded_str || (*expanded_str)[*i] != '$')
 		return (false);
 	temp = expand_var_at_pos(main, *expanded_str, i);
 	if (!temp)
@@ -50,19 +48,19 @@ bool	expand_var_in_string(t_main *main, char **expanded_str, size_t i)
 	return (true);
 }
 
-char	*expand_var_at_pos(t_main *main, const char *str, size_t pos)
+char	*expand_var_at_pos(t_main *main, const char *str, size_t *pos)
 {
 	char	*result;
 	char	*var_value;
 	size_t	var_name_len;
 	char	*parts[2];
 
-	if (!str || pos >= ft_strlen(str) || str[pos] != '$')
+	if (!str || *pos >= ft_strlen(str) || str[*pos] != '$')
 		return (ft_strdup(str));
-	var_value = get_expanded_value(main, str + pos, &var_name_len);
+	var_value = get_expanded_value(main, str + *pos, &var_name_len);
 	if (!var_value)
 		return (ft_strdup(str));
-	if (extract_string_parts(str, pos, var_name_len, parts) < 0)
+	if (extract_string_parts(str, *pos, var_name_len, parts) < 0)
 	{
 		free(var_value);
 		return (ft_strdup(str));
@@ -71,6 +69,7 @@ char	*expand_var_at_pos(t_main *main, const char *str, size_t pos)
 	free(parts[0]);
 	free(parts[1]);
 	free(var_value);
+	*pos += ft_strlen(var_value);
 	return (result);
 }
 
