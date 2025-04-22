@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:17 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/22 12:04:01 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/22 15:06:55 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	handle_command_not_found(char **tokens, t_token *token_with_meta)
 {
 	ft_putstr_fd("bash: ", 2);
 	ft_putstr_fd(tokens[0], 2);
-	ft_putstr_fd(" : command not found", 2);
+	ft_putstr_fd(" : command not found\n", 2);
 	(void)tokens;
 	g_exit_status = 127;
 	close_redirections(token_with_meta);

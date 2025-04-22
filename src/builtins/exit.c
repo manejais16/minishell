@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 15:32:20 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/22 14:50:15 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/22 14:59:04 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	ft_exit(char **tokens, t_main *shell)
 		exit_code = 0;
 	else if (!is_numeric(tokens[1]))
 	{
+		shell->return_value = 255;
 		ft_putstr_fd("bash: exit: ", 2);
 		ft_putstr_fd(tokens[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
@@ -29,6 +30,9 @@ int	ft_exit(char **tokens, t_main *shell)
 	}
 	else if (tokens[2])
 	{
+		ft_putstr_fd("bash: exit: too many arguments\n", 2);
+		shell->return_value = 1;
+		exit_code = 1;
 		//ft_printf("minishell: exit: too many arguments\n");
 		return (1);
 	}
