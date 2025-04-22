@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 09:04:13 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/07 22:11:06 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/22 14:22:16 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,9 @@ int	ft_unset(char **tokens, t_main *shell)
 		}
 		else
 		{
-			ft_printf("minishell: unset: `%s': not a valid identifier\n",
-				tokens[i]);
+			ft_putstr_fd("bash: unset: ", 2);
+			ft_putstr_fd(tokens[i], 2);
+			ft_putstr_fd(": not a valid identifier\n", 2);
 			status = 1;
 		}
 		i++;

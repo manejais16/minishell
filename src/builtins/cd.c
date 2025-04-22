@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:19:47 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/16 10:48:34 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/22 14:05:56 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,9 @@ static char	*get_cd_target(char **tokens, t_main *shell)
 	return (target);
 }
 
-static int	handle_cd_error(char *target, char *old_pwd, char *error_msg)
+static int	handle_cd_error(t_main *shell, char *target, char *old_pwd, char *error_msg)
 {
+	shell->return_value = 1;
 	if (error_msg)
 		perror(error_msg);
 	if (target)
@@ -84,11 +85,11 @@ int	ft_cd(char **tokens, t_main *shell)
 		return (1);
 	old_pwd = getcwd(NULL, 0);
 	if (old_pwd == NULL)
-		return (handle_cd_error(target, NULL, "cd"));
+		return (handle_cd_error(shell, target, NULL, "cd"));
 	if (chdir(target) != 0)
-		return (handle_cd_error(target, old_pwd, "cd"));
+		return (handle_cd_error(shell, target, old_pwd, "cd"));
 	if (update_pwd_vars(shell, old_pwd) != 0)
-		return (handle_cd_error(target, old_pwd, NULL));
+		return (handle_cd_error(shell, target, old_pwd, NULL));
 	free(target);
 	free(old_pwd);
 	return (0);
