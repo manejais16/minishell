@@ -3,37 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:24:42 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/20 14:12:17 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/22 21:51:31 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int	process_single_redirection(t_main *shell, t_metachar *meta)
+{
+	int	result;
+
+	if (meta->type == LARGER || meta->type == D_LARGER)
+	{
+		result = open_output_file(meta, shell);
+		if (result < 0)
+			return (-1);
+	}
+	else if (meta->type == SMALLER)
+	{
+		result = open_input_file(meta, shell);
+		if (result < 0)
+			return (-1);
+	}
+	else if (meta->type == 4)
+	{
+		result = process_heredoc(shell, meta);
+		if (result < 0)
+			return (-1);
+	}
+	return (0);
+}
+
 int	process_redirections(t_main *shell, t_token *token)
 {
 	t_metachar	*meta;
-	int			result;
 
 	if (!token || !token->meta)
 		return (0);
 	meta = token->meta;
 	while (meta)
 	{
-		if (meta->type == LARGER || meta->type == D_LARGER)
-		{
-			result = open_output_file(meta, shell);
-			if (result < 0)
-				return (-1);
-		}
-		else if (meta->type == SMALLER)
-		{
-			result = open_input_file(meta, shell);
-			if (result < 0)
-				return (-1);
-		}
+		if (process_single_redirection(shell, meta) < 0)
+			return (-1);
 		meta = meta->next;
 	}
 	return (0);

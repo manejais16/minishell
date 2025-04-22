@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_heredoc.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/20 10:57:58 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/21 18:34:36 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/22 21:47:33 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,15 +46,16 @@ t_heredoc	*find_heredoc(t_main *shell, char *delimiter)
 	}
 	return (NULL);
 }
-/*In an ideal implementation, the heredoc could be handled as a separate 
+/*In an ideal implementation, the heredoc could be handled as a separate
 child process,which would only receive one file descriptor. If an error
-occurs, it would only close the STDOUT_FILENO side of the process. 
+occurs, it would only close the STDOUT_FILENO side of the process.
 However, for simplicity, we can choose not to implement it this way.
-It's important to keep in mind that if more than 64KB of text is entered, 
+It's important to keep in mind that if more than 64KB of text is entered,
 the process may become unresponsive. This is due to the blocking nature
-of the write syscall, which will wait for the other side to read. In 
+of the write syscall, which will wait for the other side to read. In
 thisscenario, the pipe's read side could become full once the 64KB limit
 is reached.*/
+
 int	write_heredoc_to_pipe(t_heredoc *heredoc, int *pipe_fd, t_main *shell)
 {
 	if (heredoc->heredoc_input)
@@ -74,6 +75,28 @@ int	write_heredoc_to_pipe(t_heredoc *heredoc, int *pipe_fd, t_main *shell)
 	return (0);
 }
 
+static int	setup_heredoc_pipe(t_main *shell, t_heredoc *heredoc, int *pipe_fd)
+{
+	if (pipe(pipe_fd) == -1)
+	{
+		/*perror("minishell: pipe");*/
+		shell->return_value = 1;
+		return (-1);
+	}
+	if (heredoc->heredoc_input)
+	{
+		if (write(pipe_fd[1], heredoc->heredoc_input,
+				ft_strlen(heredoc->heredoc_input)) == -1)
+		{
+			close(pipe_fd[0]);
+			close(pipe_fd[1]);
+			return (-1);
+		}
+	}
+	close(pipe_fd[1]);
+	return (0);
+}
+
 int	process_heredoc(t_main *shell, t_metachar *meta)
 {
 	t_heredoc	*heredoc;
@@ -88,14 +111,11 @@ int	process_heredoc(t_main *shell, t_metachar *meta)
 		shell->return_value = 1;
 		return (-1);
 	}
-	if (pipe(pipe_fd) == -1)
+	if (setup_heredoc_pipe(shell, heredoc, pipe_fd) == -1)
 	{
-		/*perror("minishell: pipe");*/
 		shell->return_value = 1;
 		return (-1);
 	}
-	if (write_heredoc_to_pipe(heredoc, pipe_fd, shell) == -1)
-		return (-1);
 	meta->fd = pipe_fd[0];
 	return (0);
 }
