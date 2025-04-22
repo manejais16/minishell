@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:04:34 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/22 10:31:58 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/22 12:26:40 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 char	*handle_just_dollar(void);
 
-char	*get_expanded_value(t_main *main, const char *str, size_t *var_name_len/*, size_t *pos*/)
+char	*get_expanded_value(t_main *main, const char *str, size_t *var_name_len)
 {
 	char	*var_name;
 	char	*var_value;
 
-	if (str[1] == '\0')
+	if (str[1] == '\0' || str[1] == ' ')
 	{
-		*var_name_len = 1;
+		*var_name_len = 0;
 		return (handle_just_dollar());
 	}
 	if (str[1] == '?')

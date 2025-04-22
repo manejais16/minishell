@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/22 10:32:17 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/22 12:34:21 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ void				setup_signals(void);
 void				handle_sigint(int sig);
 void				handle_sigquit(int sig);
 void				init_terminal(t_main *shell);
-// char				**tokenize_input(char *input);
 int					tokenize_input(t_main *shell);
 void				free_tokens(char **tokens);
 void				execute_command(char **tokens, t_main *shell);
@@ -166,8 +165,7 @@ bool				expand_var_in_string(t_main *main, char **expanded_str, size_t *i);
 char				*init_token_expansion(t_token *token);
 char				*expand_var_at_pos(t_main *main, const char *str, size_t *pos);
 int					extract_string_parts(const char *str, size_t pos, size_t var_name_len, char **parts);
-//char				*get_expanded_value(t_main *main, const char *str, size_t *var_name_len);
-char				*get_expanded_value(t_main *main, const char *str, size_t *var_name_len/*, size_t *pos*/);
+char				*get_expanded_value(t_main *main, const char *str, size_t *var_name_len);
 char				*ft_strjoin3(char const *s1, char const *s2, char const *s3);
 char				*extract_var_name(const char *str);
 size_t				get_var_name_len(const char *str);
