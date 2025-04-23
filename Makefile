@@ -68,7 +68,7 @@ TEST_OBJS	= $(TEST_SRCS:.c=.o)
 	@echo "\033[1;32m✔ Compiled: $<\033[0m"
 
 $(NAME): libft ftprintf gnl $(OBJS)
-	@$(CC) $(OBJS) $(LIBRARIES) -o $(NAME) > /dev/null
+	@$(CC) -g $(OBJS) $(LIBRARIES) -o $(NAME) > /dev/null
 
 ftprintf:
 	@make -C $(PRINTF_PATH)

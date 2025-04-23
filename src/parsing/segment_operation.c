@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 20:11:37 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/22 11:39:54 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/23 22:40:41 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	expand_all_segments(t_main *real_shell, t_main *temp_shell)
 	return (0);
 }
 
-int	combine_in_one_token(t_token *token, t_main	*temp_shell)
+int	combine_in_one_token_meta(t_token *token, t_main *temp_shell)
 {
 	char	*result;
 	t_token	*walker;
@@ -123,6 +123,121 @@ int	combine_in_one_token(t_token *token, t_main	*temp_shell)
 	}
 	token->quote_type = SINGLE;
 	token->is_compound_token = 0;
+	return (0);
+}
+
+int	add_one_char(char **input, char to_add)
+{
+	char	*result;
+	int		len;
+
+	len = ft_strlen(*input);
+	result = malloc(len + 2);
+	if (!result)
+		return (MALLOC_FAIL);
+	result = ft_strcpy(result, *input);
+	result[len] = to_add;
+	result[len + 1] = 0;
+	free (*input);
+	*input = result;
+	return (0);
+}
+
+int	add_result_to_chain(t_token **chain, char *result)
+{
+	t_token	*link;
+	t_token	*iter;
+
+	link = malloc(sizeof(t_token));
+	if (!link)
+		return (-1);
+	initialize_token(link);
+	link->quote_type = SINGLE;
+	link->str = result;
+	if (!*chain)
+	{
+		*chain = link;
+		return (0);
+	}
+	iter = *chain;
+	while (iter->next)
+		iter = iter->next;
+	link->prev = iter;
+	iter->next = link;
+	return (0);
+}
+
+int replace_token_with_chain(t_token *token, t_token *chain)
+{
+	t_token	*temp;
+	t_token	*iter;
+	
+	iter = chain;
+	free(token->str);
+	token->str = chain->str;
+	temp = token->next;
+	token->next = chain->next;
+	while (iter->next)
+		iter = iter->next;
+	if (temp)
+		temp->prev = iter;
+	iter->next = temp;
+	return (0);
+}
+
+int	combine_in_one_token_regular(t_token *token, t_main *temp_shell)
+{
+	t_token	*walker;
+	t_token	*token_chain;
+	char	*result;
+	char	*temp;
+	int		walker_internal;
+	
+	walker = temp_shell->first_token;
+	result = NULL;
+	token_chain = NULL;
+	while (walker)
+	{
+		if (walker->quote_type != NONE)
+		{
+			temp = ft_strjoin(result, walker->str);
+			if (!temp)
+			{
+				if (result)
+					free(result);
+				return (-1);
+			}
+			result = temp;
+		}
+		else
+		{
+			walker_internal = 0;
+			while (*(walker->str + walker_internal))
+			{
+				while (*(walker->str + walker_internal) != ' ' && *(walker->str + walker_internal) != '\0')
+				{
+					if (add_one_char(&result, *(walker->str + walker_internal)) != 0)
+						return (MALLOC_FAIL);
+					walker_internal++;
+				}
+				if (*(walker->str + walker_internal) == '\0')
+					break ;
+				if (*(walker->str + walker_internal) == ' ' && result)
+				{
+					/*If the addresult fails it should free the token_chain!!!*/
+					add_result_to_chain(&token_chain, result);
+					result = NULL;
+				}
+				walker_internal++;
+			}
+		}
+		walker = walker->next;
+	}
+	if (result)
+		add_result_to_chain(&token_chain, result);
+	/*Replace the token with the token chain!!!*/
+	replace_token_with_chain(token, token_chain);
+	/*There could be case when the token chain is empty*/
 	return (0);
 }
 
@@ -154,9 +269,16 @@ int	go_through_segment(t_main *shell, t_token *token)
 		}
 	}
 	if (!is_heredoc_token(token->prev))
+	{
 		expand_all_segments(shell, &temp_shell);
-	if (combine_in_one_token(token, &temp_shell) == MALLOC_FAIL)
-		return (free_all_tokens(&temp_shell), MALLOC_FAIL);
+		if (combine_in_one_token_regular(token, &temp_shell) == MALLOC_FAIL)
+			return (free_all_tokens(&temp_shell), MALLOC_FAIL);
+	}
+	else
+	{
+		if (combine_in_one_token_meta(token, &temp_shell) == MALLOC_FAIL)
+			return (free_all_tokens(&temp_shell), MALLOC_FAIL);
+	}
 	free_all_tokens(&temp_shell);
 	return (0);
 }

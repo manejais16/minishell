@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 10:37:48 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/23 15:46:40 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/23 21:51:40 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,49 @@
 // Your global exit status (ONLY global allowed)
 int	g_exit_status = 0;
 
+#include <stdio.h>
+#include "./parsing/parsing.h"
+
+char *get_type(t_type type)
+{
+	if (type == LARGER)
+		return (">");
+	else if (type == SMALLER)
+		return ("<");
+	else if (type == D_LARGER)
+		return (">>");
+	else if (type == D_SMALLER)
+		return ("<<");
+	return (NO_MATCH);
+}
+
+void	print_all_tokens(t_main *shell)
+{
+	t_token		*temp;
+	t_metachar	*meta_temp;
+	t_heredoc	*here_temp;
+
+	temp = shell->first_token;
+	here_temp = shell->p_here;
+	while (temp)
+	{
+		printf(":%s:\n", temp->str);
+		meta_temp = temp->meta;
+		while (meta_temp)
+		{
+			printf("Meta type: %-8s File name: %s\n", get_type(meta_temp->type),
+				meta_temp->file_name);
+			meta_temp = meta_temp->next;
+		}
+		temp = temp->next;
+	}
+	while (here_temp)
+	{
+		ft_printf("\nThe '%s' here:\n%s", here_temp->delimiter,
+			here_temp->heredoc_input);
+		here_temp = here_temp->next;
+	}
+}
 // /*TO DO: Shorten main function to 25 lines*/
 // int	main(int argc, char **argv, char **envp)
 // {
@@ -65,7 +108,7 @@ int	g_exit_status = 0;
 /*TODO: remove the test functionality and add the error messages!*/
 int	main(int argc, char **argv, char **envp)
 {
-	char	**tokens;
+	//char	**tokens;
 	t_main	shell;
 	t_token	*current;
 	int		has_pipe;
@@ -104,16 +147,18 @@ int	main(int argc, char **argv, char **envp)
 			continue ;
 		has_pipe = 0;
 		current = shell.first_token;
+		/*TEST cases*/
+		print_all_tokens(&shell);
+		/*
 		while (current)
 		{
-			if (is_pipe_token(current))
-			{
+				if (is_pipe_token(current))
+				{
 				has_pipe = 1;
 				break ;
 			}
 			current = current->next;
 		}
-		// print_all_tokens(&shell);
 		if (has_pipe)
 		{
 			shell.return_value = process_pipeline(&shell);
@@ -140,6 +185,8 @@ int	main(int argc, char **argv, char **envp)
 				shell_free_split(tokens);
 			}
 		}
+			*/
+		/*End of programm*/
 		free_user_input(&shell);
 	}
 	if (shell.working_dir)

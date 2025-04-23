@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 19:26:27 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/23 17:58:43 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/23 22:22:09 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,8 @@ int		expand_all_heredocs(t_main	*shell);
 //segment_operations.c
 int		expand_compound_tokens(t_main *shell);
 int		is_heredoc_token(t_token *token);
+
+/*FOR tests!!!*/
+void	print_all_tokens(t_main *shell);
 
 #endif
