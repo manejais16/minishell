@@ -6,11 +6,12 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 11:34:03 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/19 21:26:37 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/23 17:57:54 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parsing.h"
 
 char	*init_token_expansion(t_token *token)
 {
@@ -54,9 +55,13 @@ int	expand_variables(t_main *main)
 	current = main->first_token;
 	while (current)
 	{
-		ret = expand_variables_in_token(main, current);
-		if (ret < 0)
-			return (-1);
+		/*I am here!!!!!!!*/
+		if (!is_heredoc_token(current->prev))
+		{
+			ret = expand_variables_in_token(main, current);
+			if (ret < 0)
+				return (-1);
+		}
 		current = current->next;
 	}
 	return (0);

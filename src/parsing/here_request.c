@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_request.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:17:21 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/22 21:55:55 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/23 17:29:02 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	ask_for_heredock_inputs(t_main *shell)
 	iter = shell->p_here;
 	while (iter)
 	{
-		input = readline(">");
+		input = readline("> ");
 		if (!input)
 			return (-1);
 		if (ft_strcmp(input, iter->delimiter) == 0)
