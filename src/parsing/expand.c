@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 11:34:03 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/23 17:57:54 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/23 18:03:56 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ int	expand_variables(t_main *main)
 	current = main->first_token;
 	while (current)
 	{
-		/*I am here!!!!!!!*/
 		if (!is_heredoc_token(current->prev))
 		{
 			ret = expand_variables_in_token(main, current);

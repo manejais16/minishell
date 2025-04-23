@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:21:39 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/23 15:59:38 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/23 17:31:29 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	is_pipe_token(t_token *token)
 {
 	if (!token || !token->str)
 		return (0);
-	if (ft_strcmp(token->str, "|") == 0)
+	if (ft_strcmp(token->str, "|") == 0 && token->quote_type == NONE)
 		return (1);
 	return (0);
 }

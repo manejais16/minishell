@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 08:58:43 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/20 19:25:26 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/23 18:15:49 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,8 @@ int	assign_redirections_to_token(t_main *shell, t_token **current_t)
 	initialize_token(&temp);
 	while (*(*current_t)->str != '|')
 	{
-		if (is_meta_char(*(*current_t)->str) && *(*current_t)->str != ' ')
+		if (is_meta_char(*(*current_t)->str) && *(*current_t)->str != ' ' &&\
+			(*current_t)->quote_type == NONE)
 		{
 			if (reassign_meta_t(shell, &temp, &(*current_t)) == -1)
 				return (-1);
