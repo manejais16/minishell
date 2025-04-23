@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 10:37:48 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/21 20:43:40 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/23 15:46:40 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,7 @@ int	main(int argc, char **argv, char **envp)
 		}
 		add_history(shell.user_input);
 		if (tokenize_input(&shell) == -1)
-		{
-			ft_printf("This is test message: Large error!!\n");
 			continue ;
-		}
 		has_pipe = 0;
 		current = shell.first_token;
 		while (current)

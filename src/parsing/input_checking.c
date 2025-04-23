@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 19:25:31 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/21 18:35:22 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/23 15:44:39 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 #include "parsing.h"
 
 /*TODO: USE AFTER TESTS!!!*/
-// static void	print_tokenisation_error(char *str)
-// {
-// 	ft_printf("minishell: syntax error near unexpected token `%s'\n", str);
-// }
+static void	print_tokenisation_error(t_main *shell, char *str)
+{
+	ft_putstr_fd("bash: syntax error near unexpected token `", STDERR_FILENO);
+	ft_putstr_fd(str, STDERR_FILENO);
+	ft_putstr_fd("'\n", STDERR_FILENO);
+	shell->return_value = 2;
+	g_exit_status = 2;
+}
 
 int	is_metachar_combination_legal(t_token *first, t_token *second)
 {
@@ -36,17 +40,17 @@ int	check_for_repeating_meta(t_main *shell)
 
 	temp = shell->first_token;
 	if (*temp->str == '|' && temp->quote_type == NONE)
-		return (/*print_tokenisation_error("|"),*/ -1);
+		return (print_tokenisation_error(shell, "|"), -1);
 	while (temp)
 	{
 		nextp = temp->next;
 		if (nextp)
 		{
 			if (!is_metachar_combination_legal(temp, nextp))
-				return (/*print_tokenisation_error(nextp->str),*/ -1);
+				return (print_tokenisation_error(shell, nextp->str), -1);
 		}
 		else if (is_meta_char(*temp->str) && temp->quote_type == NONE)
-			return (/*print_tokenisation_error("newline"),*/ -1);
+			return (print_tokenisation_error(shell, "newline"), -1);
 		temp = nextp;
 	}
 	return (0);

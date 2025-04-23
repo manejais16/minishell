@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 10:35:31 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/20 13:09:48 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/23 15:31:36 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ char	*try_paths(char **paths, char *command)
 		free(full_path);
 		i++;
 	}
+	ft_putstr_fd("bash:", STDERR_FILENO);
+	ft_putstr_fd(command, STDERR_FILENO);
+	ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 	return (NULL);
 }
 

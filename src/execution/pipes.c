@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:21:39 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/21 18:34:18 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/23 15:59:38 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ int	execute_piped_command(char **cmd_args, t_main *shell, int cmd_index,
 			exit(execute_builtin(cmd_args, shell));
 		else
 			execute_command(cmd_args, shell);
-		exit(127);
+		exit(0);
 	}
 	return (pid);
 }

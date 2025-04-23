@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:19:47 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/22 14:05:56 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/23 16:15:14 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,11 +75,6 @@ int	ft_cd(char **tokens, t_main *shell)
 	arg_count = 0;
 	while (tokens[arg_count])
 		arg_count++;
-	if (arg_count > 2)
-	{
-		ft_printf("minishell: cd: too many arguments\n");
-		return (1);
-	}
 	target = get_cd_target(tokens, shell);
 	if (target == NULL)
 		return (1);
