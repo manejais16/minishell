@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 10:37:48 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/23 21:51:40 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/24 17:09:01 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	print_all_tokens(t_main *shell)
 /*TODO: remove the test functionality and add the error messages!*/
 int	main(int argc, char **argv, char **envp)
 {
-	//char	**tokens;
+	char	**tokens;
 	t_main	shell;
 	t_token	*current;
 	int		has_pipe;
@@ -148,8 +148,7 @@ int	main(int argc, char **argv, char **envp)
 		has_pipe = 0;
 		current = shell.first_token;
 		/*TEST cases*/
-		print_all_tokens(&shell);
-		/*
+		//print_all_tokens(&shell);
 		while (current)
 		{
 				if (is_pipe_token(current))
@@ -169,23 +168,24 @@ int	main(int argc, char **argv, char **envp)
 			tokens = tokens_list_to_array(shell.first_token);
 			if (tokens)
 			{
-				if (shell.first_token)
-				{
-					if (execute_command_with_redirections(&shell,
-							shell.first_token, tokens) < 0)
-					{
-						printf("Error executing command with redirections\n");
-						execute_command(tokens, &shell);
-					}
-				}
-				else
-				{
+				//if (shell.first_token)
+				//{
+					//execute_command_with_redirections(&shell,
+					//		shell.first_token, tokens);
+					// if (execute_command_with_redirections(&shell,
+					// 		shell.first_token, tokens) < 0)
+					// {
+						//printf("Error executing command with redirections\n");
+						//execute_command(tokens, &shell);
+					// }
+				// }
+				// else
+				// {
 					execute_command(tokens, &shell);
-				}
+				//}
 				shell_free_split(tokens);
 			}
 		}
-			*/
 		/*End of programm*/
 		free_user_input(&shell);
 	}

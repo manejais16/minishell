@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 20:11:37 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/24 13:44:01 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/24 17:14:30 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,14 +174,29 @@ int replace_token_with_chain(t_token *token, t_token *chain)
 	
 	iter = chain;
 	free(token->str);
-	token->str = chain->str;
-	temp = token->next;
-	token->next = chain->next;
-	while (iter->next)
-		iter = iter->next;
-	if (temp)
-		temp->prev = iter;
-	iter->next = temp;
+	token->quote_type = SINGLE;
+	token->str = NULL;
+	if (chain)
+	{
+		token->str = chain->str;
+		temp = token->next;
+		while (iter->next)
+			iter = iter->next;
+		if (temp)
+			temp->prev = iter;
+		iter->next = temp;
+		if (chain->next)
+		{
+			/*Still in deveopment!!!!!!!*/
+			token->next = chain->next;
+		}
+	}
+	else
+	{
+		token->str = ft_strdup("");
+		if (!token->str)
+			return (MALLOC_FAIL);
+	}
 	return (0);
 }
 
