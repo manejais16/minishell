@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 20:11:37 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/23 22:40:41 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/24 13:44:01 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static int	extract_segment(t_main *shell, t_twopointer *temp)
 {
-		while (*temp->p_fast && !is_quotes(*temp->p_fast))
+		while (*temp->p_fast && !is_quotes(*temp->p_fast) && (*temp->p_fast != '$' || *temp->p_fast == *temp->p_slow))
 			temp->p_fast++;
 		if (add_token_at_end(shell, \
 			substr_dangeros(temp->p_slow, temp->p_fast - temp->p_slow), \

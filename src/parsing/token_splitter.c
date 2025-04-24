@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:33:12 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/19 15:24:33 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/24 13:55:46 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ static int	extract_token(t_main *shell, t_twopointer *temp, int *in_quotes)
 		while (*temp->p_fast != ' ' && *temp->p_fast && \
 			!is_meta_char(*temp->p_fast))
 		{
+			if (*temp->p_fast == '$' /*&& temp->p_fast != temp->p_slow*/)
+				is_compound = 1;
 			if (is_quotes(*temp->p_fast))
 			{
 				is_compound = 1;
