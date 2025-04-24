@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   path_resolver.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 10:35:31 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/23 15:31:36 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/24 11:10:57 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 char	**get_paths_from_env(char **envp)
 {
@@ -24,11 +23,6 @@ char	**get_paths_from_env(char **envp)
 	return (NULL);
 }
 
-/*TODO: If tmp ft_strjoin fails it does not propogate
-the the message that the strjoin failed.
-+ if the full_path str does not get created
-the free statement will try to free something 
-that does not exist.*/
 char	*try_paths(char **paths, char *command)
 {
 	int		i;
@@ -39,8 +33,12 @@ char	*try_paths(char **paths, char *command)
 	while (paths[i])
 	{
 		tmp = ft_strjoin(paths[i], "/");
+		if (!tmp)
+			return (NULL);
 		full_path = ft_strjoin(tmp, command);
 		free(tmp);
+		if (!full_path)
+			return (NULL);
 		if (access(full_path, X_OK) == 0)
 			return (full_path);
 		free(full_path);
@@ -61,10 +59,8 @@ char	*resolve_path(char *command, char **envp)
 		return (ft_strdup(command));
 	paths = get_paths_from_env(envp);
 	if (!paths)
-		return (NULL);	
+		return (NULL);
 	full_path = try_paths(paths, command);
 	shell_free_split(paths);
 	return (full_path);
 }
-
-
