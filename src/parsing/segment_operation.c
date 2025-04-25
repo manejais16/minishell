@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 20:11:37 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/25 20:28:41 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/25 20:34:09 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,11 +197,12 @@ int replace_token_with_chain(t_token *token, t_token *chain)
 		while (iter->next)
 			iter = iter->next;
 		if (temp && chain->next)
+		{
 			temp->prev = iter;
 			iter->next = temp;
+		}
 		if (chain->next)
 		{
-			/*Still in deveopment!!!!!!!*/
 			token->next = chain->next;
 			token->next->prev = token;
 		}
