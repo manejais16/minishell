@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_request.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:17:21 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/25 10:38:01 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/25 16:35:56 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	collect_heredoc_lines(t_heredoc *iter, char **input)
 	free(iter->heredoc_input);
 	iter->heredoc_input = temp;
 	free(*input);
-	*input = readline(">");
+	*input = readline("> ");
 	if (!*input)
 		return (-1);
 	return (0);

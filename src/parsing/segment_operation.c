@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 20:11:37 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/25 15:45:34 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/25 16:50:48 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	is_heredoc_token(t_token *token)
 	if (!token->str)
 		return (0);
 	temp = token->str;
-	if (*temp == '>' && *(temp + 1) == '>' && token->quote_type == NONE)
+	if (*temp == '<' && *(temp + 1) == '<' && token->quote_type == NONE)
 		return (1);
 	return (0);
 }
@@ -75,7 +75,7 @@ int	expand_all_segments(t_main *real_shell, t_main *temp_shell)
 	
 	temp = temp_shell->first_token;
 	/*TODO: return value should be checked!!!!*/
-	if (ft_strcmp(temp->str, "$") == 0 && temp->next)
+	if (ft_strcmp(temp->str, "$") == 0 && temp->next && temp->quote_type == NONE)
 	{
 		expanded_str = strdup("");
 		if (!expanded_str)
