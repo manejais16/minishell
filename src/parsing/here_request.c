@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_request.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:17:21 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/23 17:29:02 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/25 10:38:01 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ int	collect_heredoc_lines(t_heredoc *iter, char **input)
 
 int	expand_heredoc(t_main *shell, t_heredoc *heredoc)
 {
+	if (!heredoc || !heredoc->heredoc_input)
+		return (-1);
 	if (!heredoc->delimiter_quoted)
 		if (expand_string(shell, &heredoc->heredoc_input) == -1)
 			return (-1);
@@ -95,10 +97,12 @@ int	expand_all_heredocs(t_main *shell)
 {
 	t_heredoc	*iter;
 
+	if (!shell || !shell->p_here)
+		return (0);
 	iter = shell->p_here;
 	while (iter)
 	{
-		if (!iter->delimiter_quoted)
+		if (!iter->delimiter_quoted && iter->heredoc_input)
 		{
 			if (expand_heredoc(shell, iter) == -1)
 				return (-1);

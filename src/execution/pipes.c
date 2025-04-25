@@ -6,7 +6,7 @@
 /*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:21:39 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/24 10:31:35 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/25 10:17:10 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,12 @@ int	process_pipeline(t_main *shell)
 
 	if (!shell || !shell->first_token)
 		return (1);
+	shell->is_child_running = 1;
 	table = init_command_table(shell->first_token);
 	if (!table)
 		return (1);
 	result = execute_command_table(table, shell);
+	shell->is_child_running = 0;
 	free_command_table(table);
 	return (result);
 }

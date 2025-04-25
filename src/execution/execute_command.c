@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:31:04 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/21 18:33:57 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/25 10:23:14 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	execute_external(char **tokens, t_main *shell, t_token *token_with_meta)
 		handle_command_not_found(tokens, token_with_meta);
 		return ;
 	}
+	shell->is_child_running = 1;
 	pid = fork();
 	if (pid == -1)
 	{
@@ -69,11 +70,13 @@ void	execute_external(char **tokens, t_main *shell, t_token *token_with_meta)
 		free(path);
 		close_redirections(token_with_meta);
 		shell_free_split(tokens);
+		shell->is_child_running = 0;
 		return ;
 	}
 	if (pid == 0)
 		setup_and_exec_child(path, tokens, shell, token_with_meta);
 	cleanup_and_wait(path, token_with_meta, pid);
+	shell->is_child_running = 0;
 }
 
 void	setup_and_exec_child(char *path, char **tokens, t_main *shell,
