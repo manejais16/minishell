@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 17:33:12 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/24 13:55:46 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/24 21:18:45 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,14 @@ static int	extract_token(t_main *shell, t_twopointer *temp, int *in_quotes)
 
 	is_compound = 0;
 	ret_val = 0;
-	if (is_meta_char(*temp->p_fast) && *temp->p_fast != ' ')
+	if (is_meta_char(*temp->p_fast) && !is_space_or_tab(*temp->p_fast))
 	{
 		if (extract_meta_token(shell, temp) == MALLOC_FAIL)
 			return (MALLOC_FAIL);
 	}
-	else if (*temp->p_fast != ' ')
+	else if (!is_space_or_tab(*temp->p_fast))
 	{
-		while (*temp->p_fast != ' ' && *temp->p_fast && \
+		while (!is_space_or_tab(*temp->p_fast) && *temp->p_fast && \
 			!is_meta_char(*temp->p_fast))
 		{
 			if (*temp->p_fast == '$' /*&& temp->p_fast != temp->p_slow*/)
@@ -100,7 +100,7 @@ static int	extract_token(t_main *shell, t_twopointer *temp, int *in_quotes)
 int	extract_unquoted(t_main *shell, t_twopointer *temp, int *is_quotes)
 {
 	int	ret_val;
-	if (*temp->p_fast != ' ')
+	if (!is_space_or_tab(*temp->p_fast))
 	{
 		ret_val = extract_token(shell, temp, is_quotes);
 		if (ret_val < 0)

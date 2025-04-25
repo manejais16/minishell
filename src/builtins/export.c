@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/08 10:34:11 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/23 17:01:31 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/24 22:33:44 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	handle_export_with_value(char *arg, char *equal_sign, t_main *shell)
 		*equal_sign = '=';
 		ft_putstr_fd("bash: export: `", STDERR_FILENO);
 		ft_putstr_fd(arg, STDERR_FILENO);
-		ft_putstr_fd("': not a valid identifier", STDERR_FILENO);
+		ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 		return (1);
 	}
 }

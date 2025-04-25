@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 20:11:37 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/24 17:14:30 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/24 21:19:58 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ int	combine_in_one_token_regular(t_token *token, t_main *temp_shell)
 			walker_internal = 0;
 			while (*(walker->str + walker_internal))
 			{
-				while (*(walker->str + walker_internal) != ' ' && *(walker->str + walker_internal) != '\0')
+				while (!is_space_or_tab(*(walker->str + walker_internal)) && *(walker->str + walker_internal) != '\0')
 				{
 					if (add_one_char(&result, *(walker->str + walker_internal)) != 0)
 						return (MALLOC_FAIL);
@@ -237,7 +237,7 @@ int	combine_in_one_token_regular(t_token *token, t_main *temp_shell)
 				}
 				if (*(walker->str + walker_internal) == '\0')
 					break ;
-				if (*(walker->str + walker_internal) == ' ' && result)
+				if (is_space_or_tab(*(walker->str + walker_internal)) && result)
 				{
 					/*If the addresult fails it should free the token_chain!!!*/
 					add_result_to_chain(&token_chain, result);

@@ -6,11 +6,12 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:04:34 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/22 12:26:40 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/24 21:21:25 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "parsing.h"
 
 char	*handle_just_dollar(void);
 
@@ -19,7 +20,7 @@ char	*get_expanded_value(t_main *main, const char *str, size_t *var_name_len)
 	char	*var_name;
 	char	*var_value;
 
-	if (str[1] == '\0' || str[1] == ' ')
+	if (str[1] == '\0' || is_space_or_tab(str[1]))
 	{
 		*var_name_len = 0;
 		return (handle_just_dollar());

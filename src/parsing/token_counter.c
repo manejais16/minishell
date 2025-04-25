@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 06:30:44 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/10 20:06:00 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/24 21:18:30 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	go_through_str2(const char **s, int *in_quotes, int *count)
 {
 	if (is_quotes(**s) && !is_in_quotes(in_quotes))
 		count_quotes(s, in_quotes, count);
-	else if (is_meta_char(**s) && **s != ' ')
+	else if (is_meta_char(**s) && !is_space_or_tab(**s))
 	{
 		(*count)++;
 		(*s)++;
@@ -45,7 +45,7 @@ static int	go_through_str2(const char **s, int *in_quotes, int *count)
 			(*s)++;
 		(*count)++;
 	}
-	else if (**s == ' ')
+	else if (is_space_or_tab(**s))
 		(*s)++;
 	else
 		return (ILEGAL_CHAR);

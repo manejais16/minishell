@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:02:22 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/22 11:42:41 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/24 22:17:18 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ char	*expand_var_at_pos(t_main *main, const char *str, size_t *pos)
 		return (ft_strdup(str));
 	}
 	result = ft_strjoin3(parts[0], var_value, parts[1]);
+	*pos += ft_strlen(var_value);
 	free(parts[0]);
 	free(parts[1]);
 	free(var_value);
-	*pos += ft_strlen(var_value);
 	return (result);
 }
 

@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 08:58:43 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/23 18:15:49 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/24 21:14:48 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@ errors!*/
 void	print_fundamental_error(int ret_val)
 {
 	(void)ret_val;
+}
+
+/*This is just so that the spaces and tabs get treated as equal*/
+int	is_space_or_tab(char input)
+{
+	return (input == ' ' || input == '\t');
 }
 
 int extract_first_quote(t_main *shell, t_twopointer *temp)
@@ -130,7 +136,7 @@ int	assign_redirections_to_token(t_main *shell, t_token **current_t)
 	initialize_token(&temp);
 	while (*(*current_t)->str != '|')
 	{
-		if (is_meta_char(*(*current_t)->str) && *(*current_t)->str != ' ' &&\
+		if (is_meta_char(*(*current_t)->str) && !is_space_or_tab(*(*current_t)->str) &&\
 			(*current_t)->quote_type == NONE)
 		{
 			if (reassign_meta_t(shell, &temp, &(*current_t)) == -1)
