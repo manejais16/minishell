@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 20:11:37 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/24 21:19:58 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/25 15:45:34 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,16 @@ int	expand_all_segments(t_main *real_shell, t_main *temp_shell)
 	
 	temp = temp_shell->first_token;
 	/*TODO: return value should be checked!!!!*/
-	expand_variables_in_token(real_shell, temp);
+	if (ft_strcmp(temp->str, "$") == 0 && temp->next)
+	{
+		expanded_str = strdup("");
+		if (!expanded_str)
+			return (-1);
+		free(temp->str);
+		temp->str = expanded_str;
+	}
+	else
+		expand_variables_in_token(real_shell, temp);
 	temp = temp->next;
 	while(temp)
 	{
@@ -89,7 +98,10 @@ int	expand_all_segments(t_main *real_shell, t_main *temp_shell)
 			}
 			return (-1);
 		}
-		find_and_expand_vars(real_shell, &expanded_str);
+		if (ft_strcmp(temp->str, "$") == 0 && temp->next)
+			expanded_str = strdup("");
+		else
+			find_and_expand_vars(real_shell, &expanded_str);
 		if (!expanded_str)
 			return (-1);
 		free(temp->str);
