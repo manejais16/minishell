@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/19 20:11:37 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/25 16:50:48 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/25 20:28:41 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ int	add_result_to_chain(t_token **chain, char *result)
 	t_token	*link;
 	t_token	*iter;
 
+	/*There is leak here!!!!!!!!!!!!!!!!!!*/
 	link = malloc(sizeof(t_token));
 	if (!link)
 		return (-1);
@@ -191,16 +192,18 @@ int replace_token_with_chain(t_token *token, t_token *chain)
 	if (chain)
 	{
 		token->str = chain->str;
+		chain->str = NULL;
 		temp = token->next;
 		while (iter->next)
 			iter = iter->next;
-		if (temp)
+		if (temp && chain->next)
 			temp->prev = iter;
-		iter->next = temp;
+			iter->next = temp;
 		if (chain->next)
 		{
 			/*Still in deveopment!!!!!!!*/
 			token->next = chain->next;
+			token->next->prev = token;
 		}
 	}
 	else
@@ -209,6 +212,14 @@ int replace_token_with_chain(t_token *token, t_token *chain)
 		if (!token->str)
 			return (MALLOC_FAIL);
 	}
+	return (0);
+}
+
+int	free_chain(t_token *token_chain)
+{
+		if (token_chain)
+			free (token_chain);
+		token_chain = NULL;
 	return (0);
 }
 
@@ -227,6 +238,7 @@ int	combine_in_one_token_regular(t_token *token, t_main *temp_shell)
 	{
 		if (walker->quote_type != NONE)
 		{
+			/*There is leak here!!!!!!!!!!!!!!!!!*/
 			temp = ft_strjoin(result, walker->str);
 			if (!temp)
 			{
@@ -264,6 +276,7 @@ int	combine_in_one_token_regular(t_token *token, t_main *temp_shell)
 		add_result_to_chain(&token_chain, result);
 	/*Replace the token with the token chain!!!*/
 	replace_token_with_chain(token, token_chain);
+	free_chain(token_chain);
 	/*There could be case when the token chain is empty*/
 	return (0);
 }
