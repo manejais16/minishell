@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/22 12:34:21 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/25 10:18:25 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_main
 	t_token			*last_token;
 	int				return_value;
 	t_heredoc		*p_here;
+	int				is_child_running;
 }					t_main;
 
 typedef struct s_heredoc
@@ -216,6 +217,9 @@ int					execute_single_command_case(t_command_table *table, t_main *shell);
 int					execute_piped_commands_case(t_command_table *table, t_main *shell, pid_t *pids);
 int					execute_command_table(t_command_table *table, t_main *shell);
 int					process_pipeline(t_main *shell);
+void				set_shell_for_signals(t_main *shell);
+t_main 				*get_shell_pointer(void);
+t_main 				**get_shell_pointer_address(void);
 
 extern int					g_exit_status;
 

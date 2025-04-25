@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 08:56:54 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/07 12:29:44 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/25 10:36:14 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,7 @@ void	setup_signals(void)
 	signal(SIGQUIT, handle_sigquit);
 }
 
-void	handle_sigint(int sig)
-{
-	(void)sig;
 
-	write(1, "\n", 1);
-	// write(1, "DEBUG: SIGINT received\n", 24);
-	rl_replace_line("", 0);
-	rl_on_new_line();
-	rl_redisplay();
-	g_exit_status = 130;
-
-}
 void	handle_sigquit(int sig)
 {
 	(void)sig;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 10:37:48 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/24 17:09:01 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/25 10:25:39 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	set_shell_for_signals(&shell);
 	init_terminal(&shell);
 	shell.envp = copy_envp(envp);
 	shell.return_value = 0;
