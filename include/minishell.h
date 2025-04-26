@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/26 10:45:34 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/26 12:35:05 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_main
 	int				return_value;
 	t_heredoc		*p_here;
 	int				is_child_running;
+	int				is_recursive;
 }					t_main;
 
 typedef struct s_heredoc

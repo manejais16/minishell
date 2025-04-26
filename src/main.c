@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 10:37:48 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/25 10:25:39 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/26 12:48:39 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,49 +105,65 @@ void	print_all_tokens(t_main *shell)
 // 	return (g_exit_status);
 // }
 
+void	the_shell_loop();
+
 /*TODO: remove the test functionality and add the error messages!*/
 int	main(int argc, char **argv, char **envp)
 {
-	char	**tokens;
 	t_main	shell;
-	t_token	*current;
-	int		has_pipe;
 
 	(void)argc;
 	(void)argv;
-	set_shell_for_signals(&shell);
 	init_terminal(&shell);
 	shell.envp = copy_envp(envp);
 	shell.return_value = 0;
+	the_shell_loop(&shell);
+	if (shell.working_dir)
+		free(shell.working_dir);
+	if (shell.old_working_dir)
+		free(shell.old_working_dir);
+	free_all_tokens(&shell);
+	return (g_exit_status);
+}
+
+void	the_shell_loop(t_main *shell)
+{
+	t_token	*current;
+	int		has_pipe;
+	char	**tokens;
+	
+	set_shell_for_signals(shell);
 	while (1)
 	{
 		setup_signals();
-		//shell.user_input = readline("minishell> ");
+		//shell->user_input = readline("minishell> ");
 
+		if (shell->is_recursive)
+			break ;
 		if (isatty(fileno(stdin)))
-			shell.user_input = readline("minishell> ");
+			shell->user_input = readline("minishell> ");
 		else
 		{
 			char *line;
 			line = get_next_line(fileno(stdin));
-			shell.user_input = ft_strtrim(line, "\n");
+			shell->user_input = ft_strtrim(line, "\n");
 			free(line);
 		}
-		if (!shell.user_input)
+		if (!shell->user_input)
 		{
 			//ft_printf("exit\n");
 			break ;
 		}
-		if (*shell.user_input == '\0')
+		if (*shell->user_input == '\0')
 		{
-			free(shell.user_input);
+			free(shell->user_input);
 			continue ;
 		}
-		add_history(shell.user_input);
-		if (tokenize_input(&shell) == -1)
+		add_history(shell->user_input);
+		if (tokenize_input(shell) == -1)
 			continue ;
 		has_pipe = 0;
-		current = shell.first_token;
+		current = shell->first_token;
 		/*TEST cases*/
 		//print_all_tokens(&shell);
 		while (current)
@@ -161,20 +177,20 @@ int	main(int argc, char **argv, char **envp)
 		}
 		if (has_pipe)
 		{
-			shell.return_value = process_pipeline(&shell);
-			g_exit_status = shell.return_value;
+			shell->return_value = process_pipeline(shell);
+			g_exit_status = shell->return_value;
 		}
 		else
 		{
-			tokens = tokens_list_to_array(shell.first_token);
+			tokens = tokens_list_to_array(shell->first_token);
 			if (tokens)
 			{
-				//if (shell.first_token)
+				//if (shell->first_token)
 				//{
 					//execute_command_with_redirections(&shell,
-					//		shell.first_token, tokens);
+					//		shell->first_token, tokens);
 					// if (execute_command_with_redirections(&shell,
-					// 		shell.first_token, tokens) < 0)
+					// 		shell->first_token, tokens) < 0)
 					// {
 						//printf("Error executing command with redirections\n");
 						//execute_command(tokens, &shell);
@@ -182,18 +198,12 @@ int	main(int argc, char **argv, char **envp)
 				// }
 				// else
 				// {
-					execute_command(tokens, &shell);
+					execute_command(tokens, shell);
 				//}
 				shell_free_split(tokens);
 			}
 		}
 		/*End of programm*/
-		free_user_input(&shell);
+		free_user_input(shell);
 	}
-	if (shell.working_dir)
-		free(shell.working_dir);
-	if (shell.old_working_dir)
-		free(shell.old_working_dir);
-	free_all_tokens(&shell);
-	return (g_exit_status);
 }
