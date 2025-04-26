@@ -6,7 +6,7 @@
 /*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 10:37:48 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/25 10:25:39 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/26 12:38:52 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,7 @@ int	main(int argc, char **argv, char **envp)
 				// else
 				// {
 					execute_command(tokens, &shell);
+					shell.return_value = g_exit_status;
 				//}
 				shell_free_split(tokens);
 			}

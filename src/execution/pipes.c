@@ -6,7 +6,7 @@
 /*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:21:39 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/25 10:17:10 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/26 12:41:27 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,16 @@ t_command_table	*init_command_table(t_token *token_list)
 
 int	execute_single_command_case(t_command_table *table, t_main *shell)
 {
+	int result;
+
 	if (table->num_commands != 1)
 		return (-1);
-	if (is_builtin(table->commands[0][0]))
-		return (execute_builtin(table->commands[0], shell));
+		if (is_builtin(table->commands[0][0]))
+		{
+			result = execute_builtin(table->commands[0], shell);
+			g_exit_status = result;
+			return (result);
+		}
 	else
 	{
 		execute_command(table->commands[0], shell);
@@ -69,6 +75,7 @@ int	execute_piped_commands_case(t_command_table *table, t_main *shell,
 	}
 	close_all_pipes(table);
 	result = wait_for_all_children(pids, table->num_commands);
+	g_exit_status = result;
 	return (result);
 }
 
@@ -102,6 +109,7 @@ int	process_pipeline(t_main *shell)
 	if (!table)
 		return (1);
 	result = execute_command_table(table, shell);
+	g_exit_status = result;
 	shell->is_child_running = 0;
 	free_command_table(table);
 	return (result);

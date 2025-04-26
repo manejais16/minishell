@@ -6,7 +6,7 @@
 /*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:08:57 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/24 10:35:37 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/26 12:54:39 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,11 @@ int	execute_piped_command(char **cmd_args, t_main *shell, int cmd_index,
 		if (is_builtin(cmd_args[0]))
 			exit(execute_builtin(cmd_args, shell));
 		else
+		{
 			execute_command(cmd_args, shell);
-		exit(0);
+			exit(g_exit_status);
+		}
 	}
 	return (pid);
 }
+
