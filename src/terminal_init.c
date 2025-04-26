@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/07 12:28:16 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/26 12:36:00 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/26 18:29:19 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,26 +46,6 @@ void	init_terminal_variables(t_main *shell)
 	shell->p_here = NULL;
 	shell->is_child_running = 0;
 	shell->is_recursive = 0;
-}
-
-t_main	**get_shell_pointer_address(void)
-{
-	static t_main	*shell_ptr = NULL;
-
-	return (&shell_ptr);
-}
-
-t_main	*get_shell_pointer(void)
-{
-	return (*get_shell_pointer_address());
-}
-
-void	set_shell_for_signals(t_main *shell)
-{
-	t_main	**shell_ptr_ptr;
-
-	shell_ptr_ptr = get_shell_pointer_address();
-	*shell_ptr_ptr = shell;
 }
 
 void	handle_sigint(int sig)

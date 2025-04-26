@@ -42,6 +42,7 @@ SRC_FILES   =	main.c \
 				execution/execute_command.c \
 				execution/path_resolver.c \
 				utils.c \
+				shell_pointer_functions.c \
 				builtins/echo.c \
 				execution/builtins.c \
 				builtins/pwd.c \
