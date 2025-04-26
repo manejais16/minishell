@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 10:37:48 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/26 12:48:39 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/26 13:04:04 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,7 @@ void	the_shell_loop(t_main *shell)
 				// else
 				// {
 					execute_command(tokens, shell);
+					shell->return_value = g_exit_status;
 				//}
 				shell_free_split(tokens);
 			}
