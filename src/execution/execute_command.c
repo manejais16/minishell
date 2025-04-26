@@ -6,7 +6,7 @@
 /*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:31:04 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/26 15:31:10 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/26 16:36:33 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,4 +109,13 @@ void	cleanup_and_wait(char *path, t_token *token_with_meta, pid_t pid)
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		g_exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+	{
+		g_exit_status = 128 + WTERMSIG(status);
+		if (WTERMSIG(status) == SIGQUIT)
+		{
+			write(STDOUT_FILENO, "\n", 1);
+			rl_replace_line("", 0);
+		}
+	}
 }

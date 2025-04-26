@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_checking.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 19:25:31 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/26 14:53:45 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/26 18:28:14 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ int	check_for_repeating_meta(t_main *shell)
 	t_token	*temp;
 	t_token	*nextp;
 
+	if (!shell || !shell->first_token)
+		return (0);
 	temp = shell->first_token;
 	if (*temp->str == '|' && temp->quote_type == NONE)
 		return (print_tokenisation_error(shell, "|"), -1);
