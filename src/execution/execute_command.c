@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:31:04 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/25 10:23:14 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/26 10:43:47 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	execute_external(char **tokens, t_main *shell, t_token *token_with_meta)
 	path = resolve_path(tokens[0], shell->envp);
 	if (!path)
 	{
-		handle_command_not_found(tokens, token_with_meta);
+		handle_command_not_found(shell, tokens, token_with_meta);
 		return ;
 	}
 	shell->is_child_running = 1;

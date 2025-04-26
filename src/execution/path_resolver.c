@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path_resolver.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 10:35:31 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/24 11:10:57 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/26 11:02:01 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*try_paths(char **paths, char *command)
 		free(full_path);
 		i++;
 	}
-	ft_putstr_fd("bash:", STDERR_FILENO);
+	ft_putstr_fd("bash: ", STDERR_FILENO);
 	ft_putstr_fd(command, STDERR_FILENO);
 	ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
 	return (NULL);
@@ -56,7 +56,15 @@ char	*resolve_path(char *command, char **envp)
 	char	*full_path;
 
 	if (ft_strchr(command, '/'))
+	{
+		if (access(command, X_OK) != 0)
+		{
+			ft_putstr_fd("bash: ", STDERR_FILENO);
+			ft_putstr_fd(command, STDERR_FILENO);
+			ft_putstr_fd(": No such file or directory\n", STDERR_FILENO);
+		}
 		return (ft_strdup(command));
+	}
 	paths = get_paths_from_env(envp);
 	if (!paths)
 		return (NULL);

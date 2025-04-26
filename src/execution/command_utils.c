@@ -3,22 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   command_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/21 10:57:17 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/24 11:11:20 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/26 10:44:25 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_command_not_found(char **tokens, t_token *token_with_meta)
+void	handle_command_not_found(t_main *shell, char **tokens, t_token *token_with_meta)
 {
 	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(tokens[0], 2);
 	ft_putstr_fd(" : command not found\n", 2);
 	(void)tokens;
 	g_exit_status = 127;
+	shell->return_value = 127;
 	close_redirections(token_with_meta);
 }
 
