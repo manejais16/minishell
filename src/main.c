@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 10:37:48 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/26 19:03:39 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/26 19:10:39 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,15 +83,7 @@ void	the_shell_loop(t_main *shell)
 		setup_signals();
 		if (shell->is_recursive)
 			break ;
-		if (isatty(fileno(stdin)))
-			shell->user_input = readline("minishell> ");
-		else
-		{
-			char *line;
-			line = get_next_line(fileno(stdin));
-			shell->user_input = ft_strtrim(line, "\n");
-			free(line);
-		}
+		shell->user_input = readline("minishell> ");
 		if (!shell->user_input)
 			break ;
 		if (*shell->user_input == '\0')
