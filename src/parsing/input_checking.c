@@ -6,14 +6,13 @@
 /*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 19:25:31 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/26 16:51:03 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/26 18:28:14 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-/*TODO: USE AFTER TESTS!!!*/
 static void	print_tokenisation_error(t_main *shell, char *str)
 {
 	ft_putstr_fd("bash: syntax error near unexpected token `", STDERR_FILENO);

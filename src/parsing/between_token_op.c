@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 19:44:17 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/18 14:47:36 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/26 14:36:18 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	remove_token_from_chain(t_token *token)
 }
 
 /*Evoke only after expansino is done*/
-int	add_meta_to_token(t_main *shell, t_token *main_token, t_type meta_type, t_token *pseudo_t)
+int	add_meta_to_token(t_main *shell, t_token *main_token, \
+	t_type meta_type, t_token *pseudo_t)
 {
 	t_metachar	*last_meta;
 	t_metachar	*temp;
@@ -87,7 +88,7 @@ t_token	*token_dup(t_token *token)
 	result->str = ft_strdup(token->str);
 	if (!result->str)
 	{
-		free (result);
+		free(result);
 		return (NULL);
 	}
 	result->prev = token->prev;
