@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/31 08:56:54 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/25 10:36:14 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/26 12:24:36 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 void	setup_signals(void)
 {
-	signal(SIGINT, handle_sigint);
+	//signal(SIGINT, handle_sigint);
+	struct sigaction	ac;
+
+	ft_memset(&ac, 0, sizeof(struct sigaction));
+	ac.sa_handler = &handle_sigint;
+	sigaction(SIGINT, &ac, NULL);
 	signal(SIGQUIT, handle_sigquit);
 }
 
