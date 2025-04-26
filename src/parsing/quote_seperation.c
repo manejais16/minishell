@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 19:53:23 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/24 14:21:02 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/26 16:15:03 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,18 @@ int	is_compound_extraction(t_main *shell, t_twopointer *temp)
 
 int	move_compound_token(t_twopointer *temp, int *in_quotes)
 {
-	while(*temp->p_fast &&\
-		(get_current_quotes(in_quotes) || !is_meta_char(*temp->p_fast)))
+	while (*temp->p_fast && (get_current_quotes(in_quotes)
+			|| !is_meta_char(*temp->p_fast)))
 	{
-		if (*temp->p_fast == get_current_quotes(in_quotes) || (get_current_quotes(in_quotes) == 0 && is_quotes(*temp->p_fast)))
+		if (*temp->p_fast == get_current_quotes(in_quotes)
+			|| (get_current_quotes(in_quotes) == 0 && is_quotes(*temp->p_fast)))
 		{
 			change_quote_state(in_quotes, *temp->p_fast);
 		}
 		temp->p_fast++;
 	}
 	if (!*temp->p_fast && get_current_quotes(in_quotes) != 0)
-	 	return (UNCLOSED_QUOTES);
+		return (UNCLOSED_QUOTES);
 	return (0);
 }
 
@@ -51,9 +52,9 @@ int	extract_quotes(t_main *shell, t_twopointer *temp, int *in_quotes)
 	if (!is_meta_char(*(temp->p_fast + 1)) && *(temp->p_fast + 1))
 		return (move_compound_token(temp, in_quotes));
 	temp->p_slow++;
-	if (add_token_at_end(shell, substr_dangeros(temp->p_slow, \
-		temp->p_fast - temp->p_slow), get_token_quote_type(in_quotes), 0) \
-		== MALLOC_FAIL)
+	if (add_token_at_end(shell, substr_dangeros(temp->p_slow, temp->p_fast
+				- temp->p_slow), get_token_quote_type(in_quotes),
+			0) == MALLOC_FAIL)
 		return (MALLOC_FAIL);
 	change_quote_state(in_quotes, *temp->p_fast);
 	temp->p_fast++;

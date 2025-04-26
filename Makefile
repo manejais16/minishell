@@ -32,6 +32,13 @@ SRC_FILES   =	main.c \
 				parsing/expand_str.c \
 				parsing/here_request.c \
 				parsing/segment_operation.c \
+				parsing/expand_specific.c \
+				parsing/meta_extraction.c \
+				parsing/add_heredoc.c \
+				parsing/redirection_assigment.c \
+				parsing/token_chain_op.c \
+				parsing/segment_extraction.c \
+				parsing/compound_segments_in_tok.c \
 				execution/execute_command.c \
 				execution/path_resolver.c \
 				utils.c \

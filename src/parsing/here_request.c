@@ -6,26 +6,12 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 17:17:21 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/25 16:35:56 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/26 14:53:23 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
-
-char	*ft_strjoin3_no_nullcheck(char const *s1, char const *s2,
-		char const *s3)
-{
-	char	*result;
-	char	*temp;
-
-	temp = ft_strjoin(s1, s2);
-	if (!temp)
-		return (NULL);
-	result = ft_strjoin(temp, s3);
-	free(temp);
-	return (result);
-}
 
 int	collect_heredoc_lines(t_heredoc *iter, char **input)
 {
@@ -65,7 +51,6 @@ int	collect_empty_heredoc(t_heredoc *heredoc)
 	return (0);
 }
 
-/*TODO: Add SIGINT catching for the readline!!!*/
 int	ask_for_heredock_inputs(t_main *shell)
 {
 	t_heredoc	*iter;

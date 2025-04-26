@@ -6,11 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 10:37:48 by blohrer           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2025/04/26 12:38:52 by blohrer          ###   ########.fr       */
-=======
-/*   Updated: 2025/04/26 13:04:04 by kzarins          ###   ########.fr       */
->>>>>>> test_merge
+/*   Updated: 2025/04/26 14:49:31 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,13 +198,8 @@ void	the_shell_loop(t_main *shell)
 				// }
 				// else
 				// {
-<<<<<<< HEAD
-					execute_command(tokens, &shell);
-					shell.return_value = g_exit_status;
-=======
 					execute_command(tokens, shell);
 					shell->return_value = g_exit_status;
->>>>>>> test_merge
 				//}
 				shell_free_split(tokens);
 			}

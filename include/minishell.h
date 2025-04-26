@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/26 12:35:05 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/26 14:40:36 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ char				*ft_strjoin3(char const *s1, char const *s2, char const *s3);
 char				*extract_var_name(const char *str);
 size_t				get_var_name_len(const char *str);
 char				*handle_exit_status(t_main *main);
+char				*handle_just_dollar(void);
 char				**tokens_list_to_array(t_token *first_token);
 int					count_tokens_in_list(t_token *first_token);
 int					expand_tilde_in_string(t_main *main, char **str);

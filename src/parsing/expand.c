@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 11:34:03 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/23 18:03:56 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/26 14:39:15 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ char	*init_token_expansion(t_token *token)
 	return (expanded_str);
 }
 
-/*TODO: the expanded_str will leak if the result will be 
--1, because it will not be freed from init_token*/
 int	expand_variables_in_token(t_main *main, t_token *token)
 {
 	char	*expanded_str;

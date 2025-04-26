@@ -6,20 +6,16 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:04:34 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/24 21:21:25 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/26 14:50:23 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-char	*handle_just_dollar(void);
-
-char	*get_expanded_value(t_main *main, const char *str, size_t *var_name_len)
+char	*handle_dollar_or_question(t_main *main, const char *str, \
+			size_t *var_name_len)
 {
-	char	*var_name;
-	char	*var_value;
-
 	if (str[1] == '\0' || is_space_or_tab(str[1]))
 	{
 		*var_name_len = 0;
@@ -30,6 +26,16 @@ char	*get_expanded_value(t_main *main, const char *str, size_t *var_name_len)
 		*var_name_len = 1;
 		return (handle_exit_status(main));
 	}
+	return (NULL);
+}
+
+char	*get_expanded_value(t_main *main, const char *str, size_t *var_name_len)
+{
+	char	*var_name;
+	char	*var_value;
+
+	if (str[1] == '\0' || is_space_or_tab(str[1]) || str[1] == '?')
+		return (handle_dollar_or_question(main, str, var_name_len));
 	var_name = extract_var_name(str + 1);
 	if (!var_name)
 		return (NULL);
@@ -46,22 +52,6 @@ char	*get_expanded_value(t_main *main, const char *str, size_t *var_name_len)
 		var_value = ft_strdup(var_value);
 	free(var_name);
 	return (var_value);
-}
-
-char	*handle_exit_status(t_main *main)
-{
-	char	*exit_status;
-
-	exit_status = ft_itoa(main->return_value);
-	return (exit_status);
-}
-
-char	*handle_just_dollar(void)
-{
-	char	*exit_status;
-
-	exit_status = ft_strdup("$");
-	return (exit_status);
 }
 
 char	*extract_var_name(const char *str)

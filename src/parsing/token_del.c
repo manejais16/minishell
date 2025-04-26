@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/10 19:49:18 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/24 21:17:47 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/26 14:59:37 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ int	free_all_metachar(t_token *token)
 
 int	free_all_tokens(t_main *shell)
 {
-	t_token *next;
-	
-	while(shell->first_token)
+	t_token	*next;
+
+	while (shell->first_token)
 	{
 		free_all_metachar(shell->first_token);
 		if (shell->first_token->str)
@@ -64,7 +64,7 @@ int	free_one_token(t_token *token)
 int	free_user_input(t_main *shell)
 {
 	t_heredoc	*temp;
-	
+
 	free_all_tokens(shell);
 	if (shell->user_input)
 		free(shell->user_input);

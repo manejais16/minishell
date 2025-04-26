@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/17 12:03:31 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/19 19:16:20 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/26 14:59:02 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	add_token_at_end(t_main *shell, char *str, int quote_type, bool is_comp)
 	return (0);
 }
 
-int add_token_before(t_main *shell, t_token *token, t_token *new)
+int	add_token_before(t_main *shell, t_token *token, t_token *new)
 {
 	if (!token)
 	{
@@ -99,7 +99,7 @@ int	add_token_after(t_main *shell, t_token *token, t_token *new)
 	return (0);
 }
 
-int	dup_empty_str_token(t_main *shell, t_token *current_token,\
+int	dup_empty_str_token(t_main *shell, t_token *current_token,
 		t_token *token_to_add)
 {
 	t_token	*temp;

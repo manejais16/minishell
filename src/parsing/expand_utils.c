@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/16 16:02:22 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/25 15:22:30 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/26 14:37:04 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ bool	expand_var_in_string(t_main *main, char **expanded_str, size_t *i)
 
 	if (!expanded_str || !*expanded_str || (*expanded_str)[*i] != '$')
 		return (false);
-	if (!ft_isalnum((*expanded_str)[*i + 1]) && (*expanded_str)[*i + 1] != '?' && (*expanded_str)[*i + 1])
+	if (!ft_isalnum((*expanded_str)[*i + 1]) && (*expanded_str)[*i + 1] != '?'\
+		&& (*expanded_str)[*i + 1])
 	{
 		*i += 1;
 		return (true);

@@ -6,14 +6,13 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/15 19:25:31 by kzarins           #+#    #+#             */
-/*   Updated: 2025/04/23 15:44:39 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/26 14:53:45 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "parsing.h"
 
-/*TODO: USE AFTER TESTS!!!*/
 static void	print_tokenisation_error(t_main *shell, char *str)
 {
 	ft_putstr_fd("bash: syntax error near unexpected token `", STDERR_FILENO);
@@ -27,7 +26,7 @@ int	is_metachar_combination_legal(t_token *first, t_token *second)
 {
 	if (*first->str == '|' && (*second->str == '<' || *second->str == '>'))
 		return (1);
-	if (is_meta_char(*first->str) && first->quote_type == NONE\
+	if (is_meta_char(*first->str) && first->quote_type == NONE
 		&& is_meta_char(*second->str) && second->quote_type == NONE)
 		return (0);
 	return (1);
