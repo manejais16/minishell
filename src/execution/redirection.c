@@ -6,7 +6,7 @@
 /*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 16:24:42 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/22 21:51:31 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/26 15:21:22 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,6 @@ int	process_redirections(t_main *shell, t_token *token)
 	return (0);
 }
 
-void	restore_std_fds(int saved_stdin, int saved_stdout)
-{
-	dup2(saved_stdin, STDIN_FILENO);
-	dup2(saved_stdout, STDOUT_FILENO);
-	close(saved_stdin);
-	close(saved_stdout);
-}
-
-/*TODO: Still have to add priority for redirections*/
 int	setup_redirections(t_token *token, int *saved_stdin, int *saved_stdout)
 {
 	t_metachar	*meta;

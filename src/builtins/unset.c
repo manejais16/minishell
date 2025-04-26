@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/02 09:04:13 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/22 14:22:16 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/26 15:16:20 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Checks if the given string is a valid environment variable name
 int	is_valid_identifier(char *name)
 {
 	int	i;
@@ -31,7 +30,6 @@ int	is_valid_identifier(char *name)
 	return (1);
 }
 
-// Checks if the given environment variable matches the provided name
 int	is_matching_name(char *env_var, char *name)
 {
 	int	name_len;
@@ -46,8 +44,6 @@ int	is_matching_name(char *env_var, char *name)
 	return (1);
 }
 
-// Copies all environment variables that do not match the given name
-// and frees the old environment variables
 static int	cleanup_and_copy(char ***envp, char **new_env, char *name)
 {
 	int	i;
@@ -76,7 +72,6 @@ static int	cleanup_and_copy(char ***envp, char **new_env, char *name)
 	return (0);
 }
 
-// Removes the environment variable with the given name from the environment
 int	remove_env_name(char ***envp, char *name)
 {
 	char	**new_env;
@@ -97,8 +92,6 @@ int	remove_env_name(char ***envp, char *name)
 	return (0);
 }
 
-// Unsets the environment variables specified by the tokens, printing an error
-// if any of the tokens is not a valid identifier
 int	ft_unset(char **tokens, t_main *shell)
 {
 	int	i;

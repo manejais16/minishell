@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 08:49:49 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/26 12:35:05 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/26 15:57:01 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ void				setup_and_exec_child(char *path, char **tokens, t_main *shell, t_token *
 void				cleanup_and_wait(char *path, t_token *token_with_meta, pid_t pid);
 void				execute_external(char **tokens, t_main *shell, t_token *token_with_meta);
 void				handle_command_not_found(t_main *shell, char **tokens, t_token *token_with_meta);
-
+void				free_and_exit(t_main *shell, int exit_code);
 int					is_pipe_token(t_token *token);
 int					count_commands(t_token *token_list);
 int					allocate_pipe_memory(t_command_table *table);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execute_command.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 09:31:04 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/26 10:43:47 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/26 15:31:10 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ void	setup_and_exec_child(char *path, char **tokens, t_main *shell,
 		exit(1);
 	}
 	execve(path, tokens, shell->envp);
-	/*perror("minishell");*/
 	free(path);
 	close_redirections(token_with_meta);
 	shell_free_split(tokens);
