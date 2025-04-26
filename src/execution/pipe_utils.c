@@ -6,7 +6,7 @@
 /*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/24 10:08:57 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/26 12:54:39 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/26 15:31:20 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int	setup_child_pipes(t_command_table *table, int cmd_index)
 	{
 		if (dup2(table->pipe_fds[cmd_index - 1][0], STDIN_FILENO) == -1)
 		{
-			/*perror("dup2");*/
 			return (1);
 		}
 	}
@@ -79,7 +78,6 @@ int	setup_child_pipes(t_command_table *table, int cmd_index)
 	{
 		if (dup2(table->pipe_fds[cmd_index][1], STDOUT_FILENO) == -1)
 		{
-			/*perror("dup2");*/
 			return (1);
 		}
 	}
@@ -94,7 +92,6 @@ int	execute_piped_command(char **cmd_args, t_main *shell, int cmd_index,
 	pid = fork();
 	if (pid == -1)
 	{
-		/*perror("fork");*/
 		return (-1);
 	}
 	if (pid == 0)
@@ -112,4 +109,3 @@ int	execute_piped_command(char **cmd_args, t_main *shell, int cmd_index,
 	}
 	return (pid);
 }
-

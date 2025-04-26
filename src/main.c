@@ -6,7 +6,7 @@
 /*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/29 10:37:48 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/26 14:49:31 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/26 18:14:29 by kzarins          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	the_shell_loop(t_main *shell)
 	t_token	*current;
 	int		has_pipe;
 	char	**tokens;
-	
+
 	set_shell_for_signals(shell);
 	while (1)
 	{

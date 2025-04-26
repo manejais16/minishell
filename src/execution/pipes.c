@@ -6,7 +6,7 @@
 /*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/18 11:21:39 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/26 12:41:27 by blohrer          ###   ########.fr       */
+/*   Updated: 2025/04/26 15:19:16 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,16 @@ t_command_table	*init_command_table(t_token *token_list)
 
 int	execute_single_command_case(t_command_table *table, t_main *shell)
 {
-	int result;
+	int	result;
 
 	if (table->num_commands != 1)
 		return (-1);
-		if (is_builtin(table->commands[0][0]))
-		{
-			result = execute_builtin(table->commands[0], shell);
-			g_exit_status = result;
-			return (result);
-		}
+	if (is_builtin(table->commands[0][0]))
+	{
+		result = execute_builtin(table->commands[0], shell);
+		g_exit_status = result;
+		return (result);
+	}
 	else
 	{
 		execute_command(table->commands[0], shell);

@@ -1,29 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   redirection_utils2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/01 15:18:06 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/26 15:16:07 by blohrer          ###   ########.fr       */
+/*   Created: 2025/04/26 15:20:04 by blohrer           #+#    #+#             */
+/*   Updated: 2025/04/26 15:21:14 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_pwd(char **tokens)
+void	restore_std_fds(int saved_stdin, int saved_stdout)
 {
-	char	*cwd;
-
-	(void)tokens;
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-	{
-		perror("pwd");
-		return (1);
-	}
-	ft_printf("%s\n", cwd);
-	free(cwd);
-	return (0);
+	dup2(saved_stdin, STDIN_FILENO);
+	dup2(saved_stdout, STDOUT_FILENO);
+	close(saved_stdin);
+	close(saved_stdout);
 }

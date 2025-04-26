@@ -64,6 +64,7 @@ SRC_FILES   =	main.c \
 				execution/pipe_utils.c \
 				execution/pipe_command.c \
 				execution/pipe_command_execution.c \
+				execution/redirection_utils2.c \
 
 
 SRCS        = $(addprefix $(SRC_DIR)/, $(SRC_FILES))

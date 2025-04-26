@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kzarins <kzarins@student.42heilbronn.de    +#+  +:+       +#+        */
+/*   By: blohrer <blohrer@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 16:19:47 by blohrer           #+#    #+#             */
-/*   Updated: 2025/04/23 16:15:14 by kzarins          ###   ########.fr       */
+/*   Updated: 2025/04/26 15:16:39 by blohrer          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ static char	*get_cd_target(char **tokens, t_main *shell)
 	return (target);
 }
 
-static int	handle_cd_error(t_main *shell, char *target, char *old_pwd, char *error_msg)
+static int	handle_cd_error(t_main *shell, char *target, char *old_pwd,
+		char *error_msg)
 {
 	shell->return_value = 1;
 	if (error_msg)
